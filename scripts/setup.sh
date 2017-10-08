@@ -13,7 +13,7 @@ do
     make >> ~/setup_client-${i}.log
     exit
     "
-    scp bjakob@bjakobforaslvms${i}.westeurope.cloudapp.azure.com:~/setup_client-${i}.log /Users/jakob_beckmann/Documents/_uni/eth/_courses/2017/autumn/advanced_sys_lab/project/logs/setup_client-${i}.log
+    scp bjakob@bjakobforaslvms${i}.westeurope.cloudapp.azure.com:~/setup_client-${i}.log /Users/jakob_beckmann/Documents/_uni/eth/_courses/2017/autumn/advanced_sys_lab/gitlab/asl-fall17-project/logs/setup_client-${i}.log
 done
 
 # Set up middleware
@@ -28,7 +28,7 @@ echo 'PATH=' >> ~/setup_middleware.log
 echo $PATH >> ~/setup_middleware.log
 exit
 "
-scp bjakob@bjakobforaslvms4.westeurope.cloudapp.azure.com:~/setup_middleware.log /Users/jakob_beckmann/Documents/_uni/eth/_courses/2017/autumn/advanced_sys_lab/project/logs/setup_middleware.log
+scp bjakob@bjakobforaslvms4.westeurope.cloudapp.azure.com:~/setup_middleware.log /Users/jakob_beckmann/Documents/_uni/eth/_courses/2017/autumn/advanced_sys_lab/gitlab/asl-fall17-project/logs/setup_middleware.log
 
 # Set up memcached servers
 for i in {5..8}
@@ -39,5 +39,5 @@ do
     sudo service memcached stop
     exit
     "
-    scp bjakob@bjakobforaslvms${i}.westeurope.cloudapp.azure.com:~/setup_server-${i}.log /Users/jakob_beckmann/Documents/_uni/eth/_courses/2017/autumn/advanced_sys_lab/project/logs/setup_server-${i}.log
+    scp bjakob@bjakobforaslvms${i}.westeurope.cloudapp.azure.com:~/setup_server-${i}.log /Users/jakob_beckmann/Documents/_uni/eth/_courses/2017/autumn/advanced_sys_lab/gitlab/asl-fall17-project/logs/setup_server-${i}.log
 done
