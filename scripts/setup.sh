@@ -20,12 +20,6 @@ done
 ssh -o StrictHostKeyChecking=no bjakob@bjakobforaslvms4.westeurope.cloudapp.azure.com "
 sudo apt-get update >> ~/setup_middleware.log
 sudo apt-get --yes --force-yes install git unzip ant >> setup_middleware.log
-echo 'JAVA_HOME=' >> ~/setup_middleware.log
-echo $JAVA_HOME >> ~/setup_middleware.log
-echo 'ANT_HOME=' >> ~/setup_middleware.log
-echo $ANT_HOME >> ~/setup_middleware.log
-echo 'PATH=' >> ~/setup_middleware.log
-echo $PATH >> ~/setup_middleware.log
 exit
 "
 scp bjakob@bjakobforaslvms4.westeurope.cloudapp.azure.com:~/setup_middleware.log /Users/jakob_beckmann/Documents/_uni/eth/_courses/2017/autumn/advanced_sys_lab/gitlab/asl-fall17-project/logs/setup_middleware.log
