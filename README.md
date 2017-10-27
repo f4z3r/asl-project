@@ -2,25 +2,8 @@
 ## TODO
 1. Set up JAVA_HOME, ANT_HOME and PATH correctly on middleware machine (others do not really require ant and Java).
 2. Perform benchmarking tests to see saturation limits of servers and clients.
-3. Finish middleware and deploy
 
-## Design
-##### Main Thread
-The main thread accepts connections from clients and creates `Request` objects to add to a `BlockingQueue` to be processed by a pool of worker threads. The responsibility of the main thread is only the instantiation of the server socket to listen to clients and the accepting of connections. Moreover, it will spawn a timed task to print out analysis (non-critical) logging information. All system critical logging will be performed by a different logger that writes directly to file. On the other hand, the analysis logger will write to a write buffer which is periodically written to file. These periodical writes to disk are performed by the spawned timed task (ca. every 5 seconds) in order to reduce overhead created by logging to file. Note that all connections are kept open until all work is performed. Hence the listener socket should never close and the IO file headers should only be closed as the middleware shuts down.
-
-##### Worker Threads
-The worker threads are responsible for the request handling. Upon instantiation, they **each** should connect to **all** memcached servers in order to perform request sharding and distributed write instructions. Note that these connections should never be closed either. The worker thread is then responsible for the parsing of the request and its interpretation. Note that in the case a request cannot be parsed, this should be handled gracefully.
-
-> In the case of a failed write on one of the memcached servers, note that it is of vital importance to report the write as failed to the client.
-
-### Logging
-For the analysis logging, use a `BufferedWriter` to ensure that the logging is not performed each time a `print()` statement is encountered.
-```java
-PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("foo.out")));
-```
-This allows print statements to the `PrintWriter` to happen in a buffered manner.
-
-
+## Experimental design
 
 
 ## Project file structure

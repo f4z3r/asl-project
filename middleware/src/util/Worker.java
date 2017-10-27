@@ -306,13 +306,7 @@ public class Worker implements Runnable {
         Gathers information about the request. Note that this blocks the logger from accessing this workers statistics.
         @param request: Request object from which to gather data.
     */
-    private void completed(Request request) throws InterruptedException {
-        // Wait if logger is reading statistic values
-        this.lock_complete.await();
-        // Block logger from accessing the statistic values
-        this.lock_logger = new CountDownLatch(1);
-
-
+    private synchronized void completed(Request request) throws InterruptedException {
         request.time_completed = System.nanoTime() >> 10;   // In microseconds
 
         this.count_interval++;
@@ -367,9 +361,6 @@ public class Worker implements Runnable {
             }
         }
         this.histogram.set(index, this.histogram.get(index) + 1);
-
-        // Release lock for logger
-        this.lock_logger.countDown();
     }
 
     /**
@@ -404,26 +395,22 @@ public class Worker implements Runnable {
 
         for(Worker worker: workers) {
             // Block the worker from writing to its statistic values
-            worker.lock_logger.await();
-            worker.lock_complete = new CountDownLatch(1);
+            synchronized(worker) {
+                result_count_interval += worker.count_interval;
+                result_hits_interval += worker.hits_interval;
+                result_total_time += worker.total_time_interval;
+                result_total_proc_time += worker.total_proc_time_interval;
+                result_total_q_time += worker.total_q_time_interval;
+                result_total_server_time += worker.total_server_time_interval;
 
-            result_count_interval += worker.count_interval;
-            result_hits_interval += worker.hits_interval;
-            result_total_time += worker.total_time_interval;
-            result_total_proc_time += worker.total_proc_time_interval;
-            result_total_q_time += worker.total_q_time_interval;
-            result_total_server_time += worker.total_server_time_interval;
-
-            // Reset values for each worker
-            worker.count_interval = 0;
-            worker.hits_interval = 0;
-            worker.total_time_interval = 0L;
-            worker.total_proc_time_interval = 0L;
-            worker.total_q_time_interval = 0L;
-            worker.total_server_time_interval = 0L;
-
-            // Release lock
-            worker.lock_complete.countDown();
+                // Reset values for each worker
+                worker.count_interval = 0;
+                worker.hits_interval = 0;
+                worker.total_time_interval = 0L;
+                worker.total_proc_time_interval = 0L;
+                worker.total_q_time_interval = 0L;
+                worker.total_server_time_interval = 0L;
+            }
         }
 
         double result_response_time = result_total_time / (double) result_count_interval;
