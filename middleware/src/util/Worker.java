@@ -440,7 +440,7 @@ public class Worker implements Runnable {
         long timeRunSec = timeRun >> 20;            // Convert from microseconds to seconds
 
         String result = new String(new char[60]).replace('\0', '=') + "\nALL STATS (timing measures are in microseconds)\n";
-        result = result.concat(String.format("%10s|%10s|%10s|%10s|%10s|%10s|%10s\n", "Type", "Ops/sec", "Hits/sec", "Miss/Sec", "Resp Time", "Proc Time", "Srvr Time"));
+        result = result.concat(String.format("%9s|%9s|%9s|%9s|%9s|%9s|%9s|%9s\n", "Type", "Total", "Ops/sec", "Hits/sec", "Miss/Sec", "Resp Time", "Proc Time", "Srvr Time"));
 
         int maxHistogramSize = 0;
         ArrayList<Integer> histogram = new ArrayList<Integer>();
@@ -508,8 +508,9 @@ public class Worker implements Runnable {
             }
         }
 
-        result = result.concat(String.format("%10s|%10.2f|%10.2f|%10.2f|%10.2f|%10.2f|%10.2f\n",
+        result = result.concat(String.format("%9s|%9d|%9.2f|%9.2f|%9.2f|%9.2f|%9.2f|%9.2f\n",
                                              "SET",
+                                             type_set,
                                              type_set / (double) timeRunSec,
                                              type_hit_set / (double) timeRunSec,
                                              (type_set - type_hit_set) / (double) timeRunSec,
@@ -517,8 +518,9 @@ public class Worker implements Runnable {
                                              proc_time_set / (double) type_set,
                                              srvr_time_set / (double) type_set));
 
-        result = result.concat(String.format("%10s|%10.2f|%10.2f|%10.2f|%10.2f|%10.2f|%10.2f\n",
+        result = result.concat(String.format("%9s|%9d|%9.2f|%9.2f|%9.2f|%9.2f|%9.2f|%9.2f\n",
                                              "GET",
+                                             type_get,
                                              type_get / (double) timeRunSec,
                                              type_hit_get / (double) timeRunSec,
                                              (type_get - type_hit_get) / (double) timeRunSec,
@@ -526,8 +528,9 @@ public class Worker implements Runnable {
                                              proc_time_get / (double) type_get,
                                              srvr_time_get / (double) type_get));
 
-        result = result.concat(String.format("%10s|%10.2f|%10.2f|%10.2f|%10.2f|%10.2f|%10.2f\n",
+        result = result.concat(String.format("%9s|%9d|%9.2f|%9.2f|%9.2f|%9.2f|%9.2f|%9.2f\n",
                                              "MULTIGET",
+                                             type_multiget,
                                              type_multiget / (double) timeRunSec,
                                              type_hit_multiget / (double) timeRunSec,
                                              (type_multiget - type_hit_multiget) / (double) timeRunSec,
@@ -535,8 +538,9 @@ public class Worker implements Runnable {
                                              proc_time_multiget / (double) type_multiget,
                                              srvr_time_multiget / (double) type_multiget));
 
-        result = result.concat(String.format("%10s|%10.2f|%10s|%10s|%10.2f|%10.2f|%10s\n",
+        result = result.concat(String.format("%9s|%9d|%9.2f|%9s|%9s|%9.2f|%9.2f|%9s\n",
                                              "INVALID",
+                                             type_invalid,
                                              type_invalid / (double) timeRunSec,
                                              "---",
                                              "---",
