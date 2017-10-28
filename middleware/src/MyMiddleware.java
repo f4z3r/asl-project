@@ -128,7 +128,7 @@ public class MyMiddleware {
 
         // Set up the scheduling for loggging data, note the first delay is of 5 seconds. This is in
         // order to remove the warm up by not considering the first log record.
-        MyMiddleware.ses.scheduleWithFixedDelay(new LoggerRunnable(this), 5, 1, TimeUnit.SECONDS);
+        MyMiddleware.ses.scheduleWithFixedDelay(new LoggerRunnable(this), 10, 1, TimeUnit.SECONDS);
     }
 
 
