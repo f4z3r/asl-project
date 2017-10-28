@@ -126,8 +126,9 @@ public class MyMiddleware {
         // LOG FLUSHING
         // ===========================================================================
 
-        // Set up the scheduling for flushing the data buffer from data.
-        MyMiddleware.ses.scheduleWithFixedDelay(new LoggerRunnable(this), 1, 1, TimeUnit.SECONDS);
+        // Set up the scheduling for loggging data, note the first delay is of 5 seconds. This is in
+        // order to remove the warm up by not considering the first log record.
+        MyMiddleware.ses.scheduleWithFixedDelay(new LoggerRunnable(this), 5, 1, TimeUnit.SECONDS);
     }
 
 

@@ -24,6 +24,9 @@ import java.util.logging.Logger;
     Worker class implementing Runnable to be launched as a thread within the TheadPool in MyMiddleware.
 */
 public class Worker implements Runnable {
+    // This is a flag to clear the histogram on the first call to getRecord()
+    private static boolean clear_histogram = true;
+
     // Static fields for analysis
     private int count_set = 0;
     private int count_get = 0;
@@ -410,8 +413,16 @@ public class Worker implements Runnable {
                 worker.total_proc_time_interval = 0L;
                 worker.total_q_time_interval = 0L;
                 worker.total_server_time_interval = 0L;
+
+                // If the clear_histogram is true, clear the histograms of the workers
+                if(Worker.clear_histogram) {
+                    worker.histogram = new ArrayList<Integer>();
+                }
             }
         }
+
+        // Set the clear_histogram to be false, it hence get triggered only on the first call to this function
+        Worker.clear_histogram = false;
 
         double result_response_time = result_total_time / (double) result_count_interval;
         double result_proc_time = result_total_proc_time / (double) result_count_interval;
