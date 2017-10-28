@@ -415,8 +415,28 @@ public class Worker implements Runnable {
                 worker.total_server_time_interval = 0L;
 
                 // If the clear_histogram is true, clear the histograms of the workers
+                // and reset all statistics.
                 if(Worker.clear_histogram) {
                     worker.histogram = new ArrayList<Integer>();
+                    worker.count_set = 0;
+                    worker.count_get = 0;
+                    worker.count_multiget = 0;
+                    worker.hits_set = 0;
+                    worker.hits_get = 0;
+                    worker.hits_multiget = 0;
+                    worker.total_time_set = 0L;
+                    worker.total_time_get = 0L;
+                    worker.total_time_multiget = 0L;
+                    worker.total_time_invalid = 0L;
+                    worker.total_proc_time_set = 0L;
+                    worker.total_proc_time_get = 0L;
+                    worker.total_proc_time_multiget = 0L;
+                    worker.total_proc_time_invalid = 0L;
+                    worker.total_q_time = 0L;
+                    worker.total_server_time_set = 0L;
+                    worker.total_server_time_get = 0L;
+                    worker.total_server_time_multiget = 0L;
+                    worker.total_server_time_invalid = 0L;
                 }
             }
         }
