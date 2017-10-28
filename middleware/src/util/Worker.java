@@ -28,6 +28,7 @@ public class Worker implements Runnable {
     private static boolean clear_histogram = true;
 
     // Static fields for analysis
+    private int hist_count = 0;
     private int count_set = 0;
     private int count_get = 0;
     private int count_multiget = 0;
@@ -313,6 +314,7 @@ public class Worker implements Runnable {
         request.time_completed = System.nanoTime() >> 10;   // In microseconds
 
         this.count_interval++;
+        this.hist_count++;
 
         if(request.type == Request.Type.SET) {
             this.count_set++;
@@ -418,25 +420,7 @@ public class Worker implements Runnable {
                 // and reset all statistics.
                 if(Worker.clear_histogram) {
                     worker.histogram = new ArrayList<Integer>();
-                    worker.count_set = 0;
-                    worker.count_get = 0;
-                    worker.count_multiget = 0;
-                    worker.hits_set = 0;
-                    worker.hits_get = 0;
-                    worker.hits_multiget = 0;
-                    worker.total_time_set = 0L;
-                    worker.total_time_get = 0L;
-                    worker.total_time_multiget = 0L;
-                    worker.total_time_invalid = 0L;
-                    worker.total_proc_time_set = 0L;
-                    worker.total_proc_time_get = 0L;
-                    worker.total_proc_time_multiget = 0L;
-                    worker.total_proc_time_invalid = 0L;
-                    worker.total_q_time = 0L;
-                    worker.total_server_time_set = 0L;
-                    worker.total_server_time_get = 0L;
-                    worker.total_server_time_multiget = 0L;
-                    worker.total_server_time_invalid = 0L;
+                    worker.hist_count = 0;
                 }
             }
         }
@@ -475,6 +459,8 @@ public class Worker implements Runnable {
 
         int maxHistogramSize = 0;
         ArrayList<Integer> histogram = new ArrayList<Integer>();
+
+        int hist_count_total = 0;
 
         int type_set = 0;
         int type_get = 0;
@@ -524,6 +510,8 @@ public class Worker implements Runnable {
             srvr_time_get += worker.total_server_time_get;
             srvr_time_multiget += worker.total_server_time_multiget;
             srvr_time_invalid += worker.total_server_time_invalid;
+
+            hist_count_total += worker.hist_count;
 
 
             // Create a cummulative histogram from data from workers
@@ -586,7 +574,7 @@ public class Worker implements Runnable {
         int runningSum = 0;
         for(int idx = 0; idx < histogram.size(); idx++) {
             runningSum += histogram.get(idx);
-            result = result.concat(String.format("%20.1f%10.2f%%\n", (idx + 1) / 10.0f, 100 * runningSum / (double) (type_set + type_get + type_multiget + type_invalid)));
+            result = result.concat(String.format("%20.1f%10.2f%%\n", (idx + 1) / 10.0f, 100 * runningSum / (double) hist_count_total));
         }
 
         return result;
