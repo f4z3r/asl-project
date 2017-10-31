@@ -120,7 +120,7 @@ public class Worker implements Runnable {
     */
     @Override
     public void run() {
-        byte[] barray = new byte[4096];
+        byte[] barray = new byte[16384];
         while(true) {
             // First check if the thread has been interrupted
             if(Thread.interrupted()) {
@@ -149,7 +149,7 @@ public class Worker implements Runnable {
                 }
 
 
-                ByteBuffer response = ByteBuffer.allocate(4096);
+                ByteBuffer response = ByteBuffer.allocate(16384);
                 if(this.sharded && request.type == Request.Type.MULTIGET) {
                     // ===================================================================================================
                     // SHARDED MUTLIGET
@@ -176,12 +176,10 @@ public class Worker implements Runnable {
                         response_str = new String(Arrays.copyOfRange(responseByte, 0, responseSvr.limit()));
                         // Check if the server reponded something else than stored
                         if(!response_str.equals("STORED\r\n")) {
-                            System.out.println("Entered notstored if");
                             request.time_mmcd_rcvd = System.nanoTime() >> 10;       // In microseconds
                             request.hit = false;
                             // It did, relay the message to the client
                             request.channel.write(ByteBuffer.wrap(response_str.getBytes()));
-                            System.out.println("notstored sent to client");
                             completed(request);
                             break;
                         }
@@ -250,13 +248,14 @@ public class Worker implements Runnable {
         @return ByteBuffer that contains the aggregated responses of the servers.
     */
     private ByteBuffer shardedRead(Request request) throws IOException {
-        ByteBuffer response = ByteBuffer.allocate(4096);
+        ByteBuffer response = ByteBuffer.allocate(16384);
 
         // Get the individual keys in the get command
-        byte[] commandArray = new byte[4096];
+        byte[] commandArray = new byte[16384];
         request.buffer.get(commandArray, 0, request.buffer.limit() - 2);
         String command = new String(Arrays.copyOfRange(commandArray, 0, request.buffer.limit() - 2)).trim();
         String[] arguments = command.split(" ");
+        ByteBuffer[] serverResponses = new ByteBuffer[this.serverCount];
 
         if(arguments.length - 1 < this.serverCount) {
             // We have less arguments than available servers
@@ -273,13 +272,19 @@ public class Worker implements Runnable {
             for(int idx = 0; idx < servers.length; idx++) {
                 if(servers[idx] == 1) {
                     // We sent a request to that server hence read response
-                    this.connections.get(idx).read(response);
-                    response.flip();
-                    // Remove the "END\r\n" of the end of the message
-                    response.position(response.limit() - 5);
+                    serverResponses[idx] = ByteBuffer.allocate(16384);
+                    this.connections.get(idx).read(serverResponses[idx]);
+                    serverResponses[idx].flip();
                 }
-                request.time_mmcd_rcvd = System.nanoTime() >> 10;       // In microseconds
             }
+            request.time_mmcd_rcvd = System.nanoTime() >> 10;       // In microseconds
+            for(int idx = 0; idx < servers.length; idx++) {
+                if(servers[idx] == 1) {
+                    response.put(serverResponses[idx].array(), 0, serverResponses[idx].position() - "END\r\n".length());
+                }
+            }
+            response.put("END\r\n".getBytes());
+            response.flip();
         } else {
             // We have more arguments than available servers
             request.time_mmcd_sent = System.nanoTime() >> 10;       // In microseconds
@@ -291,15 +296,20 @@ public class Worker implements Runnable {
                 commandSvr += "\r\n";
                 connections.get(server).write(ByteBuffer.wrap(commandSvr.getBytes()));
             }
-            for(int server = 0; server < this.serverCount; server++) {
-                this.connections.get(server).read(response);
-                response.flip();
-                // Remove the "END\r\n" of the end of the message
-                response.position(response.limit() - 5);
+            for(int idx = 0; idx < this.serverCount; idx++) {
+                // Get responses from servers
+                serverResponses[idx] = ByteBuffer.allocate(16384);
+                this.connections.get(idx).read(serverResponses[idx]);
+                serverResponses[idx].flip();
             }
             request.time_mmcd_rcvd = System.nanoTime() >> 10;       // In microseconds
+            for(int idx = 0; idx < this.serverCount; idx++) {
+                response.put(serverResponses[idx].array(), 0, serverResponses[idx].position() - "END\r\n".length());
+            }
+            response.put("END\r\n".getBytes());
+            response.flip();
         }
-        response.rewind();
+
         if(response.limit() > 7) {
             request.hit = true;
         }
