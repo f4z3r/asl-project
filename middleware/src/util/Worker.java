@@ -33,7 +33,10 @@ public class Worker implements Runnable {
     private int count_get = 0;
     private int count_multiget = 0;
     private int count_invalid = 0;
-    private int count_interval = 0;
+    private int count_set_interval = 0;
+    private int count_get_interval = 0;
+    private int count_multiget_interval = 0;
+    private int count_invalid_interval = 0;
     private int hits_set = 0;
     private int hits_get = 0;
     private int hits_multiget = 0;
@@ -47,7 +50,6 @@ public class Worker implements Runnable {
     private long total_proc_time_get = 0L;
     private long total_proc_time_multiget = 0L;
     private long total_proc_time_invalid = 0L;
-    private long total_proc_time_interval = 0L;
     private long total_q_time = 0L;
     private long total_q_time_interval = 0L;
     private long total_server_time_set = 0L;
@@ -312,12 +314,11 @@ public class Worker implements Runnable {
     */
     private synchronized void completed(Request request) throws InterruptedException {
         request.time_completed = System.nanoTime() >> 10;   // In microseconds
-
-        this.count_interval++;
         this.hist_count++;
 
         if(request.type == Request.Type.SET) {
             this.count_set++;
+            this.count_set_interval++;
             this.total_time_set += (request.time_completed - request.time_created);
             this.total_proc_time_set += (request.time_completed - request.time_dqed);
             this.total_server_time_set += (request.time_mmcd_rcvd - request.time_mmcd_sent);
@@ -327,6 +328,7 @@ public class Worker implements Runnable {
             }
         } else if(request.type == Request.Type.GET) {
             this.count_get++;
+            this.count_get_interval++;
             this.total_time_get += (request.time_completed - request.time_created);
             this.total_proc_time_get += (request.time_completed - request.time_dqed);
             this.total_server_time_get += (request.time_mmcd_rcvd - request.time_mmcd_sent);
@@ -336,6 +338,7 @@ public class Worker implements Runnable {
             }
         } else if(request.type == Request.Type.MULTIGET) {
             this.count_multiget++;
+            this.count_multiget_interval++;
             this.total_time_multiget += (request.time_completed - request.time_created);
             this.total_proc_time_multiget += (request.time_completed - request.time_dqed);
             this.total_server_time_multiget += (request.time_mmcd_rcvd - request.time_mmcd_sent);
@@ -345,6 +348,7 @@ public class Worker implements Runnable {
             }
         } else {
             this.count_invalid++;
+            this.count_invalid_interval++;
             this.total_time_invalid += (request.time_completed - request.time_created);
             this.total_proc_time_invalid += (request.time_completed - request.time_dqed);
             this.total_server_time_invalid += (request.time_mmcd_rcvd - request.time_mmcd_sent);
@@ -373,14 +377,16 @@ public class Worker implements Runnable {
         @return String containing the column titles of the statistical output of the middleware.
     */
     public static String initLog() {
-        return String.format("%10s %10s %10s %10s %10s %10s %10s",
-                             "COUNT",
+        return String.format("%6s %6s %9s %5s %6s %9s %9s %9s %5s",
+                             "SETS",
+                             "GETS",
+                             "MULTIGETS",
+                             "IVLD",
                              "HITS",
                              "RSP TIME",
-                             "PROC TIME",
                              "Q TIME",
                              "SVR TIME",
-                             "Q LENGTH");
+                             "Q LEN");
     }
 
 
@@ -391,28 +397,35 @@ public class Worker implements Runnable {
         @return String containing data aggregated since the last call to this function.
     */
     public static String getRecord(ArrayList<Worker> workers, int queueLength) throws InterruptedException {
-        int result_count_interval = 0;
+        int result_count_set_interval = 0;
+        int result_count_get_interval = 0;
+        int result_count_multiget_interval = 0;
+        int result_count_invalid_interval = 0;
         int result_hits_interval = 0;
         long result_total_time = 0L;
-        long result_total_proc_time = 0L;
         long result_total_q_time = 0L;
         long result_total_server_time = 0L;
+
 
         for(Worker worker: workers) {
             // Block the worker from writing to its statistic values
             synchronized(worker) {
-                result_count_interval += worker.count_interval;
+                result_count_set_interval += worker.count_set_interval;
+                result_count_get_interval += worker.count_get_interval;
+                result_count_multiget_interval += worker.count_multiget_interval;
+                result_count_invalid_interval += worker.count_invalid_interval;
                 result_hits_interval += worker.hits_interval;
                 result_total_time += worker.total_time_interval;
-                result_total_proc_time += worker.total_proc_time_interval;
                 result_total_q_time += worker.total_q_time_interval;
                 result_total_server_time += worker.total_server_time_interval;
 
                 // Reset values for each worker
-                worker.count_interval = 0;
+                worker.count_set_interval = 0;
+                worker.count_get_interval = 0;
+                worker.count_multiget_interval = 0;
+                worker.count_invalid_interval = 0;
                 worker.hits_interval = 0;
                 worker.total_time_interval = 0L;
-                worker.total_proc_time_interval = 0L;
                 worker.total_q_time_interval = 0L;
                 worker.total_server_time_interval = 0L;
 
@@ -428,16 +441,18 @@ public class Worker implements Runnable {
         // Set the clear_histogram to be false, it hence get triggered only on the first call to this function
         Worker.clear_histogram = false;
 
+        int result_count_interval = result_count_get_interval + result_count_set_interval + result_count_multiget_interval + result_count_invalid_interval;
         double result_response_time = result_total_time / (double) result_count_interval;
-        double result_proc_time = result_total_proc_time / (double) result_count_interval;
         double result_q_time = result_total_q_time / (double) result_count_interval;
         double result_server_time = result_total_server_time / (double) result_count_interval;
 
-        String result = String.format("%10d %10d %10.2f %10.2f %10.2f %10.2f %10d",
-                                      result_count_interval,
+        String result = String.format("%6d %6d %9d %5d %6d %9.2f %9.2f %9.2f %5d",
+                                      result_count_set_interval,
+                                      result_count_get_interval,
+                                      result_count_multiget_interval,
+                                      result_count_invalid_interval,
                                       result_hits_interval,
                                       result_response_time,
-                                      result_proc_time,
                                       result_q_time,
                                       result_server_time,
                                       queueLength);
