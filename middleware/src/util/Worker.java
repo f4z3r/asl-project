@@ -162,6 +162,7 @@ public class Worker implements Runnable {
                     request.time_mmcd_sent = System.nanoTime() >> 10;       // In microseconds
                     for(int server = 0; server < this.serverCount; server++) {
                         connections.get(server).write(request.buffer);
+                        request.buffer.rewind();
                     }
 
                     String response_str = "";
