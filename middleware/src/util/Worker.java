@@ -376,16 +376,16 @@ public class Worker implements Runnable {
         @return String containing the column titles of the statistical output of the middleware.
     */
     public static String initLog() {
-        return String.format("%6s %6s %6s %7s %6d %6s %9s %8s %9s %6s",
+        return String.format("%6s %6s %6s %7s %6s %6s %9s %8s %9s %6s",
                              "SETS",
                              "GETS",
                              "MGETS",
                              "INVLD",
                              "TOT",
                              "HITS",
-                             "RSP TIME",
-                             "Q TIME",
-                             "SVR TIME",
+                             "RSP T",
+                             "Q T",
+                             "SVR T",
                              "Q LEN");
     }
 
