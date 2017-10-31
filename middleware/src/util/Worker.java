@@ -255,7 +255,6 @@ public class Worker implements Runnable {
         request.buffer.get(commandArray, 0, request.buffer.limit() - 2);
         String command = new String(Arrays.copyOfRange(commandArray, 0, request.buffer.limit() - 2)).trim();
         String[] arguments = command.split(" ");
-        ByteBuffer[] serverResponses = new ByteBuffer[this.serverCount];
 
         if(arguments.length - 1 < this.serverCount) {
             // We have less arguments than available servers
@@ -280,23 +279,6 @@ public class Worker implements Runnable {
             request.time_mmcd_rcvd = System.nanoTime() >> 10;       // In microseconds
             response.put("END\r\n".getBytes());
             response.flip();
-
-
-            // for(int idx = 0; idx < this.serverCount; idx++) {
-            //     if(servers[idx] == 1) {
-            //         // We sent a request to that server hence read response
-            //         serverResponses[idx] = ByteBuffer.allocate(16384);
-            //         this.connections.get(idx).read(serverResponses[idx]);
-            //     }
-            // }
-            // request.time_mmcd_rcvd = System.nanoTime() >> 10;       // In microseconds
-            // for(int idx = 0; idx < servers.length; idx++) {
-            //     if(servers[idx] == 1) {
-            //         response.put(serverResponses[idx].array(), 0, serverResponses[idx].position() - "END\r\n".length());
-            //     }
-            // }
-            // response.put("END\r\n".getBytes());
-            // response.flip();
         } else {
             // We have more arguments than available servers
             request.time_mmcd_sent = System.nanoTime() >> 10;       // In microseconds
@@ -317,18 +299,6 @@ public class Worker implements Runnable {
             request.time_mmcd_rcvd = System.nanoTime() >> 10;       // In microseconds
             response.put("END\r\n".getBytes());
             response.flip();
-
-            // for(int idx = 0; idx < this.serverCount; idx++) {
-            //     // Get responses from servers
-            //     serverResponses[idx] = ByteBuffer.allocate(16384);
-            //     this.connections.get(idx).read(serverResponses[idx]);
-            // }
-            // request.time_mmcd_rcvd = System.nanoTime() >> 10;       // In microseconds
-            // for(int idx = 0; idx < this.serverCount; idx++) {
-            //     response.put(serverResponses[idx].array(), 0, serverResponses[idx].position() - "END\r\n".length());
-            // }
-            // response.put("END\r\n".getBytes());
-            // response.flip();
         }
 
         if(response.limit() > 7) {
