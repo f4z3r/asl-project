@@ -269,12 +269,11 @@ public class Worker implements Runnable {
                 servers[server] = 1;
                 connections.get(server).write(ByteBuffer.wrap(("get " + arguments[idx] + "\r\n").getBytes()));
             }
-            for(int idx = 0; idx < servers.length; idx++) {
+            for(int idx = 0; idx < this.serverCount; idx++) {
                 if(servers[idx] == 1) {
                     // We sent a request to that server hence read response
                     serverResponses[idx] = ByteBuffer.allocate(16384);
                     this.connections.get(idx).read(serverResponses[idx]);
-                    serverResponses[idx].flip();
                 }
             }
             request.time_mmcd_rcvd = System.nanoTime() >> 10;       // In microseconds
@@ -300,7 +299,6 @@ public class Worker implements Runnable {
                 // Get responses from servers
                 serverResponses[idx] = ByteBuffer.allocate(16384);
                 this.connections.get(idx).read(serverResponses[idx]);
-                serverResponses[idx].flip();
             }
             request.time_mmcd_rcvd = System.nanoTime() >> 10;       // In microseconds
             for(int idx = 0; idx < this.serverCount; idx++) {
