@@ -269,21 +269,34 @@ public class Worker implements Runnable {
                 servers[server] = 1;
                 connections.get(server).write(ByteBuffer.wrap(("get " + arguments[idx] + "\r\n").getBytes()));
             }
-            for(int idx = 0; idx < this.serverCount; idx++) {
-                if(servers[idx] == 1) {
-                    // We sent a request to that server hence read response
-                    serverResponses[idx] = ByteBuffer.allocate(16384);
-                    this.connections.get(idx).read(serverResponses[idx]);
+
+            for(int server = 0; server < this.serverCount; server++) {
+                if(servers[server] == 1) {
+                    this.connections.get(server).read(response);
+                    // Remove the "END\r\n" of the end of the message
+                    response.position(response.position() - 5);
                 }
             }
             request.time_mmcd_rcvd = System.nanoTime() >> 10;       // In microseconds
-            for(int idx = 0; idx < servers.length; idx++) {
-                if(servers[idx] == 1) {
-                    response.put(serverResponses[idx].array(), 0, serverResponses[idx].position() - "END\r\n".length());
-                }
-            }
             response.put("END\r\n".getBytes());
             response.flip();
+
+
+            // for(int idx = 0; idx < this.serverCount; idx++) {
+            //     if(servers[idx] == 1) {
+            //         // We sent a request to that server hence read response
+            //         serverResponses[idx] = ByteBuffer.allocate(16384);
+            //         this.connections.get(idx).read(serverResponses[idx]);
+            //     }
+            // }
+            // request.time_mmcd_rcvd = System.nanoTime() >> 10;       // In microseconds
+            // for(int idx = 0; idx < servers.length; idx++) {
+            //     if(servers[idx] == 1) {
+            //         response.put(serverResponses[idx].array(), 0, serverResponses[idx].position() - "END\r\n".length());
+            //     }
+            // }
+            // response.put("END\r\n".getBytes());
+            // response.flip();
         } else {
             // We have more arguments than available servers
             request.time_mmcd_sent = System.nanoTime() >> 10;       // In microseconds
@@ -295,17 +308,27 @@ public class Worker implements Runnable {
                 commandSvr += "\r\n";
                 connections.get(server).write(ByteBuffer.wrap(commandSvr.getBytes()));
             }
-            for(int idx = 0; idx < this.serverCount; idx++) {
-                // Get responses from servers
-                serverResponses[idx] = ByteBuffer.allocate(16384);
-                this.connections.get(idx).read(serverResponses[idx]);
+
+            for(int server = 0; server < this.serverCount; server++) {
+                this.connections.get(server).read(response);
+                // Remove the "END\r\n" of the end of the message
+                response.position(response.position() - 5);
             }
             request.time_mmcd_rcvd = System.nanoTime() >> 10;       // In microseconds
-            for(int idx = 0; idx < this.serverCount; idx++) {
-                response.put(serverResponses[idx].array(), 0, serverResponses[idx].position() - "END\r\n".length());
-            }
             response.put("END\r\n".getBytes());
             response.flip();
+
+            // for(int idx = 0; idx < this.serverCount; idx++) {
+            //     // Get responses from servers
+            //     serverResponses[idx] = ByteBuffer.allocate(16384);
+            //     this.connections.get(idx).read(serverResponses[idx]);
+            // }
+            // request.time_mmcd_rcvd = System.nanoTime() >> 10;       // In microseconds
+            // for(int idx = 0; idx < this.serverCount; idx++) {
+            //     response.put(serverResponses[idx].array(), 0, serverResponses[idx].position() - "END\r\n".length());
+            // }
+            // response.put("END\r\n".getBytes());
+            // response.flip();
         }
 
         if(response.limit() > 7) {
