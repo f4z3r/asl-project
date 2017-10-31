@@ -355,7 +355,6 @@ public class Worker implements Runnable {
         }
 
         this.total_time_interval += (request.time_completed - request.time_created);
-        this.total_proc_time_interval += (request.time_completed - request.time_dqed);
         this.total_q_time += (request.time_dqed - request.time_created);
         this.total_q_time_interval += (request.time_dqed - request.time_created);
         this.total_server_time_interval += (request.time_mmcd_rcvd - request.time_mmcd_sent);
