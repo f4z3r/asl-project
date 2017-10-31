@@ -1,27 +1,25 @@
 # Middleware
-## TODO
-1. Set up JAVA_HOME, ANT_HOME and PATH correctly on middleware machine (others do not really require ant and Java).
-2. Perform benchmarking tests to see saturation limits of servers and clients.
 
-## Experimental design
+## TODO
+1. Install `dstat` and `screen` on all machines.
+2. Complete the scripting code for the experiments and the automation of deployment.
+3. Complete benchmarking experiments.
+4. Complete remaining experiments.
+5. Write report.
 
 
 ## Project file structure
 ```
-/app
+/middleware
     /build          -- build of the middleware
     /dist           -- jar distribution files
     /src            -- Source code
         /logging    -- logging formatters
-        /util       -- utility libraries
+        /util       -- utility libraries such as request and worker classes
         MyMiddleware.java
         RunMW.java
     build.xml       -- ANT build file
     README.md       -- recap of commands to build run
 
-/logs           -- contains logfiles copied from the cloud
-
-/scripts        -- contains all scripts to automate tasks on the cloud
-    /local      -- contains scripts that get imported by ssh commands
-                   (do not contain connections commands)
+/scripts            -- contains all scripts to automate tasks on the cloud
 ```
