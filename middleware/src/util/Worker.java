@@ -472,8 +472,7 @@ public class Worker implements Runnable {
     public static String getFinalStats(ArrayList<Worker> workers, long timeRun) {
         long timeRunSec = timeRun >> 20;            // Convert from microseconds to seconds
 
-        String result = new String(new char[60]).replace('\0', '=') + "\nALL STATS (timing measures are in microseconds)\n";
-        result = result.concat(String.format("%-9s|%-9s|%-9s|%-9s|%-9s|%-9s|%-9s|%-9s\n", "Type", "Total", "Ops/sec", "Hits/sec", "Miss/Sec", "Resp Time", "Proc Time", "Srvr Time"));
+        String result = new String(new char[80]).replace('\0', '=') + "\nALL STATS (timing measures are in microseconds)\n";
 
         int maxHistogramSize = 0;
         ArrayList<Integer> histogram = new ArrayList<Integer>();
@@ -543,7 +542,72 @@ public class Worker implements Runnable {
             for(int idx = 0; idx < worker.histogram.size(); idx++) {
                 histogram.set(idx, histogram.get(idx) + worker.histogram.get(idx));
             }
+
+            // Add worker related info to string.
+            result = result.concat(String.format("WORKER %d:\n", worker.id));
+            result = result.concat(String.format("%-9s|%-9s|%-9s|%-9s|%-9s|%-9s|%-9s|%-9s\n",
+                                                 "Type",
+                                                 "Total",
+                                                 "Ops/sec",
+                                                 "Hits/sec",
+                                                 "Miss/Sec",
+                                                 "Resp Time",
+                                                 "Proc Time",
+                                                 "Srvr Time"));
+
+            result = result.concat(String.format("%-9s|%9d|%9.2f|%9.2f|%9.2f|%9.2f|%9.2f|%9.2f\n",
+                                                 "SET",
+                                                 worker.count_set,
+                                                 worker.count_set / (double) timeRunSec,
+                                                 worker.hits_set / (double) timeRunSec,
+                                                 (worker.count_set - worker.hits_set) / (double) timeRunSec,
+                                                 worker.total_time_set / (double) worker.count_set,
+                                                 worker.total_proc_time_set / (double) worker.count_set,
+                                                 worker.total_server_time_set / (double) worker.count_set));
+
+            result = result.concat(String.format("%-9s|%9d|%9.2f|%9.2f|%9.2f|%9.2f|%9.2f|%9.2f\n",
+                                                 "GET",
+                                                 worker.count_get,
+                                                 worker.count_get / (double) timeRunSec,
+                                                 worker.hits_get / (double) timeRunSec,
+                                                 (worker.count_get - worker.hits_get) / (double) timeRunSec,
+                                                 worker.total_time_get / (double) worker.count_get,
+                                                 worker.total_proc_time_get / (double) worker.count_get,
+                                                 worker.total_server_time_get / (double) worker.count_get));
+
+            result = result.concat(String.format("%-9s|%9d|%9.2f|%9.2f|%9.2f|%9.2f|%9.2f|%9.2f\n",
+                                                 "MULTIGET",
+                                                 worker.count_multiget,
+                                                 worker.count_multiget / (double) timeRunSec,
+                                                 worker.hits_multiget / (double) timeRunSec,
+                                                 (worker.count_multiget - worker.hits_multiget) / (double) timeRunSec,
+                                                 worker.total_time_multiget / (double) worker.count_multiget,
+                                                 worker.total_proc_time_multiget / (double) worker.count_multiget,
+                                                 worker.total_server_time_multiget / (double) worker.count_multiget));
+
+            result = result.concat(String.format("%-9s|%9d|%9.2f|%9s|%9s|%9.2f|%9.2f|%9s\n",
+                                                 "INVALID",
+                                                 worker.count_invalid,
+                                                 worker.count_invalid / (double) timeRunSec,
+                                                 "---",
+                                                 "---",
+                                                 worker.total_time_invalid / (double) worker.count_invalid,
+                                                 worker.total_proc_time_invalid / (double) worker.count_invalid,
+                                                 "---"));
+
+            result = result.concat(new String(new char[80]).replace('\0', '=') + "\n");
         }
+        
+        result = result.concat(new String(new char[80]).replace('\0', '=') + "\n\nAGGREGATE FOR ALL WORKERS:");
+        result = result.concat(String.format("%-9s|%-9s|%-9s|%-9s|%-9s|%-9s|%-9s|%-9s\n",
+                                             "Type",
+                                             "Total",
+                                             "Ops/sec",
+                                             "Hits/sec",
+                                             "Miss/Sec",
+                                             "Resp Time",
+                                             "Proc Time",
+                                             "Srvr Time"));
 
         result = result.concat(String.format("%-9s|%9d|%9.2f|%9.2f|%9.2f|%9.2f|%9.2f|%9.2f\n",
                                              "SET",
