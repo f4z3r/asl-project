@@ -212,12 +212,13 @@ public class Worker implements Runnable {
                 }
 
                 // Check for hits or misses.
-                // response.get(barray, 0, response.limit());
-                // String response_str = new String(Arrays.copyOfRange(barray, 0, response.limit())).trim();
-                // if(!response_str.equals("END") && !response_str.equals("ERROR") && !response_str.equals("SERVER_ERROR") && !response_str.equals("CLIENT_ERROR") && !response_str.equals("NOT_STORED")) {
-                //     request.hit = true;
-                // }
-                // response.rewind();
+                response.get(barray, 0, response.limit());
+                String response_str = new String(Arrays.copyOfRange(barray, 0, response.limit())).trim();
+                System.out.println(response_str);
+                if(!response_str.equals("END") && !response_str.equals("ERROR") && !response_str.equals("SERVER_ERROR") && !response_str.equals("CLIENT_ERROR") && !response_str.equals("NOT_STORED")) {
+                    request.hit = true;
+                }
+                response.rewind();
 
 
                 request.channel.write(response);
