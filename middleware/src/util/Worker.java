@@ -212,12 +212,12 @@ public class Worker implements Runnable {
                 }
 
                 // Check for hits or misses.
-                response.get(barray, 0, response.limit());
-                String response_str = new String(Arrays.copyOfRange(barray, 0, response.limit())).trim();
-                if(!response_str.equals("END") && !response_str.equals("ERROR") && !response_str.equals("SERVER_ERROR") && !response_str.equals("CLIENT_ERROR") && !response_str.equals("NOT_STORED")) {
-                    request.hit = true;
-                }
-                response.rewind();
+                // response.get(barray, 0, response.limit());
+                // String response_str = new String(Arrays.copyOfRange(barray, 0, response.limit())).trim();
+                // if(!response_str.equals("END") && !response_str.equals("ERROR") && !response_str.equals("SERVER_ERROR") && !response_str.equals("CLIENT_ERROR") && !response_str.equals("NOT_STORED")) {
+                //     request.hit = true;
+                // }
+                // response.rewind();
 
 
                 request.channel.write(response);
@@ -597,8 +597,8 @@ public class Worker implements Runnable {
 
             result = result.concat(new String(new char[80]).replace('\0', '=') + "\n");
         }
-        
-        result = result.concat(new String(new char[80]).replace('\0', '=') + "\n\nAGGREGATE FOR ALL WORKERS:");
+
+        result = result.concat(new String(new char[80]).replace('\0', '=') + "\n\nAGGREGATE FOR ALL WORKERS:\n");
         result = result.concat(String.format("%-9s|%-9s|%-9s|%-9s|%-9s|%-9s|%-9s|%-9s\n",
                                              "Type",
                                              "Total",
