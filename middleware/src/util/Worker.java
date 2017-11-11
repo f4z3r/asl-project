@@ -27,7 +27,7 @@ public class Worker implements Runnable {
     // This is a flag to clear the histogram on the first call to getRecord()
     private static boolean clear_histogram = true;
 
-    // Static fields for analysis
+    // Private fields for analysis
     private int hist_count = 0;
     private int count_set = 0;
     private int count_get = 0;
@@ -57,6 +57,7 @@ public class Worker implements Runnable {
     private long total_server_time_multiget = 0L;
     private long total_server_time_invalid = 0L;
     private long total_server_time_interval = 0L;
+    private long total_multiget_length = 0L;
 
     // Histogram
     public ArrayList<Integer> histogram;
@@ -341,6 +342,7 @@ public class Worker implements Runnable {
         } else if(request.type == Request.Type.MULTIGET) {
             this.count_multiget++;
             this.count_multiget_interval++;
+            this.total_multiget_length += request.multigetLength;
             this.total_time_multiget += (request.time_completed - request.time_created);
             this.total_proc_time_multiget += (request.time_completed - request.time_dqed);
             this.total_server_time_multiget += (request.time_mmcd_rcvd - request.time_mmcd_sent);
@@ -503,6 +505,8 @@ public class Worker implements Runnable {
         long srvr_time_multiget = 0L;
         long srvr_time_invalid = 0L;
 
+        int total_multiget_length_all = 0;
+
         for(Worker worker: workers) {
             type_set += worker.count_set;
             type_get += worker.count_get;
@@ -528,6 +532,7 @@ public class Worker implements Runnable {
             srvr_time_multiget += worker.total_server_time_multiget;
             srvr_time_invalid += worker.total_server_time_invalid;
 
+            total_multiget_length_all += worker.total_multiget_length;
             hist_count_total += worker.hist_count;
 
 
@@ -595,6 +600,9 @@ public class Worker implements Runnable {
                                                  worker.total_proc_time_invalid / (double) worker.count_invalid,
                                                  "---"));
 
+            result = result.concat(String.format("Average mutliget length: %.2f\n",
+                                                 worker.total_multiget_length / (double) worker.count_multiget));
+
             result = result.concat(new String(new char[80]).replace('\0', '=') + "\n");
         }
 
@@ -648,6 +656,9 @@ public class Worker implements Runnable {
                                              resp_time_invalid / (double) type_invalid,
                                              proc_time_invalid / (double) type_invalid,
                                              "---"));
+
+        result = result.concat(String.format("Average mutliget length: %.2f\n",
+                                             total_multiget_length_all / (double) type_multiget));
 
         result = result.concat("\n\n HISTOGRAM\n");
         result = result.concat(String.format("%20s%10s\n", "Response time (ms)", "Percent"));

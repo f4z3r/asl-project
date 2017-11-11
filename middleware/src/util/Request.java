@@ -38,6 +38,7 @@ public class Request {
     private int dataLength;
     public Type type;
     public boolean hit;
+    public int multigetLength;
 
     // Timing fields
     public long time_created;
@@ -91,8 +92,10 @@ public class Request {
         buffer.get(barray, 0, commandLength - 2);
         String command = new String(Arrays.copyOfRange(barray, 0, commandLength)).trim();
         if(command.startsWith("get")) {
-            if(command.split(" ").length > 2) {
+            int numGets = command.split(" ").length - 1;
+            if(numGets > 1) {
                 this.type = Type.MULTIGET;
+                this.multigetLength = numGets;
             } else {
                 this.type = Type.GET;
             }
