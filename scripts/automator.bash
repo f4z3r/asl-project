@@ -2,6 +2,11 @@
 
 # Do not forget to remove the hosts from the known_hosts file before launching
 # the experiments
+#
+# The following is a failsafe if the .shh/config is not set up properly with:
+#   Host *      # (or individual hostnames)
+#       StrictHostKeyChecking no
+
 alias ssh='ssh StrictHostKeyChecking=no'
 alias scp='scp StrictHostKeyChecking=no'
 
@@ -24,10 +29,6 @@ export server1="10.0.0.7";  export server1_port="11212";
 export server2="10.0.0.4";  export server2_port="11212";
 export server3="10.0.0.11"; export server3_port="11212";
 
-# The following should not be used if the .shh/config is set up properly with:
-#   Host ^(bjakob@bjakobforaslvms[1-8].westeurope.cloudapp.azure.com)$
-#       StrictHostKeyChecking no
-export options="StrictHostKeyChecking=no";
 
 function upload {
     # Compile the middleware
@@ -293,6 +294,7 @@ function benchmark_1mw {
 
                     # Kill the middleware to get data
                     ssh ${mw1_pub} "pkill -f RunMW";
+                    sleep 3;            # Make sure the middleware had time to shut down ...
 
                     echo "Repetition ${rep} finished";
                 done
@@ -315,6 +317,7 @@ function benchmark_1mw {
     echo "Experiment finished, retrieving middleware system data ...";
     scp ${mw1_pub}:analysis.log ${logs_dir};
     scp ${mw1_pub}:system_report.log ${logs_dir};
+    ssh ${mw1_pub} "rm *.log";
 
     echo "Data retrieved, reordering ...";
     date=$(date +%Y-%m-%d_%Hh%M);
@@ -379,6 +382,7 @@ function benchmark_2mw {
                     # Kill the middlewares to get data
                     ssh ${mw1_pub} "pkill -f RunMW";
                     ssh ${mw2_pub} "pkill -f RunMW";
+                    sleep 3;            # Make sure the middlewares had time to shut down ...
 
                     echo "Repetition ${rep} finished";
                 done
@@ -405,9 +409,11 @@ function benchmark_2mw {
     echo "Experiment finished, retrieving middleware system data ...";
     scp ${mw1_pub}:analysis.log ${logs_dir}/analysis1.log;
     scp ${mw1_pub}:system_report.log ${logs_dir}/system_report1.log;
+    ssh ${mw1_pub} "rm *.log";
 
     scp ${mw2_pub}:analysis.log ${logs_dir}/analysis2.log;
     scp ${mw2_pub}:system_report.log ${logs_dir}/system_report2.log;
+    ssh ${mw2_pub} "rm *.log";
 
     echo "Data retrieved, reordering ...";
     date=$(date +%Y-%m-%d_%Hh%M);
@@ -426,6 +432,7 @@ if [ "${1}" == "run" ]; then
     # benchmark_memcached;
     # benchmark_clients;
     benchmark_1mw;
+    benchmark_2mw;
 
     cleanup;
 fi
