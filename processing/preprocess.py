@@ -4,8 +4,11 @@ import os
 import sys
 import re
 
+valid_line = re.compile("\[RUN #1\s+\d+%,\s+\d+ secs\]")
+last_line = re.compile("\[RUN #1\s+100%,\s+90 secs\]")
+
 def bench_memcached():
-    valid_line = re.compile("\[RUN #1\s+\d+%,\s+\d+ secs\]")
+    """Docstring"""
 
     os.mkdir("preprocessed/bench_memcached")
     for operation in ["read", "write"]:
@@ -26,12 +29,13 @@ def bench_memcached():
                                     lines = content.split("\r")
                                     for line in lines:
                                         line.strip()
-                                        print(line, file=writefile, end="")
+                                        if not re.match(last_line, line):
+                                            print(line, file=writefile, end="")
                         readfile.close()
                 writefile.close()
 
 def bench_clients():
-    valid_line = re.compile("\[RUN #1\s+\d+%,\s+\d+ secs\]")
+    """Docstring"""
 
     os.mkdir("preprocessed/bench_clients")
     for operation in ["read", "write"]:
@@ -52,7 +56,8 @@ def bench_clients():
                                     lines = content.split("\r")
                                     for line in lines:
                                         line.strip()
-                                        print(line, file=writefile, end="")
+                                        if not re.match(last_line, line):
+                                            print(line, file=writefile, end="")
                         readfile.close()
                 writefile.close()
 
