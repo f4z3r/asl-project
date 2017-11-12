@@ -4,30 +4,49 @@ import os
 import sys
 import re
 import csv
+import numpy as np
 
-def handle_memtier(basedir):
-    """Creates a csv file containing throughput, response time for every second."""
-
+def memtier_clients():
+    """Creates a csv file containing combined throughput, response time for every second."""
+    basedir = "bench_clients"
     os.mkdir("processed/{}".format(basedir))
     for operation in ["read", "write"]:
         os.mkdir("processed/{}/{}".format(basedir, operation))
         for nclients in [1, 2, 4, 8, 16, 24, 32]:
             with open("processed/{}/{}/{}_clients.csv".format(basedir, operation, nclients), 'w') as csvfile:
-                writer = csv.writer(csvfile, delimiter=',')
+                writer = csv.writer(csvfile)
                 writer.writerow(["Throughput", "latency(ms)"])
-                for rep in [1, 2, 3]:
-                    with open("preprocessed/{}/{}/{}_clients/rep{}.log".format(basedir, operation, nclients, rep), 'r') as inputfile:
-                        for line in inputfile.readlines():
-                            contents = re.split("\s", line)
-                            contents = list(filter(None, contents))
-                            writer.writerow([contents[9], contents[16]])
-                    inputfile.close()
+
+                data = np.zeros(shape=(89, 2))
+
+                for client in [1, 2]:
+                    averages = np.zeros(shape=(89, 2))
+
+                    for rep in [1, 2, 3]:
+                        with open("preprocessed/{}/{}/{}_clients/client{}/rep{}.log".format(basedir, operation, nclients, client, rep), 'r') as inputfile:
+                            content = []
+                            for line in inputfile.readlines():
+                                line_content = re.split("\s", line)
+                                line_content = list(filter(None, line_content))
+                                content += [[int(line_content[9]), float(line_content[16])]]
+
+                            content = np.matrix(content)
+                            averages += content
+                        inputfile.close()
+
+                    averages /= 3
+                    data += averages
+
+                for row in data:
+                    # Get average response time
+                    row[1] /= 2
+                    writer.writerow(row)
+
             csvfile.close()
 
 
 if __name__ == "__main__":
     if sys.argv[1] == "all":
-        handle_memtier("bench_clients")
-        handle_memtier("bench_memcached")
+        memtier_clients()
     else:
-        handle_memtier(sys.argv[1])
+        memtier_clients()

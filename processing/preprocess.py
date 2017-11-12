@@ -16,9 +16,10 @@ def bench_memcached():
         for nclients in [1, 2, 4, 8, 16, 24, 32]:
             cwd = "preprocessed/bench_memcached/{}/{}_clients".format(operation, nclients)
             os.mkdir(cwd)
-            for rep in range(1, 4):
-                with open("{}/rep{}.log".format(cwd, rep), 'w') as writefile:
-                    for client in range(1, 4):
+            for client in range(1, 4):
+                os.mkdir("{}/client{}".format(cwd, client))
+                for rep in range(1, 4):
+                    with open("{}/client{}/rep{}.log".format(cwd, client, rep), 'w') as writefile:
                         with open("../logs/2017-11-11_17h12(bench_memcached)/2threads" +\
                                 "_{}clients_{}/clients/client{}_{}.log".format(nclients, operation, client, rep), 'r') as readfile:
                             # Skip the first two lines of input file
@@ -32,7 +33,7 @@ def bench_memcached():
                                         if not re.match(last_line, line):
                                             print(line, file=writefile, end="")
                         readfile.close()
-                writefile.close()
+                    writefile.close()
 
 def bench_clients():
     """Docstring"""
@@ -43,9 +44,10 @@ def bench_clients():
         for nclients in [1, 2, 4, 8, 16, 24, 32]:
             cwd = "preprocessed/bench_clients/{}/{}_clients".format(operation, nclients)
             os.mkdir(cwd)
-            for rep in range(1, 4):
-                with open("{}/rep{}.log".format(cwd, rep), 'w') as writefile:
-                    for client in range(1, 3):
+            for client in range(1, 3):
+                os.mkdir("{}/client{}".format(cwd, client))
+                for rep in range(1, 4):
+                    with open("{}/client{}/rep{}.log".format(cwd, client, rep), 'w') as writefile:
                         with open("../logs/2017-11-11_18h21(bench_clients)/1threads" +\
                                 "_{}clients_{}/clients/client1-{}_{}.log".format(nclients, operation, client, rep), 'r') as readfile:
                             # Skip the first two lines of input file
@@ -59,7 +61,7 @@ def bench_clients():
                                         if not re.match(last_line, line):
                                             print(line, file=writefile, end="")
                         readfile.close()
-                writefile.close()
+                    writefile.close()
 
 if __name__ == "__main__":
     if sys.argv[1] == "bench_memcached":
