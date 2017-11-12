@@ -44,9 +44,10 @@ function upload {
 
 function populate {
     # Launch memcached instances on the server machines
-    ssh ${server1_pub} "pkill -f memcached; sudo service memcached stop; memcached -p ${server1_port} -t 1 &" &
-    ssh ${server2_pub} "pkill -f memcached; sudo service memcached stop; memcached -p ${server2_port} -t 1 &" &
-    ssh ${server3_pub} "pkill -f memcached; sudo service memcached stop; memcached -p ${server3_port} -t 1 &" &
+    ssh ${mw2_pub} "sudo service memcached stop" &
+    ssh ${server1_pub} "sudo service memcached stop; memcached -p ${server1_port} -t 1 &" &
+    ssh ${server2_pub} "sudo service memcached stop; memcached -p ${server2_port} -t 1 &" &
+    ssh ${server3_pub} "sudo service memcached stop; memcached -p ${server3_port} -t 1 &" &
     echo "Memcached instances launched on all servers";
 
     echo "Populating memcached instances ...";
@@ -60,7 +61,7 @@ function populate {
     ssh ${client2_pub} "./memtier_benchmark-master/memtier_benchmark -s ${server2} -p ${server2_port} -c ${VC} -t ${CT} --ratio=${ratio} --test-time=${runtime} --protocol=memcache_text --expiry-range=9999-10000 --key-maximum=10000 --hide-histogram -d 1024 &> empty.log &" &
     ssh ${client3_pub} "./memtier_benchmark-master/memtier_benchmark -s ${server3} -p ${server3_port} -c ${VC} -t ${CT} --ratio=${ratio} --test-time=${runtime} --protocol=memcache_text --expiry-range=9999-10000 --key-maximum=10000 --hide-histogram -d 1024 &> empty.log &" &
 
-    sleeptime=$(( $runtime + 10 ))
+    sleeptime=$(( $runtime + 30 ))
     sleep ${sleeptime};
 
     ssh ${client1_pub} "rm *.log";
@@ -73,10 +74,10 @@ function populate {
 function cleanup {
     ssh ${mw1_pub} "rm -r util logging META-INF *.java *.jar asl_project";
     ssh ${mw2_pub} "rm -r util logging META-INF *.java *.jar asl_project";
-    ssh ${mw2_pub} "pkill -f memcached; sudo service memcached stop";
-    ssh ${server1_pub} "pkill -f memcached; sudo service memcached stop";
-    ssh ${server2_pub} "pkill -f memcached; sudo service memcached stop";
-    ssh ${server3_pub} "pkill -f memcached; sudo service memcached stop";
+    ssh ${mw2_pub} "sudo service memcached stop";
+    ssh ${server1_pub} "sudo pkill -f memcached; sudo service memcached stop";
+    ssh ${server2_pub} "sudo pkill -f memcached; sudo service memcached stop";
+    ssh ${server3_pub} "sudo pkill -f memcached; sudo service memcached stop";
 }
 
 function tester {
@@ -84,7 +85,7 @@ function tester {
     runtime=120;
     memtier_options="--protocol=memcache_text --expiry-range=9999-10000 --key-maximum=10000 --hide-histogram --test-time=${runtime} --data-size=1024 --multi-key-get=10";
 
-    ssh ${mw1_pub} "java -jar middleware-bjakob.jar -l $mw1 -p $mw1_port -t 4 -s true -m ${server1}:${server1_port} ${server2}:${server2_port} &> test.log" &
+    ssh ${mw1_pub} "java -jar middleware-bjakob.jar -l ${mw1} -p ${mw1_port} -t 4 -s true -m ${server1}:${server1_port} ${server2}:${server2_port} &> test.log" &
     sleep 3;
 
     ssh ${client1_pub} "./memtier_benchmark-master/memtier_benchmark -s ${mw1} -p ${mw1_port} -c ${vc} --threads=2 --clients=3 --ratio=1:10 ${memtier_options} &> memtier.log" &
@@ -92,7 +93,7 @@ function tester {
     echo "Test experiment launched. Please be patient for ${runtime} seconds ...";
     sleep $(( ${runtime} + 5 ));
 
-    ssh ${mw1_pub} "sudo pkill -f RunMW"
+    ssh ${mw1_pub} "sudo pkill -f middleware"
 
     echo "Experiment finised, recovering log files ...";
     scp ${client1_pub}:memtier.log ~/Desktop/logs;
@@ -248,6 +249,9 @@ function benchmark_1mw {
     mkdir ~/Desktop/logs/benchmark_1mw;
     logs_dir=~/Desktop/logs/benchmark_1mw;
 
+    # Make sure the middleware is not already running ...
+    ssh ${mw1_pub} "sudo pkill -f middleware";
+
     runtime=90;
     memtier_options="--protocol=memcache_text --expiry-range=9999-10000 --key-maximum=10000 --hide-histogram --test-time=${runtime} --data-size=1024";
 
@@ -281,11 +285,11 @@ function benchmark_1mw {
                 echo "Preparing to run with ${threads} threads on ${nclient} clients and ratio ${ratio} (${nworker} workers)";
 
                 for rep in "${repetitions[@]}"; do
-                    ssh ${mw1_pub} "java -jar middleware-bjakob.jar -l ${mw1} -p ${mw1_port} -s false -t ${nworker} -m ${server1}:${server1_port} > mw1_${rep}.log &" &
+                    ssh ${mw1_pub} "java -jar middleware-bjakob.jar -l ${mw1} -p ${mw1_port} -s false -t ${nworker} -m ${server1}:${server1_port} &> mw1_${rep}.log &" &
                     sleep 2;            # Make sure the middleware runs ...
                     ssh ${mw1_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_mw1_${rep}.log &" &
 
-                    ssh ${client1_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw1} --port=${mw1_port} --clients=${nclient} --threads=${threads} --ratio=${ratio} ${memtier_options} &> client1_${rep}.log &" &
+                    ssh ${client1_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw1} --port=${mw1_port} --clients=${nclient} --threads=${threads} --ratio=${ratio} ${memtier_options} &> client1_${rep}.log" &
                     ssh ${client1_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_client1_${rep}.log &" &
 
                     ssh ${server1_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_server1_${rep}.log &" &
@@ -293,8 +297,7 @@ function benchmark_1mw {
                     sleep $(( ${runtime} + 5 ))
 
                     # Kill the middleware to get data
-                    ssh ${mw1_pub} "pkill -f RunMW";
-                    sleep 3;            # Make sure the middleware had time to shut down ...
+                    ssh ${mw1_pub} "sudo pkill -f middleware";
 
                     echo "Repetition ${rep} finished";
                 done
@@ -317,7 +320,7 @@ function benchmark_1mw {
     echo "Experiment finished, retrieving middleware system data ...";
     scp ${mw1_pub}:analysis.log ${logs_dir};
     scp ${mw1_pub}:system_report.log ${logs_dir};
-    ssh ${mw1_pub} "rm *.log";
+    ssh ${mw1_pub} "rm *.log ana* sys*";
 
     echo "Data retrieved, reordering ...";
     date=$(date +%Y-%m-%d_%Hh%M);
@@ -331,6 +334,10 @@ function benchmark_2mw {
     echo "Setting up benchmark_2mw ...";
     mkdir ~/Desktop/logs/benchmark_2mw;
     logs_dir=~/Desktop/logs/benchmark_2mw;
+
+    # Make sure the middlewares are not already running.
+    ssh ${mw1_pub} "sudo pkill -f middleware";
+    ssh ${mw2_pub} "sudo pkill -f middleware";
 
     runtime=90;
     memtier_options="--protocol=memcache_text --expiry-range=9999-10000 --key-maximum=10000 --hide-histogram --test-time=${runtime} --data-size=1024";
@@ -365,14 +372,14 @@ function benchmark_2mw {
                 echo "Preparing to run with ${threads} threads on ${nclient} clients and ratio ${ratio} (${nworker} workers)";
 
                 for rep in "${repetitions[@]}"; do
-                    ssh ${mw1_pub} "java -jar middleware-bjakob.jar -l ${mw1} -p ${mw1_port} -s false -t ${nworker} -m ${server1}:${server1_port} > mw1_${rep}.log &" &
-                    ssh ${mw2_pub} "java -jar middleware-bjakob.jar -l ${mw2} -p ${mw2_port} -s false -t ${nworker} -m ${server1}:${server1_port} > mw2_${rep}.log &" &
+                    ssh ${mw1_pub} "java -jar middleware-bjakob.jar -l ${mw1} -p ${mw1_port} -s false -t ${nworker} -m ${server1}:${server1_port} &> mw1_${rep}.log &" &
+                    ssh ${mw2_pub} "java -jar middleware-bjakob.jar -l ${mw2} -p ${mw2_port} -s false -t ${nworker} -m ${server1}:${server1_port} &> mw2_${rep}.log &" &
                     sleep 2;            # Make sure the middleware runs ...
                     ssh ${mw1_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_mw1_${rep}.log &" &
                     ssh ${mw2_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_mw2_${rep}.log &" &
 
-                    ssh ${client1_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw1} --port=${mw1_port} --clients=${nclient} --threads=${threads} --ratio=${ratio} ${memtier_options} &> client1-1_${rep}.log &" &
-                    ssh ${client1_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw2} --port=${mw2_port} --clients=${nclient} --threads=${threads} --ratio=${ratio} ${memtier_options} &> client1-2_${rep}.log &" &
+                    ssh ${client1_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw1} --port=${mw1_port} --clients=${nclient} --threads=${threads} --ratio=${ratio} ${memtier_options} &> client1-1_${rep}.log" &
+                    ssh ${client1_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw2} --port=${mw2_port} --clients=${nclient} --threads=${threads} --ratio=${ratio} ${memtier_options} &> client1-2_${rep}.log" &
                     ssh ${client1_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_client1_${rep}.log &" &
 
                     ssh ${server1_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_server1_${rep}.log &" &
@@ -380,9 +387,8 @@ function benchmark_2mw {
                     sleep $(( ${runtime} + 5 ))
 
                     # Kill the middlewares to get data
-                    ssh ${mw1_pub} "pkill -f RunMW";
-                    ssh ${mw2_pub} "pkill -f RunMW";
-                    sleep 3;            # Make sure the middlewares had time to shut down ...
+                    ssh ${mw1_pub} "sudo pkill -f middleware";
+                    ssh ${mw2_pub} "sudo pkill -f middleware";
 
                     echo "Repetition ${rep} finished";
                 done
@@ -409,11 +415,11 @@ function benchmark_2mw {
     echo "Experiment finished, retrieving middleware system data ...";
     scp ${mw1_pub}:analysis.log ${logs_dir}/analysis1.log;
     scp ${mw1_pub}:system_report.log ${logs_dir}/system_report1.log;
-    ssh ${mw1_pub} "rm *.log";
+    ssh ${mw1_pub} "rm *.log ana* sys*";
 
     scp ${mw2_pub}:analysis.log ${logs_dir}/analysis2.log;
     scp ${mw2_pub}:system_report.log ${logs_dir}/system_report2.log;
-    ssh ${mw2_pub} "rm *.log";
+    ssh ${mw2_pub} "rm *.log ana* sys*";
 
     echo "Data retrieved, reordering ...";
     date=$(date +%Y-%m-%d_%Hh%M);
