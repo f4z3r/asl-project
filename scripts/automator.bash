@@ -80,6 +80,37 @@ function cleanup {
     ssh ${server3_pub} "sudo pkill -f memcached; sudo service memcached stop";
 }
 
+function pinger {
+    echo "Launching ping script ...";
+
+    ssh ${mw1_pub} "echo 'PING MIDDLEWARE 1' > mw1_ping.log";
+    ssh ${mw2_pub} "echo 'PING MIDDLEWARE 2' > mw2_ping.log";
+
+    echo "Pinging clients.";
+    for machine in client{1..3}; do
+        ssh ${mw1_pub} "echo 'mw1 > ${machine}' >> mw1_ping.log; ping -t 5 ${!machine} >> mw1_ping.log &" &
+        ssh ${mw1_pub} "echo 'mw2 > ${machine}' >> mw2_ping.log; ping -t 5 ${!machine} >> mw2_ping.log &" &
+        sleep 6;
+    done
+
+    echo "Pinging servers.";
+    for machine in server{1..3}; do
+        ssh ${mw1_pub} "echo 'mw1 > ${machine}' >> mw1_ping.log; ping -t 5 ${!machine} >> mw1_ping.log &" &
+        ssh ${mw1_pub} "echo 'mw2 > ${machine}' >> mw2_ping.log; ping -t 5 ${!machine} >> mw2_ping.log &" &
+        sleep 6;
+    done
+
+    echo "Ping finished, retrieving data ...";
+
+    scp ${mw1_pub}:mw* ~/Desktop/logs/
+    scp ${mw2_pub}:mw* ~/Desktop/logs/
+
+    ssh ${mw1_pub} "rm *.log";
+    ssh ${mw2_pub} "rm *.log";
+
+    echo "Ping finished.";
+}
+
 function tester {
     echo "Launching tester ...";
     runtime=120;
@@ -432,12 +463,13 @@ function benchmark_2mw {
 
 if [ "${1}" == "run" ]; then
     upload;
+    pinger;
     populate;
 
     # List the experiments to run
     # benchmark_memcached;
     # benchmark_clients;
-    benchmark_1mw;
+    # benchmark_1mw;
     benchmark_2mw;
 
     cleanup;
