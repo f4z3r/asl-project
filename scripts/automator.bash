@@ -74,8 +74,8 @@ function populate {
 function cleanup {
     ssh ${mw2_pub} "sudo service memcached stop";
     ssh ${server1_pub} "sudo pkill -f memcached; sudo service memcached stop";
-    # ssh ${server2_pub} "sudo pkill -f memcached; sudo service memcached stop";
-    # ssh ${server3_pub} "sudo pkill -f memcached; sudo service memcached stop";
+    ssh ${server2_pub} "sudo pkill -f memcached; sudo service memcached stop";
+    ssh ${server3_pub} "sudo pkill -f memcached; sudo service memcached stop";
 }
 
 function pinger {
@@ -208,7 +208,9 @@ function benchmark_memcached {
 
     date=$(date +%Y-%m-%d_%Hh%M);
     dir=/Users/jakob_beckmann/Documents/_uni/eth/_courses/2017/autumn/advanced_sys_lab/gitlab/asl-fall17-project/logs;
-    mv ~/Desktop/logs/** ${dir}/${date};
+    mv ~/Desktop/logs/mw1_ping.log "${dir}/${date}(bench_memcached)";
+    mv ~/Desktop/logs/mw2_ping.log "${dir}/${date}(bench_memcached)";
+    mv ~/Desktop/logs/** "${dir}/${date}(bench_memcached)";
 
     echo "benchmark_memcached finished";
 }
@@ -272,7 +274,9 @@ function benchmark_clients {
 
     date=$(date +%Y-%m-%d_%Hh%M);
     dir=/Users/jakob_beckmann/Documents/_uni/eth/_courses/2017/autumn/advanced_sys_lab/gitlab/asl-fall17-project/logs;
-    mv ~/Desktop/logs/** ${dir}/${date};
+    mv ~/Desktop/logs/mw1_ping.log "${dir}/${date}(bench_clients)";
+    mv ~/Desktop/logs/mw2_ping.log "${dir}/${date}(bench_clients)";
+    mv ~/Desktop/logs/** "${dir}/${date}(bench_clients)";
 
     echo "benchmark_clients finished";
 }
@@ -358,6 +362,8 @@ function benchmark_1mw {
     echo "Data retrieved, reordering ...";
     date=$(date +%Y-%m-%d_%Hh%M);
     dir=/Users/jakob_beckmann/Documents/_uni/eth/_courses/2017/autumn/advanced_sys_lab/gitlab/asl-fall17-project/logs;
+    mv ~/Desktop/logs/mw1_ping.log "${dir}/${date}(bench_1mw)";
+    mv ~/Desktop/logs/mw2_ping.log "${dir}/${date}(bench_1mw)";
     mv ~/Desktop/logs/** "${dir}/${date}(bench_1mw)";
 
     echo "benchmark_1mw finished";
@@ -457,6 +463,8 @@ function benchmark_2mw {
     echo "Data retrieved, reordering ...";
     date=$(date +%Y-%m-%d_%Hh%M);
     dir=/Users/jakob_beckmann/Documents/_uni/eth/_courses/2017/autumn/advanced_sys_lab/gitlab/asl-fall17-project/logs;
+    mv ~/Desktop/logs/mw1_ping.log "${dir}/${date}(bench_2mw)";
+    mv ~/Desktop/logs/mw2_ping.log "${dir}/${date}(bench_2mw)";
     mv ~/Desktop/logs/** "${dir}/${date}(bench_2mw)";
 
     echo "benchmark_2mw finished";
