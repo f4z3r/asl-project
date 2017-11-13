@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import os
 import sys
 import csv
 import statistics
@@ -20,7 +19,7 @@ def memtier_throughtput(basedir):
                     next(reader, None)
                     # Compute averages
                     data = [row for row in reader]
-                    mean_throughput = statistics.mean(int(record[0]) for record in data)
+                    mean_throughput = statistics.mean(float(record[0]) for record in data)
                     mean_latency = statistics.mean(float(record[1]) for record in data)
 
                     writer.writerow([operation, nclients, mean_throughput, mean_latency])

@@ -72,8 +72,6 @@ function populate {
 }
 
 function cleanup {
-    ssh ${mw1_pub} "rm -r util logging META-INF *.java *.jar asl_project";
-    ssh ${mw2_pub} "rm -r util logging META-INF *.java *.jar asl_project";
     ssh ${mw2_pub} "sudo service memcached stop";
     ssh ${server1_pub} "sudo pkill -f memcached; sudo service memcached stop";
     ssh ${server2_pub} "sudo pkill -f memcached; sudo service memcached stop";
@@ -88,16 +86,20 @@ function pinger {
 
     echo "Pinging clients.";
     for machine in client{1..3}; do
-        ssh ${mw1_pub} "echo 'mw1 > ${machine}' >> mw1_ping.log; ping -t 5 ${!machine} >> mw1_ping.log &" &
-        ssh ${mw1_pub} "echo 'mw2 > ${machine}' >> mw2_ping.log; ping -t 5 ${!machine} >> mw2_ping.log &" &
+        ssh ${mw1_pub} "echo 'mw1 > ${machine}' >> mw1_ping.log; ping -t 5 -i 0.2 ${!machine} >> mw1_ping.log &" &
+        ssh ${mw2_pub} "echo 'mw2 > ${machine}' >> mw2_ping.log; ping -t 5 -i 0.2 ${!machine} >> mw2_ping.log &" &
         sleep 6;
+        ssh ${mw1_pub} "sudo pkill -f ping";
+        ssh ${mw2_pub} "sudo pkill -f ping";
     done
 
     echo "Pinging servers.";
     for machine in server{1..3}; do
-        ssh ${mw1_pub} "echo 'mw1 > ${machine}' >> mw1_ping.log; ping -t 5 ${!machine} >> mw1_ping.log &" &
-        ssh ${mw1_pub} "echo 'mw2 > ${machine}' >> mw2_ping.log; ping -t 5 ${!machine} >> mw2_ping.log &" &
+        ssh ${mw1_pub} "echo 'mw1 > ${machine}' >> mw1_ping.log; ping -t 5 -i 0.2 ${!machine} >> mw1_ping.log &" &
+        ssh ${mw2_pub} "echo 'mw2 > ${machine}' >> mw2_ping.log; ping -t 5 -i 0.2 ${!machine} >> mw2_ping.log &" &
         sleep 6;
+        ssh ${mw1_pub} "sudo pkill -f ping";
+        ssh ${mw2_pub} "sudo pkill -f ping";
     done
 
     echo "Ping finished, retrieving data ...";
