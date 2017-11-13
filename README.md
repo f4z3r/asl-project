@@ -2,7 +2,7 @@
 
 ## TODO
 1. Complete remaining experiments.
-2. Implement ping at beginning of each experiment ?
+2. Find optimal configuration based on benchmarks.
 3. Write report.
 
 
@@ -22,10 +22,14 @@
 /scripts            -- contains all scripts to automate tasks on the cloud
 /logs               -- contains all experiment raw logs
 /processing
-    /assets         -- final processed data used for analysis and graphing
+    /final          -- final processed data used for analysis and graphing
     /preprocessed   -- data from logs (removed unnecessary )
+    /processed      -- processed data, client cumulated, etc.
     procssing script ...
 ```
 
 ## Notes to myself
 - Note that in the memcached benchmarking experiment, client host #2 is has much higher latency due to network latencies.
+- Note that in mw2 experiment, we have data getting evicted over long read without write periods (2.5h), starts at rates lower than 1%, increases to ...
+- Repeat baselines without middleware if enough resources at very end. Alternate reads and writes to reduce the amount of evicted data.
+- Repeat baseline with 2 mws if enough resources and make sure the pings are acceptable.
