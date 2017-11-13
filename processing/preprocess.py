@@ -7,147 +7,66 @@ import re
 valid_line = re.compile(r"\[RUN #1\s+\d+%,\s+\d+ secs\]")
 last_line = re.compile(r"\[RUN #1\s+100%,\s+90 secs\]")
 
-def bench_memcached():
+def preprosses_memtier(experiment_name, client_count, thread_count):
     """Docstring"""
 
-    experiment_name = "2017-11-11_17h12(bench_memcached)"
+    sub_clients = False
+    if re.match(r"bench_memcached", experiment_name):
+        experiment = "bench_memcached"
+    elif re.match(r"bench_clients", experiment_name):
+        experiment = "bench_clients"
+        sub_clients = True
+    elif re.match(r"bench_1mw", experiment_name):
+        experiment = "bench_1mw"
+    elif re.match(r"bench_2mw", experiment_name):
+        experiment = "bench_2mw"
 
-    os.mkdir("preprocessed/bench_memcached")
     for operation in ["read", "write"]:
-        os.mkdir("preprocessed/bench_memcached/{}".format(operation))
         for nclients in [1, 2, 4, 8, 16, 24, 32]:
-            cwd = "preprocessed/bench_memcached/{}/{}_clients".format(operation, nclients)
-            os.mkdir(cwd)
-            for client in range(1, 4):
-                os.mkdir("{}/client{}".format(cwd, client))
+            cwd = "preprocessed/{}/{}/{}_clients".format(experiment, operation, nclients)
+            for client in range(1, client_count + 1):
+                os.makedirs("{}/client{}".format(cwd, client))
                 for rep in range(1, 4):
                     with open("{}/client{}/rep{}.log".format(cwd, client, rep), 'w') as writefile:
-                        with open("../logs/{}/2threads".format(experiment_name) +\
-                                "_{}clients_{}/clients/client{}_{}.log".format(nclients, operation, client, rep), 'r') as readfile:
+                        if sub_clients:
+                            filename = "../logs/{}/{}threads_{}clients_{}/clients/client1-{}_{}.log".format(experiment_name, thread_count, nclients, operation, client, rep)
+                        else:
+                            filename = "../logs/{}/{}threads_{}clients_{}/clients/client{}_{}.log".format(experiment_name, thread_count, nclients, operation, client, rep)
+                        with open(filename, 'r') as readfile:
                             # Skip the first two lines of input file
+                            line_num = 0
                             for content in readfile.readlines():
                                 content.strip()
                                 if re.match(valid_line, content):
-                                    # lines = re.split(valid_line, content)
                                     lines = content.split("\r")
                                     for line in lines:
                                         line.strip()
                                         if not re.match(last_line, line):
-                                            print(line, file=writefile, end="")
-                        readfile.close()
-                    writefile.close()
-
-def bench_clients():
-    """Docstring"""
-
-    experiment_name = "2017-11-11_18h21(bench_clients)"
-
-    os.mkdir("preprocessed/bench_clients")
-    for operation in ["read", "write"]:
-        os.mkdir("preprocessed/bench_clients/{}".format(operation))
-        for nclients in [1, 2, 4, 8, 16, 24, 32]:
-            cwd = "preprocessed/bench_clients/{}/{}_clients".format(operation, nclients)
-            os.mkdir(cwd)
-            for client in range(1, 3):
-                os.mkdir("{}/client{}".format(cwd, client))
-                for rep in range(1, 4):
-                    with open("{}/client{}/rep{}.log".format(cwd, client, rep), 'w') as writefile:
-                        with open("../logs/{}/1threads".format(experiment_name) +\
-                                "_{}clients_{}/clients/client1-{}_{}.log".format(nclients, operation, client, rep), 'r') as readfile:
-                            # Skip the first two lines of input file
-                            for content in readfile.readlines():
-                                content.strip()
-                                if re.match(valid_line, content):
-                                    # lines = re.split(valid_line, content)
-                                    lines = content.split("\r")
-                                    for line in lines:
-                                        line.strip()
-                                        if not re.match(last_line, line):
-                                            print(line, file=writefile, end="")
-                        readfile.close()
-                    writefile.close()
-
-
-def bench_1mw():
-    """Docstring"""
-
-    experiment_name = "2017-11-12_16h58(benchmark_1mw)"
-
-    os.mkdir("preprocessed/bench_1mw")
-    for operation in ["read", "write"]:
-        os.mkdir("preprocessed/bench_1mw/{}".format(operation))
-        for nworkers in [8, 16, 32, 64]:
-            os.mkdir("preprocessed/bench_1mw/{}/{}_workers".format(operation, nworkers))
-            for nclients in [2, 4, 8, 14, 20, 26, 32]:
-                cwd = "preprocessed/bench_1mw/{}/{}_workers/{}_clients".format(operation, nworkers, nclients)
-                os.mkdir(cwd)
-                for rep in range(1, 4):
-                    with open("{}/client_rep{}.log".format(cwd, rep), 'w') as writefile:
-                        with open("../logs/{}/{}_workers/2threads".format(experiment_name, nworkers) +\
-                                "_{}clients_{}/clients/client1_{}.log".format(nclients, operation, rep), 'r') as readfile:
-                            # Skip the first two lines of input file
-                            for content in readfile.readlines():
-                                content.strip()
-                                if re.match(valid_line, content):
-                                    # lines = re.split(valid_line, content)
-                                    lines = content.split("\r")
-                                    for line in lines:
-                                        line.strip()
-                                        if not re.match(last_line, line):
-                                            print(line, file=writefile, end="")
-                        readfile.close()
-                    writefile.close()
-                    with open("{}/mw_rep{}.log".format(cwd, rep), 'w') as writefile:
-                        with open("../logs/{}/{}_workers/2threads".format(experiment_name, nworkers) +\
-                                "_{}clients_{}/mw/mw1_{}.log".format(nclients, operation, rep), 'r') as readfile:
-                            # Skip headers and first row (warmup time)
-                            for line in readfile.readlines():
-                                contents = re.split(r"\s", line)
-                                contents = list(filter(None, contents))
-                                if contents == []:
-                                    continue
-                                if re.match(r"=+", line):
-                                    break
-                                if not (re.match(r"\d+", contents[0].strip()) or re.match(r"SETS", contents[0])):
-                                    continue
-                                print(line, file=writefile, end="")
-                        readfile.close()
-                    writefile.close()
-
-
-def bench_2mw():
-    """Docstring"""
-
-    experiment_name = "2017-11-12_23h02(benchmark_2mw)"
-
-    os.mkdir("preprocessed/bench_2mw")
-    for operation in ["read", "write"]:
-        os.mkdir("preprocessed/bench_2mw/{}".format(operation))
-        for nworkers in [8, 16, 32, 64]:
-            os.mkdir("preprocessed/bench_2mw/{}/{}_workers".format(operation, nworkers))
-            for nclients in [2, 4, 8, 14, 20, 26, 32]:
-                cwd = "preprocessed/bench_2mw/{}/{}_workers/{}_clients".format(operation, nworkers, nclients)
-                os.mkdir(cwd)
-                for machine in range(1, 3):
-                    for rep in range(1, 4):
-                        with open("{}/client{}_rep{}.log".format(cwd, machine, rep), 'w') as writefile:
-                            with open("../logs/{}/{}_workers/1threads".format(experiment_name, nworkers) +\
-                                    "_{}clients_{}/clients/client1-{}_{}.log".format(nclients, operation, machine, rep), 'r') as readfile:
-                                # Skip the first two lines of input file
-                                for content in readfile.readlines():
-                                    content.strip()
-                                    if re.match(valid_line, content):
-                                        # lines = re.split(valid_line, content)
-                                        lines = content.split("\r")
-                                        for line in lines:
-                                            line.strip()
-                                            if not re.match(last_line, line):
+                                            line_num += 1
+                                            if line_num < 89:
                                                 print(line, file=writefile, end="")
-                            readfile.close()
-                        writefile.close()
-                        with open("{}/mw{}_rep{}.log".format(cwd, machine, rep), 'w') as writefile:
-                            with open("../logs/{}/{}_workers/1threads".format(experiment_name, nworkers) +\
-                                    "_{}clients_{}/mw/mw{}_{}.log".format(nclients, operation, machine, rep), 'r') as readfile:
+                        readfile.close()
+                    writefile.close()
+
+
+def preproce_middleware(experiment_name, mw_count, thread_count):
+    """Docstring"""
+
+    if re.match(r"bench_1mw", experiment_name):
+        experiment = "bench_1mw"
+    elif re.match(r"bench_2mw", experiment_name):
+        experiment = "bench_2mw"
+
+    for operation in ["read", "write"]:
+        for nworkers in [8, 16, 32, 64]:
+            for nclients in [2, 4, 8, 14, 20, 26, 32]:
+                for mw in range(1, mw_count + 1):
+                    cwd = "preprocessed/{}/{}/{}_workers/{}_clients/mw{}".format(experiment, operation, nworkers, nclients, mw)
+                    os.makedirs(cwd)
+                    for rep in range(1, 4):
+                        with open("{}/mw{}_rep{}.log".format(cwd, mid, rep), 'w') as writefile:
+                            with open("../logs/{}/{}_workers/{}threads".format(experiment_name, nworkers, thread_count) +\
+                                    "_{}clients_{}/mw/mw{}_{}.log".format(nclients, operation, mw, rep), 'r') as readfile:
                                 # Skip headers and first row (warmup time)
                                 for line in readfile.readlines():
                                     contents = re.split(r"\s", line)
@@ -167,14 +86,31 @@ def bench_2mw():
 
 
 if __name__ == "__main__":
-    if sys.argv[1] == "bench_memcached":
-        bench_memcached()
-    if sys.argv[1] == "bench_clients":
-        bench_clients()
-    if sys.argv[1] == "bench_1mw":
-        bench_1mw()
-    if sys.argv[1] == "bench_2mw":
-        bench_2mw()
-    if sys.argv[1] == "all":
-        bench_memcached()
-        bench_clients()
+    if len(sys.argv) > 1:
+        for arg in sys.argv:
+            if arg == "./preprocess.py":
+                continue
+            elif re.match(r"name=[\w()-]+", arg):
+                experiment_name = re.match(r"name=[\w()-]+", arg).string.split("=")[1]
+            elif re.match(r"clients=\d+", arg):
+                clients = re.match(r"clients=\d+", arg).string.split("=")[1]
+            elif re.match(r"mws=\d+", arg):
+                mws = re.match(r"mws=\d+", arg).string.split("=")[1]
+            elif re.match(r"tc=\d+", arg):
+                tc = re.match(r"tc=\d+", arg).string.split("=")[1]
+            else:
+                print("Usage:\n\tpreprocess.py name=\"<name>\" clients=<client_count> mws=<mw_count> tc=<thread_count>")
+                sys.exit(1)
+        if experiment_name is None or clients is None or mws is None or tc is None:
+            print("Usage:\n\tpreprocess.py name=\"<name>\" clients=<client_count> mws=<mw_count> tc=<thread_count>")
+            sys.exit(1)
+
+        if int(mws) == 0:
+            preprosses_memtier(experiment_name, int(clients), int(tc))
+        else:
+            preprosses_memtier(experiment_name, int(clients), int(tc))
+            preproce_middleware(experiment_name, int(mws), int(tc))
+
+    else:
+        print("Usage:\n\tpreprocess.py name=\"<name>\" clients=<client_count> mws=<mw_count> tc=<thread_count>")
+        sys.exit(1)

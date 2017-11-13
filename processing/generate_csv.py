@@ -6,9 +6,8 @@ import re
 import csv
 import numpy as np
 
-def memtier_clients():
+def handle_memtier(basedir, client_num):
     """Creates a csv file containing combined throughput, response time for every second."""
-    basedir = "bench_clients"
     os.mkdir("processed/{}".format(basedir))
     for operation in ["read", "write"]:
         os.mkdir("processed/{}/{}".format(basedir, operation))
@@ -19,7 +18,7 @@ def memtier_clients():
 
                 data = np.zeros(shape=(89, 2))
 
-                for client in [1, 2]:
+                for client in range(1, client_num + 1):
                     averages = np.zeros(shape=(89, 2))
 
                     for rep in [1, 2, 3]:
@@ -39,26 +38,25 @@ def memtier_clients():
 
                 for row in data:
                     # Get average response time
-                    row[1] /= 2
+                    row[1] /= client_num
                     writer.writerow(row)
 
             csvfile.close()
 
-def memtier_memcached():
-    """Creates a csv file containing combined throughput, response time for every second."""
-    basedir = "bench_memcached"
+def handle_middleware(basedir, mw_num):
+    """Creates a csv file containing combined throughput, response time and queue length for every second."""
     os.mkdir("processed/{}".format(basedir))
     for operation in ["read", "write"]:
         os.mkdir("processed/{}/{}".format(basedir, operation))
         for nclients in [1, 2, 4, 8, 16, 24, 32]:
-            with open("processed/{}/{}/{}_clients.csv".format(basedir, operation, nclients), 'w') as csvfile:
+            with open("processed/{}/{}/mw.csv".format(basedir, operation, nclients), 'w') as csvfile:
                 writer = csv.writer(csvfile)
-                writer.writerow(["Throughput", "latency(ms)"])
+                writer.writerow(["Throughput", "latency(ms)", "Queue length"])
 
-                data = np.zeros(shape=(89, 2))
+                data = np.zeros(shape=(82, 3))
 
-                for client in [1, 2, 3]:
-                    averages = np.zeros(shape=(89, 2))
+                for client in range(1, mw_num + 1):
+                    averages = np.zeros(shape=(82, 3))
 
                     for rep in [1, 2, 3]:
                         with open("preprocessed/{}/{}/{}_clients/client{}/rep{}.log".format(basedir, operation, nclients, client, rep), 'r') as inputfile:
@@ -77,7 +75,7 @@ def memtier_memcached():
 
                 for row in data:
                     # Get average response time
-                    row[1] /= 3
+                    row[1] /= client_num
                     writer.writerow(row)
 
             csvfile.close()
@@ -85,9 +83,9 @@ def memtier_memcached():
 
 if __name__ == "__main__":
     if sys.argv[1] == "all":
-        memtier_clients()
-        memtier_memcached()
+        handle_memtier("bench_clients", 2)
+        handle_memtier("bench_memcached", 3)
     if sys.argv[1] == "bench_clients":
-        memtier_clients()
+        handle_memtier("bench_clients", 2)
     if sys.argv[1] == "bench_memcached":
-        memtier_memcached()
+        handle_memtier("bench_memcached", 3)
