@@ -358,7 +358,7 @@ function benchmark_1mw {
     echo "Data retrieved, reordering ...";
     date=$(date +%Y-%m-%d_%Hh%M);
     dir=/Users/jakob_beckmann/Documents/_uni/eth/_courses/2017/autumn/advanced_sys_lab/gitlab/asl-fall17-project/logs;
-    mv ~/Desktop/logs/** "${dir}/${date}(benchmark_1mw)";
+    mv ~/Desktop/logs/** "${dir}/${date}(bench_1mw)";
 
     echo "benchmark_1mw finished";
 }
@@ -457,7 +457,7 @@ function benchmark_2mw {
     echo "Data retrieved, reordering ...";
     date=$(date +%Y-%m-%d_%Hh%M);
     dir=/Users/jakob_beckmann/Documents/_uni/eth/_courses/2017/autumn/advanced_sys_lab/gitlab/asl-fall17-project/logs;
-    mv ~/Desktop/logs/** "${dir}/${date}(benchmark_2mw)";
+    mv ~/Desktop/logs/** "${dir}/${date}(bench_2mw)";
 
     echo "benchmark_2mw finished";
 }
