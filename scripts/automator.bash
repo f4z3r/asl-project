@@ -25,9 +25,9 @@ export client2="10.0.0.6";
 export client3="10.0.0.8";
 export mw1="10.0.0.5";      export mw1_port="8000";
 export mw2="10.0.0.10";     export mw2_port="8000";
-export server1="10.0.0.7";  export server1_port="11212";
-export server2="10.0.0.4";  export server2_port="11212";
-export server3="10.0.0.11"; export server3_port="11212";
+export server1="10.0.0.7";  export server1_port="11211";
+export server2="10.0.0.4";  export server2_port="11211";
+export server3="10.0.0.11"; export server3_port="11211";
 
 
 function upload {
@@ -54,14 +54,14 @@ function populate {
     #parameters for memtier
     CT=1;
     VC=1;
-    runtime=20;
+    runtime=30;
     ratio=1:0;
 
     ssh ${client1_pub} "./memtier_benchmark-master/memtier_benchmark -s ${server1} -p ${server1_port} -c ${VC} -t ${CT} --ratio=${ratio} --test-time=${runtime} --protocol=memcache_text --expiry-range=9999-10000 --key-maximum=10000 --hide-histogram -d 1024 &> empty.log &" &
     ssh ${client2_pub} "./memtier_benchmark-master/memtier_benchmark -s ${server2} -p ${server2_port} -c ${VC} -t ${CT} --ratio=${ratio} --test-time=${runtime} --protocol=memcache_text --expiry-range=9999-10000 --key-maximum=10000 --hide-histogram -d 1024 &> empty.log &" &
     ssh ${client3_pub} "./memtier_benchmark-master/memtier_benchmark -s ${server3} -p ${server3_port} -c ${VC} -t ${CT} --ratio=${ratio} --test-time=${runtime} --protocol=memcache_text --expiry-range=9999-10000 --key-maximum=10000 --hide-histogram -d 1024 &> empty.log &" &
 
-    sleeptime=$(( $runtime + 30 ))
+    sleeptime=$(( $runtime + 20 ))
     sleep ${sleeptime};
 
     ssh ${client1_pub} "rm *.log";
@@ -74,8 +74,8 @@ function populate {
 function cleanup {
     ssh ${mw2_pub} "sudo service memcached stop";
     ssh ${server1_pub} "sudo pkill -f memcached; sudo service memcached stop";
-    ssh ${server2_pub} "sudo pkill -f memcached; sudo service memcached stop";
-    ssh ${server3_pub} "sudo pkill -f memcached; sudo service memcached stop";
+    # ssh ${server2_pub} "sudo pkill -f memcached; sudo service memcached stop";
+    # ssh ${server3_pub} "sudo pkill -f memcached; sudo service memcached stop";
 }
 
 function pinger {
@@ -464,9 +464,9 @@ function benchmark_2mw {
 
 
 if [ "${1}" == "run" ]; then
-    upload;
-    pinger;
-    populate;
+    # upload;
+    # pinger;
+    # populate;
 
     # List the experiments to run
     # benchmark_memcached;
