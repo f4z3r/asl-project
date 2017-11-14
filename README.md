@@ -5,6 +5,25 @@
 2. Find optimal configuration based on benchmarks.
 3. Write report.
 
+## Dir structure
+Use the following dir structure for experiments:
+```
+/date(name)
+    /n_workers
+        /x_threads_y_clients_operation
+            /clients
+                /clientm_123.log
+```
+Reorder into the following structure when preprocessing data:
+```
+/name
+    /operation
+        /n_workers
+            /m_clients
+                /clientx
+                    /rep123.csv
+```
+The number of threads on memtier is implicit here as it does not change between experiments.
 
 ## Project file structure
 ```

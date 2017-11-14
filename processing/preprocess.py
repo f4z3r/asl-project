@@ -3,6 +3,7 @@
 import os
 import sys
 import re
+import csv
 
 valid_line = re.compile(r"\[RUN #1\s+\d+%,\s+\d+ secs\]")
 
@@ -40,7 +41,9 @@ def preprosses_memtier(experiment_name, client_count, thread_count):
                 for client in range(1, client_count + 1):
                     os.makedirs("{}/client{}".format(cwd, client))
                     for rep in range(1, 4):
-                        with open("{}/client{}/rep{}.log".format(cwd, client, rep), 'w') as writefile:
+                        with open("{}/client{}/rep{}.csv".format(cwd, client, rep), 'w') as writefile:
+                            writer = csv.writer(writefile)
+                            writer.writerow(["Throughput", "Latency"])
                             if sub_clients:
                                 filename = "../logs/{}/{}threads_{}clients_{}/clients/client1-{}_{}.log".format(experiment_name, thread_count, nclients, operation, client, rep)
                             if not has_workers:
@@ -72,7 +75,9 @@ def preprosses_memtier(experiment_name, client_count, thread_count):
 
                                             # Take 80 seconds of measurements
                                             if line_num < 89:
-                                                print(line, file=writefile, end="")
+                                                line_content = re.split(r"\s", line)
+                                                line_content = list(filter(None, line_content))
+                                                writer.writerow([int(line_content[9]), float(line_content[16])])
 
                                 readfile.close()
                         writefile.close()
@@ -93,7 +98,9 @@ def preproce_middleware(experiment_name, mw_count, thread_count):
                     cwd = "preprocessed/{}/{}/{}_workers/{}_clients/mw{}".format(experiment, operation, nworkers, nclients, mw)
                     os.makedirs(cwd)
                     for rep in range(1, 4):
-                        with open("{}/rep{}.log".format(cwd, rep), 'w') as writefile:
+                        with open("{}/rep{}.csv".format(cwd, rep), 'w') as writefile:
+                            writer = csv.writer(writefile)
+                            writer.writerow(["SETS", "GETS", "MGETS", "INVLD", "TOT", "HITS", "RSP T", "Q T", "SVR T", "Q LEN"])
                             with open("../logs/{}/{}_workers/{}threads".format(experiment_name, nworkers, thread_count) +\
                                     "_{}clients_{}/mw/mw{}_{}.log".format(nclients, operation, mw, rep), 'r') as readfile:
                                 line_num = 0
@@ -110,12 +117,12 @@ def preproce_middleware(experiment_name, mw_count, thread_count):
                                     line_num += 1
 
                                     # Skip second line to remove warm up
-                                    if line_num == 2:
+                                    if line_num < 3:
                                         continue
 
                                     # Take 80 seconds of measurements
                                     if line_num < 83:
-                                        print(line, file=writefile, end="")
+                                        writer.writerow(contents)
                             readfile.close()
                         writefile.close()
 
