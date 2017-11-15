@@ -499,13 +499,13 @@ function throughput_writes {
         mkdir ${logs_dir}/${worker_dir};
 
         for nclients in "${clients[@]}"; do
-            config="${threads}threads_${nclient}clients_write";
+            config="${threads}threads_${nclients}clients_write";
             mkdir ${logs_dir}/${worker_dir}/${config}
             mw_logs=${logs_dir}/${worker_dir}/${config}/mw; mkdir ${mw_logs};
             client_logs=${logs_dir}/${worker_dir}/${config}/clients; mkdir ${client_logs};
             server_logs=${logs_dir}/${worker_dir}/${config}/servers; mkdir ${server_logs};
 
-            echo "Preparing to run with ${threads} threads on ${nclient} clients and ratio ${ratio} (${nworkers} workers)";
+            echo "Preparing to run with ${threads} threads on ${nclients} clients and ratio ${ratio} (${nworkers} workers)";
             for rep in "${repetitions[@]}"; do
                 ssh ${mw1_pub} "java -jar middleware-bjakob.jar -l ${mw1} -p ${mw1_port} -s false -t ${nworkers} -m ${server1}:${server1_port} ${server2}:${server2_port} ${server3}:${server3_port} &> mw1_${rep}.log &" &
                 ssh ${mw2_pub} "java -jar middleware-bjakob.jar -l ${mw2} -p ${mw2_port} -s false -t ${nworkers} -m ${server1}:${server1_port} ${server2}:${server2_port} ${server3}:${server3_port} &> mw2_${rep}.log &" &
@@ -513,16 +513,16 @@ function throughput_writes {
                 ssh ${mw1_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_mw1_${rep}.log &" &
                 ssh ${mw2_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_mw2_${rep}.log &" &
 
-                ssh ${client1_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw1} --port=${mw1_port} --clients=${nclient} --threads=${threads} --ratio=${ratio} ${memtier_options} &> client1-1_${rep}.log" &
-                ssh ${client1_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw2} --port=${mw2_port} --clients=${nclient} --threads=${threads} --ratio=${ratio} ${memtier_options} &> client1-2_${rep}.log" &
+                ssh ${client1_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw1} --port=${mw1_port} --clients=${nclients} --threads=${threads} --ratio=${ratio} ${memtier_options} &> client1-1_${rep}.log" &
+                ssh ${client1_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw2} --port=${mw2_port} --clients=${nclients} --threads=${threads} --ratio=${ratio} ${memtier_options} &> client1-2_${rep}.log" &
                 ssh ${client1_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_client1_${rep}.log &" &
 
-                ssh ${client2_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw1} --port=${mw1_port} --clients=${nclient} --threads=${threads} --ratio=${ratio} ${memtier_options} &> client2-1_${rep}.log" &
-                ssh ${client2_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw2} --port=${mw2_port} --clients=${nclient} --threads=${threads} --ratio=${ratio} ${memtier_options} &> client2-2_${rep}.log" &
+                ssh ${client2_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw1} --port=${mw1_port} --clients=${nclients} --threads=${threads} --ratio=${ratio} ${memtier_options} &> client2-1_${rep}.log" &
+                ssh ${client2_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw2} --port=${mw2_port} --clients=${nclients} --threads=${threads} --ratio=${ratio} ${memtier_options} &> client2-2_${rep}.log" &
                 ssh ${client2_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_client2_${rep}.log &" &
 
-                ssh ${client3_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw1} --port=${mw1_port} --clients=${nclient} --threads=${threads} --ratio=${ratio} ${memtier_options} &> client3-1_${rep}.log" &
-                ssh ${client3_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw2} --port=${mw2_port} --clients=${nclient} --threads=${threads} --ratio=${ratio} ${memtier_options} &> client3-2_${rep}.log" &
+                ssh ${client3_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw1} --port=${mw1_port} --clients=${nclients} --threads=${threads} --ratio=${ratio} ${memtier_options} &> client3-1_${rep}.log" &
+                ssh ${client3_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw2} --port=${mw2_port} --clients=${nclients} --threads=${threads} --ratio=${ratio} ${memtier_options} &> client3-2_${rep}.log" &
                 ssh ${client3_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_client3_${rep}.log &" &
 
                 ssh ${server1_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_server1_${rep}.log &" &
@@ -614,14 +614,15 @@ function get_and_multigets {
         echo
         echo "Preparing to run with ${workers} workers ...";
         worker_dir="${workers}_workers";
+        mkdir ${logs_dir}/${is_sharded}
         mkdir ${logs_dir}/${is_sharded}/${worker_dir};
 
         for multiget in "${multiget_size[@]}"; do
             config="${threads}threads_${clients}clients_${multiget}get";
-            mkdir ${logs_dir}/${workers}/${config}
-            mw_logs=${logs_dir}/${workers}/${config}/mw; mkdir ${mw_logs};
-            client_logs=${logs_dir}/${workers}/${config}/clients; mkdir ${client_logs};
-            server_logs=${logs_dir}/${workers}/${config}/servers; mkdir ${server_logs};
+            mkdir ${logs_dir}/${is_sharded}/${worker_dir}/${config}
+            mw_logs=${logs_dir}/${is_sharded}/${worker_dir}/${config}/mw; mkdir ${mw_logs};
+            client_logs=${logs_dir}/${is_sharded}/${worker_dir}/${config}/clients; mkdir ${client_logs};
+            server_logs=${logs_dir}/${is_sharded}/${worker_dir}/${config}/servers; mkdir ${server_logs};
 
             echo "Preparing to run with ${threads} threads on ${clients} clients and ratio ${ratio} (${workers} workers)";
             for rep in "${repetitions[@]}"; do
@@ -640,7 +641,7 @@ function get_and_multigets {
                 ssh ${client2_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_client2_${rep}.log &" &
 
                 ssh ${client3_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw1} --port=${mw1_port} --clients=${clients} --threads=${threads} --ratio=${ratio} ${memtier_options} --multi-key-get=${multiget} &> client3-1_${rep}.log" &
-                ssh ${client3_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw2} --port=${mw2_port} --clients=${clients} --threads=${threads} --ratio=${ratio} ${memtier_options} --multi-key-get=${multiget} > client3-2_${rep}.log" &
+                ssh ${client3_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw2} --port=${mw2_port} --clients=${clients} --threads=${threads} --ratio=${ratio} ${memtier_options} --multi-key-get=${multiget} &> client3-2_${rep}.log" &
                 ssh ${client3_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_client3_${rep}.log &" &
 
                 ssh ${server1_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_server1_${rep}.log &" &
@@ -717,7 +718,7 @@ if [ "${1}" == "run" ]; then
     # benchmark_clients;
     # benchmark_1mw;
     # benchmark_2mw;
-    throughput_writes;
+    # throughput_writes;
     get_and_multigets;
 
     cleanup;

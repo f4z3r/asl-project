@@ -121,7 +121,6 @@ public class Worker implements Runnable {
     */
     @Override
     public void run() {
-        byte[] barray = new byte[16384];
         while(true) {
             // First check if the thread has been interrupted
             if(Thread.interrupted()) {
@@ -155,7 +154,7 @@ public class Worker implements Runnable {
                     // ===================================================================================================
                     // SHARDED MUTLIGET
                     // ===================================================================================================
-                    response = shardedRead(request);
+                    response = shardedRead(request, response);                      // TODO
                 } else if(request.type == Request.Type.SET) {
                     // ===================================================================================================
                     // SET REQUEST: send request to all servers
@@ -212,9 +211,15 @@ public class Worker implements Runnable {
                     response.flip();
                 }
 
+                byte[] barray = new byte[16384];                    // TODO replace before loop to check for performence ...
+
                 // Check for hits or misses.
                 response.get(barray, 0, response.limit());
                 String response_str = new String(Arrays.copyOfRange(barray, 0, response.limit())).trim();
+
+                SYS_LOG.info(response_str);                                 // TODO
+
+
                 if(!response_str.equals("END") && !response_str.equals("ERROR") && !response_str.equals("SERVER_ERROR") && !response_str.equals("CLIENT_ERROR") && !response_str.equals("NOT_STORED")) {
                     request.hit = true;
                 }
@@ -248,8 +253,8 @@ public class Worker implements Runnable {
         @param request: Request to be sharded
         @return ByteBuffer that contains the aggregated responses of the servers.
     */
-    private ByteBuffer shardedRead(Request request) throws IOException {
-        ByteBuffer response = ByteBuffer.allocate(16384);
+    private ByteBuffer shardedRead(Request request, ByteBuffer response) throws IOException {
+        // ByteBuffer response = ByteBuffer.allocate(16384);                            TODO remove from signature and reassign.
 
         // Get the individual keys in the get command
         byte[] commandArray = new byte[16384];
