@@ -43,6 +43,7 @@ function upload {
 }
 
 function populate {
+    echo "Launching memcached ..."
     # Launch memcached instances on the server machines
     ssh ${mw2_pub} "sudo service memcached stop" &
     ssh ${server1_pub} "sudo service memcached stop; memcached -p ${server1_port} -t 1 &" &
@@ -72,10 +73,14 @@ function populate {
 }
 
 function cleanup {
+    echo "Cleaning up ...";
+    ssh ${mw1_pub} "sudo pkill -f middleware";
+    ssh ${mw2_pub} "sudo pkill -f middleware";
     ssh ${mw2_pub} "sudo service memcached stop";
     ssh ${server1_pub} "sudo pkill -f memcached; sudo service memcached stop";
     ssh ${server2_pub} "sudo pkill -f memcached; sudo service memcached stop";
     ssh ${server3_pub} "sudo pkill -f memcached; sudo service memcached stop";
+    echo "Finished cleaning up.";
 }
 
 function pinger {
@@ -467,6 +472,240 @@ function benchmark_2mw {
 }
 
 
+function throughput_writes {
+    echo "Setting up throughput_writes ...";
+    mkdir ~/Desktop/logs/throughput_writes;
+    logs_dir=~/Desktop/logs/throughput_writes;
+
+    # Make sure the middlewares are not already running.
+    ssh ${mw1_pub} "sudo pkill -f middleware";
+    ssh ${mw2_pub} "sudo pkill -f middleware";
+
+    runtime=90;
+    memtier_options="--protocol=memcache_text --expiry-range=9999-10000 --key-maximum=10000 --hide-histogram --test-time=${runtime} --data-size=1024";
+
+    repetitions=(1 2 3);
+
+    threads=1;
+    clients=(2 4 8 14 20 26 32);
+    workers=(8 16 32 64)
+    ratio=1:0;
+
+    echo "Starting throughput_writes ...";
+    for nworkers in "${workers[@]}"; do
+        echo
+        echo "Preparing to run with ${nworker} workers ...";
+        worker_dir="${nworkers}_workers";
+        mkdir ${logs_dir}/${worker_dir};
+
+        for nclients in "${clients[@]}"; do
+            config="${threads}threads_${nclient}clients_write";
+            mkdir ${logs_dir}/${worker_dir}/${config}
+            mw_logs=${logs_dir}/${worker_dir}/${config}/mw; mkdir ${mw_logs};
+            client_logs=${logs_dir}/${worker_dir}/${config}/clients; mkdir ${client_logs};
+            server_logs=${logs_dir}/${worker_dir}/${config}/servers; mkdir ${server_logs};
+
+            echo "Preparing to run with ${threads} threads on ${nclient} clients and ratio ${ratio} (${nworkers} workers)";
+            for rep in "${repetitions[@]}"; do
+                ssh ${mw1_pub} "java -jar middleware-bjakob.jar -l ${mw1} -p ${mw1_port} -s false -t ${nworkers} -m ${server1}:${server1_port} ${server2}:${server2_port} ${server3}:${server3_port} &> mw1_${rep}.log &" &
+                ssh ${mw2_pub} "java -jar middleware-bjakob.jar -l ${mw2} -p ${mw2_port} -s false -t ${nworkers} -m ${server1}:${server1_port} ${server2}:${server2_port} ${server3}:${server3_port} &> mw2_${rep}.log &" &
+                sleep 2;            # Make sure the middleware runs ...
+                ssh ${mw1_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_mw1_${rep}.log &" &
+                ssh ${mw2_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_mw2_${rep}.log &" &
+
+                ssh ${client1_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw1} --port=${mw1_port} --clients=${nclient} --threads=${threads} --ratio=${ratio} ${memtier_options} &> client1-1_${rep}.log" &
+                ssh ${client1_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw2} --port=${mw2_port} --clients=${nclient} --threads=${threads} --ratio=${ratio} ${memtier_options} &> client1-2_${rep}.log" &
+                ssh ${client1_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_client1_${rep}.log &" &
+
+                ssh ${client2_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw1} --port=${mw1_port} --clients=${nclient} --threads=${threads} --ratio=${ratio} ${memtier_options} &> client2-1_${rep}.log" &
+                ssh ${client2_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw2} --port=${mw2_port} --clients=${nclient} --threads=${threads} --ratio=${ratio} ${memtier_options} &> client2-2_${rep}.log" &
+                ssh ${client2_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_client2_${rep}.log &" &
+
+                ssh ${client3_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw1} --port=${mw1_port} --clients=${nclient} --threads=${threads} --ratio=${ratio} ${memtier_options} &> client3-1_${rep}.log" &
+                ssh ${client3_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw2} --port=${mw2_port} --clients=${nclient} --threads=${threads} --ratio=${ratio} ${memtier_options} &> client3-2_${rep}.log" &
+                ssh ${client3_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_client3_${rep}.log &" &
+
+                ssh ${server1_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_server1_${rep}.log &" &
+                ssh ${server2_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_server2_${rep}.log &" &
+                ssh ${server3_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_server3_${rep}.log &" &
+
+                sleep $(( ${runtime} + 5 ))
+
+                # Kill the middlewares to get data
+                ssh ${mw1_pub} "sudo pkill -f middleware";
+                ssh ${mw2_pub} "sudo pkill -f middleware";
+
+                echo "Repetition ${rep} finished";
+            done
+
+            echo "All repetitions finished, gathering data ...";
+            scp ${mw1_pub}:mw* ${mw_logs};
+            scp ${mw1_pub}:dstat* ${mw_logs};
+            ssh ${mw1_pub} "rm mw* dstat*";
+
+            scp ${mw2_pub}:mw* ${mw_logs};
+            scp ${mw2_pub}:dstat* ${mw_logs};
+            ssh ${mw2_pub} "rm mw* dstat*";
+
+            scp ${client1_pub}:client* ${client_logs};
+            scp ${client1_pub}:dstat* ${client_logs};
+            ssh ${client1_pub} "rm client* dstat*";
+
+            scp ${client2_pub}:client* ${client_logs};
+            scp ${client2_pub}:dstat* ${client_logs};
+            ssh ${client2_pub} "rm client* dstat*";
+
+            scp ${client3_pub}:client* ${client_logs};
+            scp ${client3_pub}:dstat* ${client_logs};
+            ssh ${client3_pub} "rm client* dstat*";
+
+            scp ${server1_pub}:dstat* ${server_logs};
+            ssh ${server1_pub} "rm dstat*";
+
+            scp ${server2_pub}:dstat* ${server_logs};
+            ssh ${server2_pub} "rm dstat*";
+
+            scp ${server3_pub}:dstat* ${server_logs};
+            ssh ${server3_pub} "rm dstat*";
+        done
+    done
+
+    echo "Experiment finished, retrieving middleware system data ...";
+    scp ${mw1_pub}:analysis.log ${logs_dir}/analysis1.log;
+    scp ${mw1_pub}:system_report.log ${logs_dir}/system_report1.log;
+    ssh ${mw1_pub} "rm *.log ana* sys*";
+
+    scp ${mw2_pub}:analysis.log ${logs_dir}/analysis2.log;
+    scp ${mw2_pub}:system_report.log ${logs_dir}/system_report2.log;
+    ssh ${mw2_pub} "rm *.log ana* sys*";
+
+    echo "Data retrieved, reordering ...";
+    date=$(date +%Y-%m-%d_%Hh%M);
+    dir=/Users/jakob_beckmann/Documents/_uni/eth/_courses/2017/autumn/advanced_sys_lab/gitlab/asl-fall17-project/logs;
+    mv ~/Desktop/logs/** "${dir}/${date}(throughput_writes)";
+
+    echo "throughput_writes finished";
+}
+
+
+function get_and_multigets {
+    echo "Setting up get_and_multigets ...";
+    mkdir ~/Desktop/logs/get_and_multigets;
+    logs_dir=~/Desktop/logs/get_and_multigets;
+
+    # Make sure the middlewares are not already running.
+    ssh ${mw1_pub} "sudo pkill -f middleware";
+    ssh ${mw2_pub} "sudo pkill -f middleware";
+
+    runtime=90;
+    memtier_options="--protocol=memcache_text --expiry-range=9999-10000 --key-maximum=10000 --hide-histogram --test-time=${runtime} --data-size=1024";
+
+    repetitions=(1 2 3);
+
+    threads=1;
+    clients=2;
+    workers=32
+    ratio=0:9;
+    sharded=(true false);
+    multiget_size=(1 3 6 9);
+
+    echo "Starting get_and_multigets ...";
+    for is_sharded in "${sharded[@]}"; do
+        echo
+        echo "Preparing to run with ${workers} workers ...";
+        worker_dir="${workers}_workers";
+        mkdir ${logs_dir}/${is_sharded}/${worker_dir};
+
+        for multiget in "${multiget_size[@]}"; do
+            config="${threads}threads_${clients}clients_${multiget}get";
+            mkdir ${logs_dir}/${workers}/${config}
+            mw_logs=${logs_dir}/${workers}/${config}/mw; mkdir ${mw_logs};
+            client_logs=${logs_dir}/${workers}/${config}/clients; mkdir ${client_logs};
+            server_logs=${logs_dir}/${workers}/${config}/servers; mkdir ${server_logs};
+
+            echo "Preparing to run with ${threads} threads on ${clients} clients and ratio ${ratio} (${workers} workers)";
+            for rep in "${repetitions[@]}"; do
+                ssh ${mw1_pub} "java -jar middleware-bjakob.jar -l ${mw1} -p ${mw1_port} -s ${is_sharded} -t ${workers} -m ${server1}:${server1_port} ${server2}:${server2_port} ${server3}:${server3_port} &> mw1_${rep}.log &" &
+                ssh ${mw2_pub} "java -jar middleware-bjakob.jar -l ${mw2} -p ${mw2_port} -s ${is_sharded} -t ${workers} -m ${server1}:${server1_port} ${server2}:${server2_port} ${server3}:${server3_port} &> mw2_${rep}.log &" &
+                sleep 2;            # Make sure the middleware runs ...
+                ssh ${mw1_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_mw1_${rep}.log &" &
+                ssh ${mw2_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_mw2_${rep}.log &" &
+
+                ssh ${client1_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw1} --port=${mw1_port} --clients=${clients} --threads=${threads} --ratio=${ratio} ${memtier_options} --multi-key-get=${multiget} &> client1-1_${rep}.log" &
+                ssh ${client1_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw2} --port=${mw2_port} --clients=${clients} --threads=${threads} --ratio=${ratio} ${memtier_options} --multi-key-get=${multiget} &> client1-2_${rep}.log" &
+                ssh ${client1_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_client1_${rep}.log &" &
+
+                ssh ${client2_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw1} --port=${mw1_port} --clients=${clients} --threads=${threads} --ratio=${ratio} ${memtier_options} --multi-key-get=${multiget} &> client2-1_${rep}.log" &
+                ssh ${client2_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw2} --port=${mw2_port} --clients=${clients} --threads=${threads} --ratio=${ratio} ${memtier_options} --multi-key-get=${multiget} &> client2-2_${rep}.log" &
+                ssh ${client2_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_client2_${rep}.log &" &
+
+                ssh ${client3_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw1} --port=${mw1_port} --clients=${clients} --threads=${threads} --ratio=${ratio} ${memtier_options} --multi-key-get=${multiget} &> client3-1_${rep}.log" &
+                ssh ${client3_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw2} --port=${mw2_port} --clients=${clients} --threads=${threads} --ratio=${ratio} ${memtier_options} --multi-key-get=${multiget} > client3-2_${rep}.log" &
+                ssh ${client3_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_client3_${rep}.log &" &
+
+                ssh ${server1_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_server1_${rep}.log &" &
+                ssh ${server2_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_server2_${rep}.log &" &
+                ssh ${server3_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_server3_${rep}.log &" &
+
+                sleep $(( ${runtime} + 5 ))
+
+                # Kill the middlewares to get data
+                ssh ${mw1_pub} "sudo pkill -f middleware";
+                ssh ${mw2_pub} "sudo pkill -f middleware";
+
+                echo "Repetition ${rep} finished";
+            done
+
+            echo "All repetitions finished, gathering data ...";
+            scp ${mw1_pub}:mw* ${mw_logs};
+            scp ${mw1_pub}:dstat* ${mw_logs};
+            ssh ${mw1_pub} "rm mw* dstat*";
+
+            scp ${mw2_pub}:mw* ${mw_logs};
+            scp ${mw2_pub}:dstat* ${mw_logs};
+            ssh ${mw2_pub} "rm mw* dstat*";
+
+            scp ${client1_pub}:client* ${client_logs};
+            scp ${client1_pub}:dstat* ${client_logs};
+            ssh ${client1_pub} "rm client* dstat*";
+
+            scp ${client2_pub}:client* ${client_logs};
+            scp ${client2_pub}:dstat* ${client_logs};
+            ssh ${client2_pub} "rm client* dstat*";
+
+            scp ${client3_pub}:client* ${client_logs};
+            scp ${client3_pub}:dstat* ${client_logs};
+            ssh ${client3_pub} "rm client* dstat*";
+
+            scp ${server1_pub}:dstat* ${server_logs};
+            ssh ${server1_pub} "rm dstat*";
+
+            scp ${server2_pub}:dstat* ${server_logs};
+            ssh ${server2_pub} "rm dstat*";
+
+            scp ${server3_pub}:dstat* ${server_logs};
+            ssh ${server3_pub} "rm dstat*";
+        done
+    done
+
+    echo "Experiment finished, retrieving middleware system data ...";
+    scp ${mw1_pub}:analysis.log ${logs_dir}/analysis1.log;
+    scp ${mw1_pub}:system_report.log ${logs_dir}/system_report1.log;
+    ssh ${mw1_pub} "rm *.log ana* sys*";
+
+    scp ${mw2_pub}:analysis.log ${logs_dir}/analysis2.log;
+    scp ${mw2_pub}:system_report.log ${logs_dir}/system_report2.log;
+    ssh ${mw2_pub} "rm *.log ana* sys*";
+
+    echo "Data retrieved, reordering ...";
+    date=$(date +%Y-%m-%d_%Hh%M);
+    dir=/Users/jakob_beckmann/Documents/_uni/eth/_courses/2017/autumn/advanced_sys_lab/gitlab/asl-fall17-project/logs;
+    mv ~/Desktop/logs/** "${dir}/${date}(get_and_multigets)";
+
+    echo "get_and_multigets finished";
+}
+
+
 if [ "${1}" == "run" ]; then
     upload;
     pinger;
@@ -478,6 +717,8 @@ if [ "${1}" == "run" ]; then
     # benchmark_clients;
     # benchmark_1mw;
     # benchmark_2mw;
+    throughput_writes;
+    get_and_multigets;
 
     cleanup;
 fi

@@ -7,7 +7,7 @@ import csv
 
 valid_line = re.compile(r"\[RUN #1\s+\d+%,\s+\d+ secs\]")
 
-def preprosses_memtier(experiment_name, client_count, thread_count):
+def preprocess_memtier(experiment_name, client_count, thread_count):
     """Docstring"""
 
     sub_clients = False
@@ -83,7 +83,8 @@ def preprosses_memtier(experiment_name, client_count, thread_count):
                         writefile.close()
 
 
-def preproce_middleware(experiment_name, mw_count, thread_count):
+
+def preprocess_middleware(experiment_name, mw_count, thread_count):
     """Docstring"""
 
     if re.search(r"bench_1mw", experiment_name):
@@ -127,6 +128,86 @@ def preproce_middleware(experiment_name, mw_count, thread_count):
                         writefile.close()
 
 
+def throughput_writes(experiment_name):
+    """Docstring"""
+
+    experiment = "throughput_writes"
+
+
+    for workers in [8, 16, 32, 64]:
+        for nclients in [2, 4, 8, 14, 20, 26, 32]:
+            cwd = "preprocessed/{}/write/{}_workers/{}_clients".format(experiment, workers, nclients)
+            for machine in range(1, 4):
+                for memtier_instance in range(1, 3):
+                    os.makedirs("{}/client{}-{}".format(cwd, machine, memtier_instance))
+                    for rep in range(1, 4):
+                        with open("{}/client{}-{}/rep{}.csv".format(cwd, machine, memtier_instance, rep), 'w') as writefile:
+                            writer = csv.writer(writefile)
+                            writer.writerow(["Throughput", "Latency"])
+                            filename = "../logs/{}/1threads_{}clients_write/clients/client1-{}_{}.log".format(experiment_name, nclients, machine, rep)
+                            with open(filename, 'r') as readfile:
+                                line_num = 0
+                                for content in readfile.readlines():
+                                    content.strip()
+
+                                    # Check if valid line
+                                    if re.match(valid_line, content):
+                                        lines = content.split("\r")
+                                        for line in lines:
+                                            line.strip()
+
+                                            line_num += 1
+
+                                            # Don't print first 8 lines to remove warm up time
+                                            if line_num < 9:
+                                                continue
+
+                                            # Take 80 seconds of measurements
+                                            if line_num < 89:
+                                                line_content = re.split(r"\s", line)
+                                                line_content = list(filter(None, line_content))
+                                                writer.writerow([int(line_content[9]), float(line_content[16])])
+
+                            readfile.close()
+                        writefile.close()
+                # Handle middleware info
+                for rep in range(1, 4):
+                    os.makedirs("{}/mw{}".format(cwd, machine))
+                    with open("{}/rep{}.csv".format(cwd, rep), 'w') as writefile:
+                        writer = csv.writer(writefile)
+                        writer.writerow(["SETS", "GETS", "MGETS", "INVLD", "TOT", "HITS", "RSP T", "Q T", "SVR T", "Q LEN"])
+                        with open("../logs/{}/{}_workers/1threads".format(experiment_name, workers) +\
+                                  "_{}clients_write/mw/mw{}_{}.log".format(nclients, machine, rep), 'r') as readfile:
+                            line_num = 0
+                            for line in readfile.readlines():
+                                # Check if line is valid
+                                contents = re.split(r"\s", line)
+                                contents = list(filter(None, contents))
+                                if contents == []:
+                                    continue
+                                if re.match(r"=+", line):
+                                    break
+                                if not (re.match(r"\d+", contents[0].strip()) or re.match(r"SETS", contents[0])):
+                                    continue
+                                line_num += 1
+
+                                # Skip second line to remove warm up
+                                if line_num < 3:
+                                    continue
+
+                                # Take 80 seconds of measurements
+                                if line_num < 83:
+                                    writer.writerow(contents)
+                        readfile.close()
+                    writefile.close()
+
+
+def multigets(experiment_name):
+    """Docstring"""
+
+    experiment = "multigets"
+    pass
+
 
 
 
@@ -134,12 +215,15 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         for arg in sys.argv:
             if arg == "all":
-                preprosses_memtier("2017-11-11_17h12(bench_memcached)", 3, 2)
-                preprosses_memtier("2017-11-11_18h21(bench_clients)", 2, 1)
-                preprosses_memtier("2017-11-12_16h58(bench_1mw)", 1, 2)
-                preproce_middleware("2017-11-12_16h58(bench_1mw)", 1, 2)
-                preprosses_memtier("2017-11-13_18h55(bench_2mw)", 2, 1)
-                preproce_middleware("2017-11-13_18h55(bench_2mw)", 2, 1)
+                preprocess_memtier("2017-11-11_17h12(bench_memcached)", 3, 2)
+                preprocess_memtier("2017-11-11_18h21(bench_clients)", 2, 1)
+                preprocess_memtier("2017-11-12_16h58(bench_1mw)", 1, 2)
+                preprocess_middleware("2017-11-12_16h58(bench_1mw)", 1, 2)
+                preprocess_memtier("2017-11-13_18h55(bench_2mw)", 2, 1)
+                preprocess_middleware("2017-11-13_18h55(bench_2mw)", 2, 1)
+
+            elif arg == "throughput_writes":
+                throughput_writes("")
 
                 sys.exit(0)
             elif arg == "./preprocess.py":
@@ -160,10 +244,10 @@ if __name__ == "__main__":
             sys.exit(1)
 
         if int(mws) == 0:
-            preprosses_memtier(experiment_name, int(clients), int(tc))
+            preprocess_memtier(experiment_name, int(clients), int(tc))
         else:
-            preprosses_memtier(experiment_name, int(clients), int(tc))
-            preproce_middleware(experiment_name, int(mws), int(tc))
+            preprocess_memtier(experiment_name, int(clients), int(tc))
+            preprocess_middleware(experiment_name, int(mws), int(tc))
 
     else:
         print("Usage:\n\tpreprocess.py name=\"<name>\" clients=<client_count> mws=<mw_count> tc=<thread_count>")
