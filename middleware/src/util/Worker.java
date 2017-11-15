@@ -217,7 +217,7 @@ public class Worker implements Runnable {
                 response.get(barray, 0, response.limit());
                 String response_str = new String(Arrays.copyOfRange(barray, 0, response.limit())).trim();
 
-                SYS_LOG.info(response_str);                                 // TODO
+                // SYS_LOG.info(response_str);                                 // TODO
 
 
                 if(!response_str.equals("END") && !response_str.equals("ERROR") && !response_str.equals("SERVER_ERROR") && !response_str.equals("CLIENT_ERROR") && !response_str.equals("NOT_STORED")) {
