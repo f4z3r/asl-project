@@ -7,7 +7,10 @@ import csv
 
 
 def bench_no_mw(basedir):
-    os.mkdir("final/{}".format(basedir))
+    try:
+        os.mkdir("final/{}".format(basedir))
+    except:
+        pass
     with open("final/{}/data.csv".format(basedir), 'w', newline="") as outputfile:
         writer = csv.writer(outputfile)
         writer.writerow(["Operation",
@@ -28,7 +31,10 @@ def bench_no_mw(basedir):
     outputfile.close()
 
 def bench_mw(basedir):
-    os.mkdir("final/{}".format(basedir))
+    try:
+        os.mkdir("final/{}".format(basedir))
+    except:
+        pass
     with open("final/{}/data.csv".format(basedir), 'w', newline="") as outputfile:
         writer = csv.writer(outputfile)
         writer.writerow(["Operation",
