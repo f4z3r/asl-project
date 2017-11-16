@@ -523,6 +523,7 @@ public class Worker implements Runnable {
         int type_hit_set = 0;
         int type_hit_get = 0;
         int type_hit_multiget = 0;
+        int type_miss_multiget = 0;
 
         long resp_time_set = 0L;
         long resp_time_get = 0L;
@@ -550,6 +551,7 @@ public class Worker implements Runnable {
             type_hit_set += worker.hits_set;
             type_hit_get += worker.hits_get;
             type_hit_multiget += worker.hits_multiget;
+            type_miss_multiget += worker.misses_multiget;
 
             resp_time_set += worker.total_time_set;
             resp_time_get += worker.total_time_get;
@@ -619,7 +621,7 @@ public class Worker implements Runnable {
                                                  worker.count_multiget,
                                                  worker.count_multiget / (double) timeRunSec,
                                                  worker.hits_multiget / (double) timeRunSec,
-                                                 (worker.count_multiget - worker.hits_multiget) / (double) timeRunSec,
+                                                 worker.misses_multiget / (double) timeRunSec,
                                                  worker.total_time_multiget / (double) worker.count_multiget,
                                                  worker.total_proc_time_multiget / (double) worker.count_multiget,
                                                  worker.total_server_time_multiget / (double) worker.count_multiget));
@@ -676,7 +678,7 @@ public class Worker implements Runnable {
                                              type_multiget,
                                              type_multiget / (double) timeRunSec,
                                              type_hit_multiget / (double) timeRunSec,
-                                             (type_multiget - type_hit_multiget) / (double) timeRunSec,
+                                             type_miss_multiget / (double) timeRunSec,
                                              resp_time_multiget / (double) type_multiget,
                                              proc_time_multiget / (double) type_multiget,
                                              srvr_time_multiget / (double) type_multiget));
