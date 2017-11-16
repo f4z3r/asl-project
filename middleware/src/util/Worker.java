@@ -277,6 +277,7 @@ public class Worker implements Runnable {
 
             for(int server = 0; server < this.serverCount; server++) {
                 temp.clear();
+                response_str = "response";
                 if(servers[server] == 1) {
                     while(!response_str.endsWith("END\r\n") && !response_str.endsWith("ERROR\r\n") && !response_str.endsWith("SERVER_ERROR\r\n") && !response_str.endsWith("CLIENT_ERROR\r\n")) {
                         this.connections.get(server).read(temp);
@@ -318,6 +319,7 @@ public class Worker implements Runnable {
 
             for(int server = 0; server < this.serverCount; server++) {
                 temp.clear();
+                response_str = "response";
                 while(!response_str.endsWith("END\r\n") && !response_str.endsWith("ERROR\r\n") && !response_str.endsWith("SERVER_ERROR\r\n") && !response_str.endsWith("CLIENT_ERROR\r\n")) {
                     this.connections.get(server).read(temp);
 
