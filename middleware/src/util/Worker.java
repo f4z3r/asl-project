@@ -40,6 +40,7 @@ public class Worker implements Runnable {
     private int hits_set = 0;
     private int hits_get = 0;
     private int hits_multiget = 0;
+    private int misses_multiget = 0;
     private int hits_interval = 0;
     private long total_time_set = 0L;
     private long total_time_get = 0L;
@@ -154,7 +155,8 @@ public class Worker implements Runnable {
                     // ===================================================================================================
                     // SHARDED MUTLIGET
                     // ===================================================================================================
-                    response = shardedRead(request, response);                      // TODO
+                    shardedRead(request, response);
+                    completed(request);
                 } else if(request.type == Request.Type.SET) {
                     // ===================================================================================================
                     // SET REQUEST: send request to all servers
@@ -206,29 +208,27 @@ public class Worker implements Runnable {
                     connections.get(server).write(request.buffer);
 
                     // Get response from server
-                    connections.get(server).read(response);
+                    String response_str = "response";
+                    while(!response_str.endsWith("END\r\n") && !response_str.endsWith("ERROR\r\n") && !response_str.endsWith("SERVER_ERROR\r\n") && !response_str.endsWith("CLIENT_ERROR\r\n")) {
+                        connections.get(server).read(response);
+
+                        // Convert response into string
+                        response_str = new String(Arrays.copyOfRange(response.array(), 0, response.position()));
+                    }
                     request.time_mmcd_rcvd = System.nanoTime() >> 10;       // In microseconds
+
+                    if(request.type == Request.Type.MULTIGET) {
+                        int num_hits = response_str.split("VALUE").length - 1;
+                        this.hits_multiget += num_hits;
+                        this.hits_interval += num_hits;
+                        this.misses_multiget += request.multigetLength - num_hits;
+                    }
+
+
                     response.flip();
+                    request.channel.write(response);
+                    completed(request);
                 }
-
-                byte[] barray = new byte[16384];                    // TODO replace before loop to check for performence ...
-
-                // Check for hits or misses.
-                response.get(barray, 0, response.limit());
-                String response_str = new String(Arrays.copyOfRange(barray, 0, response.limit())).trim();
-
-                // SYS_LOG.info(response_str);                                 // TODO
-
-
-                if(!response_str.equals("END") && !response_str.equals("ERROR") && !response_str.equals("SERVER_ERROR") && !response_str.equals("CLIENT_ERROR") && !response_str.equals("NOT_STORED")) {
-                    request.hit = true;
-                }
-                response.rewind();
-
-
-                request.channel.write(response);
-
-                completed(request);
 
             } catch(IOException ex) {
                 SYS_LOG.info("Error communicating with client or server.");
@@ -253,15 +253,13 @@ public class Worker implements Runnable {
         @param request: Request to be sharded
         @return ByteBuffer that contains the aggregated responses of the servers.
     */
-    private ByteBuffer shardedRead(Request request, ByteBuffer response) throws IOException {
-        // ByteBuffer response = ByteBuffer.allocate(16384);                            TODO remove from signature and reassign.
+    private void shardedRead(Request request, ByteBuffer response) throws IOException {
 
         // Get the individual keys in the get command
-        byte[] commandArray = new byte[16384];
-        request.buffer.get(commandArray, 0, request.buffer.limit() - 2);
-        String command = new String(Arrays.copyOfRange(commandArray, 0, request.buffer.limit() - 2)).trim();
+        String command = new String(Arrays.copyOfRange(request.buffer.array(), 0, request.buffer.limit() - 2)).trim();
         String[] arguments = command.split(" ");
 
+        String response_str = "response";
         if(arguments.length - 1 < this.serverCount) {
             // We have less arguments than available servers
 
@@ -277,7 +275,24 @@ public class Worker implements Runnable {
 
             for(int server = 0; server < this.serverCount; server++) {
                 if(servers[server] == 1) {
-                    this.connections.get(server).read(response);
+                    while(!response_str.endsWith("END\r\n") && !response_str.endsWith("ERROR\r\n") && !response_str.endsWith("SERVER_ERROR\r\n") && !response_str.endsWith("CLIENT_ERROR\r\n")) {
+                        this.connections.get(server).read(response);
+
+                        // Convert response into string
+                        response_str = new String(Arrays.copyOfRange(response.array(), 0, response.position()));
+                    }
+                    // Check if an error occured
+                    if(response_str.endsWith("ERROR\r\n")) {
+                        request.channel.write(ByteBuffer.wrap("ERROR\r\n".getBytes()));
+                        return;
+                    } else if(response_str.endsWith("SERVER_ERROR\r\n")) {
+                        request.channel.write(ByteBuffer.wrap("SERVER_ERROR\r\n".getBytes()));
+                        return;
+                    } else if(response_str.endsWith("CLIENT_ERROR\r\n")) {
+                        request.channel.write(ByteBuffer.wrap("CLIENT_ERROR\r\n".getBytes()));
+                        return;
+                    }
+
                     // Remove the "END\r\n" of the end of the message
                     response.position(response.position() - 5);
                 }
@@ -298,7 +313,24 @@ public class Worker implements Runnable {
             }
 
             for(int server = 0; server < this.serverCount; server++) {
-                this.connections.get(server).read(response);
+                while(!response_str.endsWith("END\r\n") && !response_str.endsWith("ERROR\r\n") && !response_str.endsWith("SERVER_ERROR\r\n") && !response_str.endsWith("CLIENT_ERROR\r\n")) {
+                    this.connections.get(server).read(response);
+
+                    // Convert response into string
+                    response_str = new String(Arrays.copyOfRange(response.array(), 0, response.position()));
+                }
+                // Check if an error occured
+                if(response_str.endsWith("ERROR\r\n")) {
+                    request.channel.write(ByteBuffer.wrap("ERROR\r\n".getBytes()));
+                    return;
+                } else if(response_str.endsWith("SERVER_ERROR\r\n")) {
+                    request.channel.write(ByteBuffer.wrap("SERVER_ERROR\r\n".getBytes()));
+                    return;
+                } else if(response_str.endsWith("CLIENT_ERROR\r\n")) {
+                    request.channel.write(ByteBuffer.wrap("CLIENT_ERROR\r\n".getBytes()));
+                    return;
+                }
+
                 // Remove the "END\r\n" of the end of the message
                 response.position(response.position() - 5);
             }
@@ -307,10 +339,11 @@ public class Worker implements Runnable {
             response.flip();
         }
 
-        if(response.limit() > 7) {
-            request.hit = true;
-        }
-        return response;
+        // Count number of hits / misses
+        int num_hits = response_str.split("VALUE").length - 1;
+        this.hits_multiget += num_hits;
+        this.hits_interval += num_hits;
+        this.misses_multiget += request.multigetLength - num_hits;
     }
 
     // ======================================================================================
@@ -351,10 +384,6 @@ public class Worker implements Runnable {
             this.total_time_multiget += (request.time_completed - request.time_created);
             this.total_proc_time_multiget += (request.time_completed - request.time_dqed);
             this.total_server_time_multiget += (request.time_mmcd_rcvd - request.time_mmcd_sent);
-            if(request.hit == true) {
-                this.hits_multiget++;
-                this.hits_interval++;
-            }
         } else {
             this.count_invalid++;
             this.count_invalid_interval++;
