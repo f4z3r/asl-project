@@ -345,6 +345,7 @@ public class Worker implements Runnable {
             response.flip();
         }
 
+        System.out.println(new String(Arrays.copyOfRange(response.array(), 0, response.limit())));
         request.channel.write(response);
         // Count number of hits / misses
         int num_hits = response_str.split("VALUE").length - 1;
