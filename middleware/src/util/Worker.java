@@ -318,7 +318,6 @@ public class Worker implements Runnable {
 
                     // Convert response into string
                     response_str = new String(Arrays.copyOfRange(response.array(), 0, response.position()));
-                    System.out.println(response_str);
                 }
                 // Check if an error occured
                 if(response_str.endsWith("ERROR\r\n")) {
@@ -335,6 +334,7 @@ public class Worker implements Runnable {
                 // Remove the "END\r\n" of the end of the message
                 response.position(response.position() - 5);
             }
+            System.out.println(response_str);
             request.time_mmcd_rcvd = System.nanoTime() >> 10;       // In microseconds
             response.put("END\r\n".getBytes());
             response.flip();
