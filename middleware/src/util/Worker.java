@@ -318,6 +318,7 @@ public class Worker implements Runnable {
 
                     // Convert response into string
                     response_str = new String(Arrays.copyOfRange(response.array(), 0, response.position()));
+                    System.out.println(response_str);
                 }
                 // Check if an error occured
                 if(response_str.endsWith("ERROR\r\n")) {
