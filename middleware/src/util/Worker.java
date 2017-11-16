@@ -122,6 +122,8 @@ public class Worker implements Runnable {
     */
     @Override
     public void run() {
+        ByteBuffer response = ByteBuffer.allocate(16384);
+        ByteBuffer temp = ByteBuffer.allocate(16384);
         while(true) {
             // First check if the thread has been interrupted
             if(Thread.interrupted()) {
@@ -149,13 +151,13 @@ public class Worker implements Runnable {
                     continue;
                 }
 
-
-                ByteBuffer response = ByteBuffer.allocate(16384);
+                response.clear();
+                temp.clear();
                 if(this.sharded && request.type == Request.Type.MULTIGET) {
                     // ===================================================================================================
                     // SHARDED MUTLIGET
                     // ===================================================================================================
-                    shardedRead(request, response);
+                    shardedRead(request, response, temp);
                     completed(request);
                 } else if(request.type == Request.Type.SET) {
                     // ===================================================================================================
@@ -253,7 +255,7 @@ public class Worker implements Runnable {
         @param request: Request to be sharded
         @return ByteBuffer that contains the aggregated responses of the servers.
     */
-    private void shardedRead(Request request, ByteBuffer response) throws IOException {
+    private void shardedRead(Request request, ByteBuffer response, ByteBuffer temp) throws IOException {
 
         // Get the individual keys in the get command
         String command = new String(Arrays.copyOfRange(request.buffer.array(), 0, request.buffer.limit() - 2)).trim();
@@ -276,10 +278,10 @@ public class Worker implements Runnable {
             for(int server = 0; server < this.serverCount; server++) {
                 if(servers[server] == 1) {
                     while(!response_str.endsWith("END\r\n") && !response_str.endsWith("ERROR\r\n") && !response_str.endsWith("SERVER_ERROR\r\n") && !response_str.endsWith("CLIENT_ERROR\r\n")) {
-                        this.connections.get(server).read(response);
+                        this.connections.get(server).read(temp);
 
                         // Convert response into string
-                        response_str = new String(Arrays.copyOfRange(response.array(), 0, response.position()));
+                        response_str = new String(Arrays.copyOfRange(temp.array(), 0, temp.position()));
                     }
                     // Check if an error occured
                     if(response_str.endsWith("ERROR\r\n")) {
@@ -294,7 +296,9 @@ public class Worker implements Runnable {
                     }
 
                     // Remove the "END\r\n" of the end of the message
-                    response.position(response.position() - 5);
+                    temp.position(temp.position() - 5);
+                    temp.flip();
+                    response.put(temp);
                 }
             }
             request.time_mmcd_rcvd = System.nanoTime() >> 10;       // In microseconds
@@ -314,10 +318,10 @@ public class Worker implements Runnable {
 
             for(int server = 0; server < this.serverCount; server++) {
                 while(!response_str.endsWith("END\r\n") && !response_str.endsWith("ERROR\r\n") && !response_str.endsWith("SERVER_ERROR\r\n") && !response_str.endsWith("CLIENT_ERROR\r\n")) {
-                    this.connections.get(server).read(response);
+                    this.connections.get(server).read(temp);
 
                     // Convert response into string
-                    response_str = new String(Arrays.copyOfRange(response.array(), 0, response.position()));
+                    response_str = new String(Arrays.copyOfRange(temp.array(), 0, temp.position()));
                 }
                 // Check if an error occured
                 if(response_str.endsWith("ERROR\r\n")) {
@@ -332,7 +336,9 @@ public class Worker implements Runnable {
                 }
 
                 // Remove the "END\r\n" of the end of the message
-                response.position(response.position() - 5);
+                temp.position(temp.position() - 5);
+                temp.flip();
+                response.put(temp);
             }
             System.out.println(response_str);
             request.time_mmcd_rcvd = System.nanoTime() >> 10;       // In microseconds
