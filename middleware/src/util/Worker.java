@@ -297,6 +297,7 @@ public class Worker implements Runnable {
                     }
 
                     // Remove the "END\r\n" of the end of the message
+                    System.out.println(temp.position());
                     temp.position(temp.position() - 5);
                     temp.flip();
                     response.put(temp);
@@ -336,6 +337,7 @@ public class Worker implements Runnable {
                 }
 
                 // Remove the "END\r\n" of the end of the message
+                System.out.println(temp.position());
                 temp.position(temp.position() - 5);
                 temp.flip();
                 response.put(temp);
@@ -348,7 +350,6 @@ public class Worker implements Runnable {
         response_str = new String(Arrays.copyOfRange(response.array(), 0, response.limit()));
 
         System.out.println(response_str);
-        System.out.println(response.position());
 
         request.channel.write(response);
         // Count number of hits / misses
