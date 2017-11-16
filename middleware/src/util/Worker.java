@@ -340,12 +340,12 @@ public class Worker implements Runnable {
                 temp.flip();
                 response.put(temp);
             }
-            System.out.println(response_str);
             request.time_mmcd_rcvd = System.nanoTime() >> 10;       // In microseconds
             response.put("END\r\n".getBytes());
             response.flip();
         }
 
+        request.channel.write(response);
         // Count number of hits / misses
         int num_hits = response_str.split("VALUE").length - 1;
         this.hits_multiget += num_hits;
