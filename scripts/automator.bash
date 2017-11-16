@@ -127,31 +127,29 @@ function pinger {
 
 function tester {
     echo "Launching tester ...";
-    repetitions=(1 2);
-    for rep in "${repetitions[@]}"; do
-        # Launch memcached instances on the server machines
-        ssh ${server1_pub} "sudo service memcached stop; memcached -p ${server1_port} -t 1 &" &
-        ssh ${server2_pub} "sudo service memcached stop; memcached -p ${server2_port} -t 1 &" &
-        ssh ${server3_pub} "sudo service memcached stop; memcached -p ${server3_port} -t 1 &" &
-        echo "Memcached instances launched on all servers";
+    # Launch memcached instances on the server machines
+    ssh ${server1_pub} "sudo service memcached stop; memcached -p ${server1_port} -t 1 &" &
+    ssh ${server2_pub} "sudo service memcached stop; memcached -p ${server2_port} -t 1 &" &
+    ssh ${server3_pub} "sudo service memcached stop; memcached -p ${server3_port} -t 1 &" &
+    sleep 3;
+    echo "Memcached instances launched on all servers";
 
-        echo "Populating memcached instances ...";
-        #parameters for memtier
-        CT=1;
-        VC=1;
-        runtime=30;
-        ratio=1:0;
+    echo "Populating memcached instances ...";
+    #parameters for memtier
+    CT=1;
+    VC=1;
+    runtime=30;
+    ratio=1:0;
 
-        ssh ${client1_pub} "./memtier_benchmark-master/memtier_benchmark -s ${server1} -p ${server1_port} -c ${VC} -t ${CT} --ratio=${ratio} --test-time=${runtime} --key-pattern=P:P --protocol=memcache_text --expiry-range=9999-10000 --key-maximum=10000 --hide-histogram -d 1024 &> empty1.log &" &
-        ssh ${client1_pub} "./memtier_benchmark-master/memtier_benchmark -s ${server2} -p ${server2_port} -c ${VC} -t ${CT} --ratio=${ratio} --test-time=${runtime} --key-pattern=P:P --protocol=memcache_text --expiry-range=9999-10000 --key-maximum=10000 --hide-histogram -d 1024 &> empty2.log &" &
-        ssh ${client1_pub} "./memtier_benchmark-master/memtier_benchmark -s ${server3} -p ${server3_port} -c ${VC} -t ${CT} --ratio=${ratio} --test-time=${runtime} --key-pattern=P:P --protocol=memcache_text --expiry-range=9999-10000 --key-maximum=10000 --hide-histogram -d 1024 &> empty3.log &" &
+    ssh ${client1_pub} "./memtier_benchmark-master/memtier_benchmark -s ${server1} -p ${server1_port} -c ${VC} -t ${CT} --ratio=${ratio} --test-time=${runtime} --key-pattern=P:P --protocol=memcache_text --expiry-range=9999-10000 --key-maximum=10000 --hide-histogram -d 1024 &> empty1.log &" &
+    ssh ${client1_pub} "./memtier_benchmark-master/memtier_benchmark -s ${server2} -p ${server2_port} -c ${VC} -t ${CT} --ratio=${ratio} --test-time=${runtime} --key-pattern=P:P --protocol=memcache_text --expiry-range=9999-10000 --key-maximum=10000 --hide-histogram -d 1024 &> empty2.log &" &
+    ssh ${client1_pub} "./memtier_benchmark-master/memtier_benchmark -s ${server3} -p ${server3_port} -c ${VC} -t ${CT} --ratio=${ratio} --test-time=${runtime} --key-pattern=P:P --protocol=memcache_text --expiry-range=9999-10000 --key-maximum=10000 --hide-histogram -d 1024 &> empty3.log &" &
 
-        sleep $(( ${runtime} + 5 ));
+    sleep $(( ${runtime} + 5 ));
 
-        ssh ${client1_pub} "rm *.log";
+    ssh ${client1_pub} "rm *.log";
 
-        echo "Finished populating memcached.";
-    done
+    echo "Finished populating memcached.";
 
     echo "Starting test runs on middleware ...";
 
@@ -529,6 +527,7 @@ function throughput_writes {
     # Make sure the middlewares are not already running.
     ssh ${mw1_pub} "sudo pkill -f middleware";
     ssh ${mw2_pub} "sudo pkill -f middleware";
+    sleep 1;
 
     runtime=90;
     memtier_options="--protocol=memcache_text --expiry-range=9999-10000 --key-maximum=10000 --hide-histogram --test-time=${runtime} --data-size=1024";
@@ -645,6 +644,7 @@ function get_and_multigets {
     # Make sure the middlewares are not already running.
     ssh ${mw1_pub} "sudo pkill -f middleware";
     ssh ${mw2_pub} "sudo pkill -f middleware";
+    sleep 1;
 
     runtime=90;
     memtier_options="--protocol=memcache_text --expiry-range=9999-10000 --key-maximum=10000 --test-time=${runtime} --data-size=1024";
@@ -672,7 +672,7 @@ function get_and_multigets {
             client_logs=${logs_dir}/${is_sharded}/${worker_dir}/${config}/clients; mkdir ${client_logs};
             server_logs=${logs_dir}/${is_sharded}/${worker_dir}/${config}/servers; mkdir ${server_logs};
 
-            echo "Preparing to run with ${threads} threads on ${clients} clients and ratio 0:${multiget_size} (${workers} workers)";
+            echo "Preparing to run with ${threads} threads on ${clients} clients and ratio 0:${multiget} (${workers} workers)";
             for rep in "${repetitions[@]}"; do
                 ssh ${mw1_pub} "java -jar middleware-bjakob.jar -l ${mw1} -p ${mw1_port} -s ${is_sharded} -t ${workers} -m ${server1}:${server1_port} ${server2}:${server2_port} ${server3}:${server3_port} &> mw1_${rep}.log &" &
                 ssh ${mw2_pub} "java -jar middleware-bjakob.jar -l ${mw2} -p ${mw2_port} -s ${is_sharded} -t ${workers} -m ${server1}:${server1_port} ${server2}:${server2_port} ${server3}:${server3_port} &> mw2_${rep}.log &" &
@@ -680,16 +680,16 @@ function get_and_multigets {
                 ssh ${mw1_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_mw1_${rep}.log &" &
                 ssh ${mw2_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_mw2_${rep}.log &" &
 
-                ssh ${client1_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw1} --port=${mw1_port} --clients=${clients} --threads=${threads} --ratio=0:${multiget_size} ${memtier_options} --multi-key-get=${multiget} &> client1-1_${rep}.log" &
-                ssh ${client1_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw2} --port=${mw2_port} --clients=${clients} --threads=${threads} --ratio=0:${multiget_size} ${memtier_options} --multi-key-get=${multiget} &> client1-2_${rep}.log" &
+                ssh ${client1_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw1} --port=${mw1_port} --clients=${clients} --threads=${threads} --ratio=0:${multiget} ${memtier_options} --multi-key-get=${multiget} &> client1-1_${rep}.log" &
+                ssh ${client1_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw2} --port=${mw2_port} --clients=${clients} --threads=${threads} --ratio=0:${multiget} ${memtier_options} --multi-key-get=${multiget} &> client1-2_${rep}.log" &
                 ssh ${client1_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_client1_${rep}.log &" &
 
-                ssh ${client2_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw1} --port=${mw1_port} --clients=${clients} --threads=${threads} --ratio=0:${multiget_size} ${memtier_options} --multi-key-get=${multiget} &> client2-1_${rep}.log" &
-                ssh ${client2_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw2} --port=${mw2_port} --clients=${clients} --threads=${threads} --ratio=0:${multiget_size} ${memtier_options} --multi-key-get=${multiget} &> client2-2_${rep}.log" &
+                ssh ${client2_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw1} --port=${mw1_port} --clients=${clients} --threads=${threads} --ratio=0:${multiget} ${memtier_options} --multi-key-get=${multiget} &> client2-1_${rep}.log" &
+                ssh ${client2_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw2} --port=${mw2_port} --clients=${clients} --threads=${threads} --ratio=0:${multiget} ${memtier_options} --multi-key-get=${multiget} &> client2-2_${rep}.log" &
                 ssh ${client2_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_client2_${rep}.log &" &
 
-                ssh ${client3_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw1} --port=${mw1_port} --clients=${clients} --threads=${threads} --ratio=0:${multiget_size} ${memtier_options} --multi-key-get=${multiget} &> client3-1_${rep}.log" &
-                ssh ${client3_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw2} --port=${mw2_port} --clients=${clients} --threads=${threads} --ratio=0:${multiget_size} ${memtier_options} --multi-key-get=${multiget} &> client3-2_${rep}.log" &
+                ssh ${client3_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw1} --port=${mw1_port} --clients=${clients} --threads=${threads} --ratio=0:${multiget} ${memtier_options} --multi-key-get=${multiget} &> client3-1_${rep}.log" &
+                ssh ${client3_pub} "./memtier_benchmark-master/memtier_benchmark --server=${mw2} --port=${mw2_port} --clients=${clients} --threads=${threads} --ratio=0:${multiget} ${memtier_options} --multi-key-get=${multiget} &> client3-2_${rep}.log" &
                 ssh ${client3_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_client3_${rep}.log &" &
 
                 ssh ${server1_pub} "dstat -c -n -d -T 1 ${runtime} > dstat_server1_${rep}.log &" &
@@ -756,12 +756,12 @@ function get_and_multigets {
 
 
 if [ "${1}" == "run" ]; then
-    tester;
+    # tester
 
-    # upload;
-    # pinger;
-    # populate;
-    # populate;
+    upload;
+    pinger;
+    populate;
+
 
     # List the experiments to run
     # benchmark_memcached;
@@ -769,8 +769,7 @@ if [ "${1}" == "run" ]; then
     # benchmark_1mw;
     # benchmark_2mw;
     # throughput_writes;
-    # get_and_multigets;
+    get_and_multigets;
 
-    # cleanup;
-
+    cleanup;
 fi
