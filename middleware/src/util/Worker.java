@@ -276,6 +276,7 @@ public class Worker implements Runnable {
             }
 
             for(int server = 0; server < this.serverCount; server++) {
+                temp.clear();
                 if(servers[server] == 1) {
                     while(!response_str.endsWith("END\r\n") && !response_str.endsWith("ERROR\r\n") && !response_str.endsWith("SERVER_ERROR\r\n") && !response_str.endsWith("CLIENT_ERROR\r\n")) {
                         this.connections.get(server).read(temp);
@@ -301,9 +302,7 @@ public class Worker implements Runnable {
                     response.put(temp);
                 }
             }
-            request.time_mmcd_rcvd = System.nanoTime() >> 10;       // In microseconds
-            response.put("END\r\n".getBytes());
-            response.flip();
+
         } else {
             // We have more arguments than available servers
             request.time_mmcd_sent = System.nanoTime() >> 10;       // In microseconds
@@ -317,6 +316,7 @@ public class Worker implements Runnable {
             }
 
             for(int server = 0; server < this.serverCount; server++) {
+                temp.clear();
                 while(!response_str.endsWith("END\r\n") && !response_str.endsWith("ERROR\r\n") && !response_str.endsWith("SERVER_ERROR\r\n") && !response_str.endsWith("CLIENT_ERROR\r\n")) {
                     this.connections.get(server).read(temp);
 
@@ -340,16 +340,16 @@ public class Worker implements Runnable {
                 temp.flip();
                 response.put(temp);
             }
-            request.time_mmcd_rcvd = System.nanoTime() >> 10;       // In microseconds
-            response.put("END\r\n".getBytes());
-            response.flip();
         }
+        request.time_mmcd_rcvd = System.nanoTime() >> 10;       // In microseconds
+        response.put("END\r\n".getBytes());
+        response.flip();
 
         response_str = new String(Arrays.copyOfRange(response.array(), 0, response.limit()));
 
         System.out.println(response_str);
         System.out.println(response.position());
-        
+
         request.channel.write(response);
         // Count number of hits / misses
         int num_hits = response_str.split("VALUE").length - 1;
