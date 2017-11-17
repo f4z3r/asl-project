@@ -105,7 +105,13 @@ def _handle_repetitions(cwd,
         mw_writer: csv wirter to write mw output to
     """
 
-    client_writer.writerow(["Repetition", "Average Throughput", "Average Latency"])
+    client_writer.writerow(["Repetition",
+                            "Client",
+                            "Subclient",
+                            "Average Throughput",
+                            "Std Throughput",
+                            "Average Latency",
+                            "Std Latency"])
     for rep in [1, 2, 3]:
         rep_data = pd.DataFrame({"Latency": [0]*80, "Throughput": [0]*80})
         for memtier in range(1, memtier_count + 1):
@@ -142,15 +148,36 @@ def _handle_repetitions(cwd,
                                         int(line_content[9]),
                                     ])
                 inputfile.close()
-            memtier_data += subclient_data
+                memtier_data += subclient_data
+
+                client_writer.writerow([rep,
+                                        memtier,
+                                        subclient,
+                                        subclient_data["Throughput"].mean(),
+                                        subclient_data["Throughput"].std(),
+                                        subclient_data["Latency"].mean(),
+                                        subclient_data["Latency"].std()])
+
 
             # Get average latency across subclients
             memtier_data["Latency"] /= subclient_count
             rep_data += memtier_data
-
+            client_writer.writerow([rep,
+                                    memtier,
+                                    "Total",
+                                    memtier_data["Throughput"].mean(),
+                                    memtier_data["Throughput"].std(),
+                                    memtier_data["Latency"].mean(),
+                                    memtier_data["Latency"].std()])
         # Get average latency across clients
         rep_data["Latency"] /= memtier_count
-        client_writer.writerow([rep, rep_data["Throughput"].mean(), rep_data["Latency"].mean()])
+        client_writer.writerow([rep,
+                                "Total",
+                                "Total",
+                                rep_data["Throughput"].mean(),
+                                rep_data["Throughput"].std(),
+                                rep_data["Latency"].mean(),
+                                rep_data["Latency"].std()])
 
     # Check if we need to handle middleware info
     if mw_writer is None or mw_count == 0:
@@ -159,16 +186,22 @@ def _handle_repetitions(cwd,
         return
 
     mw_writer.writerow(["Repetition",
+                        "Middleware"
                         "Average Throughput",
+                        "Std Throughput"
                         "Average Latency",
+                        "Std Latency",
                         "Average Gets",
                         "Average Multigets"
                         "Average Sets",
                         "Average Invalids",
                         "Average Hits",
                         "Average Queue Length",
+                        "Std Queue Length",
                         "Average Queue Time",
-                        "Average Server Time"])
+                        "Std Queue Time",
+                        "Average Server Time",
+                        "Std Server Time"])
     for rep in [1, 2, 3]:
         rep_data = pd.DataFrame({"Gets": [0]*80,
                                  "Hits": [0]*80,
@@ -228,7 +261,25 @@ def _handle_repetitions(cwd,
                             contents[4],
                         ])
             inputfile.close()
-        rep_data += mw_data
+            rep_data += mw_data
+
+            mw_writer.writerow([rep,
+                                mw,
+                                mw_data["Throughput"].mean(),
+                                mw_data["Throughput"].std(),
+                                mw_data["Latency"].mean(),
+                                mw_data["Latency"].std(),
+                                mw_data["Gets"].mean(),
+                                mw_data["Multigets"].mean(),
+                                mw_data["Sets"].mean(),
+                                mw_data["Invalids"].mean(),
+                                mw_data["Hits"].mean(),
+                                mw_data["Queue length"].mean(),
+                                mw_data["Queue length"].std(),
+                                mw_data["Queue time"].mean(),
+                                mw_data["Queue time"].std(),
+                                mw_data["Server time"].mean(),
+                                mw_data["Server time"].std()])
 
         # Get average times and lengths across middlewares
         rep_data[["Latency",
@@ -238,16 +289,22 @@ def _handle_repetitions(cwd,
                  ]] /= mw_count
 
         mw_writer.writerow([rep,
+                            "Total",
                             rep_data["Throughput"].mean(),
+                            rep_data["Throughput"].std(),
                             rep_data["Latency"].mean(),
+                            rep_data["Latency"].std(),
                             rep_data["Gets"].mean(),
                             rep_data["Multigets"].mean(),
                             rep_data["Sets"].mean(),
                             rep_data["Invalids"].mean(),
                             rep_data["Hits"].mean(),
                             rep_data["Queue length"].mean(),
+                            rep_data["Queue length"].std(),
                             rep_data["Queue time"].mean(),
-                            rep_data["Server time"].mean()])
+                            rep_data["Queue time"].std(),
+                            rep_data["Server time"].mean(),
+                            rep_data["Server time"].std()])
 
 
 if __name__ == "__main__":

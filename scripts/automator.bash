@@ -783,11 +783,11 @@ if [ "${1}" == "run" ]; then
     populate;
 
     # List the experiments to run
-    # benchmark_memcached;
-    # benchmark_clients;
-    # benchmark_1mw;
-    # benchmark_2mw;
-    # throughput_writes;
+    benchmark_memcached;
+    benchmark_clients;
+    benchmark_1mw;
+    benchmark_2mw;
+    throughput_writes;
     # get_and_multigets;
 
     cleanup;
