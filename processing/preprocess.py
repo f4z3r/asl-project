@@ -4,251 +4,299 @@ import os
 import sys
 import re
 import csv
+import pandas as pd
+import numpy as np
 
-valid_line = re.compile(r"\[RUN #1\s+\d+%,\s+\d+ secs\]")
-
-def preprocess_memtier(experiment_name, client_count, thread_count):
-    """Docstring"""
-
-    sub_clients = False
-    has_workers = True
-    if re.search(r"bench_memcached", experiment_name):
-        experiment = "bench_memcached"
-        has_workers = False
-    elif re.search(r"bench_clients", experiment_name):
-        experiment = "bench_clients"
-        sub_clients = True
-        has_workers = False
-    elif re.search(r"bench_1mw", experiment_name):
-        experiment = "bench_1mw"
-    elif re.search(r"bench_2mw", experiment_name):
-        experiment = "bench_2mw"
-        sub_clients = True
-
-    for operation in ["read", "write"]:
-        for workers in [8, 16, 32, 64]:
-            if not has_workers and workers != 8:
-                continue
-            if has_workers:
-                client_list = [2, 4, 8, 14, 20, 26, 32]
-            else:
-                client_list = [1, 2, 4, 8, 16, 24, 32]
-            for nclients in client_list:
-                if has_workers:
-                    cwd = "preprocessed/{}/{}/{}_workers/{}_clients".format(experiment, operation, workers, nclients)
-                else:
-                    cwd = "preprocessed/{}/{}/{}_clients".format(experiment, operation, nclients)
-                for client in range(1, client_count + 1):
-                    os.makedirs("{}/client{}".format(cwd, client))
-                    for rep in range(1, 4):
-                        with open("{}/client{}/rep{}.csv".format(cwd, client, rep), 'w') as writefile:
-                            writer = csv.writer(writefile)
-                            writer.writerow(["Throughput", "Latency"])
-                            if sub_clients:
-                                filename = "../logs/{}/{}threads_{}clients_{}/clients/client1-{}_{}.log".format(experiment_name, thread_count, nclients, operation, client, rep)
-                            if not has_workers:
-                                if sub_clients:
-                                    filename = "../logs/{}/{}threads_{}clients_{}/clients/client1-{}_{}.log".format(experiment_name, thread_count, nclients, operation, client, rep)
-                                else:
-                                    filename = "../logs/{}/{}threads_{}clients_{}/clients/client{}_{}.log".format(experiment_name, thread_count, nclients, operation, client, rep)
-                            else:
-                                if sub_clients:
-                                    filename = "../logs/{}/{}_workers/{}threads_{}clients_{}/clients/client1-{}_{}.log".format(experiment_name, workers, thread_count, nclients, operation, client, rep)
-                                else:
-                                    filename = "../logs/{}/{}_workers/{}threads_{}clients_{}/clients/client{}_{}.log".format(experiment_name, workers, thread_count, nclients, operation, client, rep)
-                            with open(filename, 'r') as readfile:
-                                line_num = 0
-                                for content in readfile.readlines():
-                                    content.strip()
-
-                                    # Check if valid line
-                                    if re.match(valid_line, content):
-                                        lines = content.split("\r")
-                                        for line in lines:
-                                            line.strip()
-
-                                            line_num += 1
-
-                                            # Don't print first 8 lines to remove warm up time
-                                            if line_num < 9:
-                                                continue
-
-                                            # Take 80 seconds of measurements
-                                            if line_num < 89:
-                                                line_content = re.split(r"\s", line)
-                                                line_content = list(filter(None, line_content))
-                                                writer.writerow([int(line_content[9]), float(line_content[16])])
-
-                                readfile.close()
-                        writefile.close()
+VALID_LINE = re.compile(r"\[RUN #1\s+\d+%,\s+\d+ secs\]")
 
 
+def preprocess(name,
+               memtier_count,
+               mw_count,
+               operation_list,
+               sharded_list,
+               worker_list,
+               client_list,
+               subclient_count):
+    """Preprocesses the data for a given experiment.
+    Arguments:
+        name: String of the experiment name
+        memtier_count: number of memtier machines used in the experiment
+        mw_count: number of mw machiens used in the experiment
+        operation_list: list of ratios used in the experiment
+        sharded_list: list of sharding parameters
+        worker_list: list of worker numbers used in experiment
+        client_list: list of client numbers per thread used in experiment
+        subclient_list: list of subclients used by memtier in experiment
+    """
 
-def preprocess_middleware(experiment_name, mw_count, thread_count):
-    """Docstring"""
+    # Check the log directory for logs of with the name of the experiment
+    potential_dirs = os.listdir("/Users/jakob_beckmann/Documents/_uni/eth/_courses/2017/" +\
+                                "autumn/advanced_sys_lab/gitlab/asl-fall17-project/logs")
+    exp_dir = [directory for directory in potential_dirs if not directory.find(name)]
+    if len(exp_dir) != 1:
+        print("Please make sure there is one and only one directory containing " +\
+              "the experiment name")
+        sys.exit(1)
 
-    if re.search(r"bench_1mw", experiment_name):
-        experiment = "bench_1mw"
-    elif re.search(r"bench_2mw", experiment_name):
-        experiment = "bench_2mw"
+    exp_dir = os.path.join("/Users/jakob_beckmann/Documents/_uni/eth/_courses/2017/" +\
+                           "autumn/advanced_sys_lab/gitlab/asl-fall17-project/logs",
+                           exp_dir[0])
 
-    for operation in ["read", "write"]:
-        for nworkers in [8, 16, 32, 64]:
-            for nclients in [2, 4, 8, 14, 20, 26, 32]:
-                for mw in range(1, mw_count + 1):
-                    cwd = "preprocessed/{}/{}/{}_workers/{}_clients/mw{}".format(experiment, operation, nworkers, nclients, mw)
-                    os.makedirs(cwd)
-                    for rep in range(1, 4):
-                        with open("{}/rep{}.csv".format(cwd, rep), 'w') as writefile:
-                            writer = csv.writer(writefile)
-                            writer.writerow(["SETS", "GETS", "MGETS", "INVLD", "TOT", "HITS", "RSP T", "Q T", "SVR T", "Q LEN"])
-                            with open("../logs/{}/{}_workers/{}threads".format(experiment_name, nworkers, thread_count) +\
-                                    "_{}clients_{}/mw/mw{}_{}.log".format(nclients, operation, mw, rep), 'r') as readfile:
-                                line_num = 0
-                                for line in readfile.readlines():
-                                    # Check if line is valid
-                                    contents = re.split(r"\s", line)
-                                    contents = list(filter(None, contents))
-                                    if contents == []:
-                                        continue
-                                    if re.match(r"=+", line):
-                                        break
-                                    if not (re.match(r"\d+", contents[0].strip()) or re.match(r"SETS", contents[0])):
-                                        continue
-                                    line_num += 1
+    for op in operation_list:
+        for sharded in sharded_list:
+            for workers in worker_list:
+                for clients in client_list:
+                    cwd = os.path.join(exp_dir,
+                                       "ratio_" + op,
+                                       "sharded_" + sharded,
+                                       "workers_" + workers,
+                                       "clients_" + clients)
 
-                                    # Skip second line to remove warm up
-                                    if line_num < 3:
-                                        continue
+                    # Create a directory for the processed results
+                    output_dir = os.path.join("processed",
+                                              name,
+                                              "ratio_" + op,
+                                              "sharded_" + sharded,
+                                              "workers_" + workers,
+                                              "clients_" + clients)
+                    os.makedirs(output_dir)
+                    clients_filename = os.path.join(output_dir, "clients.csv")
+                    with open(clients_filename, 'w', newline="") as clients_file:
+                        client_writer = csv.writer(clients_file)
 
-                                    # Take 80 seconds of measurements
-                                    if line_num < 83:
-                                        writer.writerow(contents)
-                            readfile.close()
-                        writefile.close()
+                        if mw_count != 0:
+                            mw_filename = os.path.join(output_dir, "mws.csv")
+                            with open(mw_filename, 'w', newline="") as mw_file:
+                                mw_writer = csv.writer(mw_file)
+                                _handle_repetitions(cwd=cwd,
+                                                    memtier_count=memtier_count,
+                                                    subclient_count=subclient_count,
+                                                    client_writer=client_writer,
+                                                    mw_count=mw_count,
+                                                    mw_writer=mw_writer)
+                            mw_file.close()
+                        else:
+                            _handle_repetitions(cwd=cwd,
+                                                memtier_count=memtier_count,
+                                                subclient_count=subclient_count,
+                                                client_writer=client_writer)
+
+                    clients_file.close()
 
 
-def throughput_writes(experiment_name):
-    """Docstring"""
-
-    experiment = "throughput_writes"
 
 
-    for workers in [8, 16, 32, 64]:
-        for nclients in [2, 4, 8, 14, 20, 26, 32]:
-            cwd = "preprocessed/{}/write/{}_workers/{}_clients".format(experiment, workers, nclients)
-            for machine in range(1, 4):
-                for memtier_instance in range(1, 3):
-                    os.makedirs("{}/client{}-{}".format(cwd, machine, memtier_instance))
-                    for rep in range(1, 4):
-                        with open("{}/client{}-{}/rep{}.csv".format(cwd, machine, memtier_instance, rep), 'w') as writefile:
-                            writer = csv.writer(writefile)
-                            writer.writerow(["Throughput", "Latency"])
-                            filename = "../logs/{}/1threads_{}clients_write/clients/client1-{}_{}.log".format(experiment_name, nclients, machine, rep)
-                            with open(filename, 'r') as readfile:
-                                line_num = 0
-                                for content in readfile.readlines():
-                                    content.strip()
 
-                                    # Check if valid line
-                                    if re.match(valid_line, content):
-                                        lines = content.split("\r")
-                                        for line in lines:
-                                            line.strip()
 
-                                            line_num += 1
+def _handle_repetitions(cwd,
+                        memtier_count,
+                        subclient_count,
+                        client_writer,
+                        mw_count=0,
+                        mw_writer=None):
+    """Handles the innermost repetitions to gather data
+    Arguments:
+        cwd: path to the working directory of the innermost loop of the experiment
+        memtier_count: count of memtier machines used in experiment
+        subclient_count: count of subclients used on each memtier machine
+        client_writer: csv writer to write client output to
+        mw_count: number of middlewares used in experiments
+        mw_writer: csv wirter to write mw output to
+    """
 
-                                            # Don't print first 8 lines to remove warm up time
-                                            if line_num < 9:
-                                                continue
+    client_writer.writerow(["Repetition", "Average Throughput", "Average Latency"])
+    for rep in [1, 2, 3]:
+        rep_data = pd.DataFrame({"Latency": [0]*80, "Throughput": [0]*80})
+        for memtier in range(1, memtier_count + 1):
+            memtier_data = pd.DataFrame({"Latency": [0]*80, "Throughput": [0]*80})
+            for subclient in range(1, subclient_count + 1):
+                subclient_data = pd.DataFrame({"Latency": [0]*80, "Throughput": [0]*80})
+                input_filename = os.path.join(
+                    cwd,
+                    "client_{}_{}_{}.log".format(memtier, subclient, rep)
+                )
+                with open(input_filename) as inputfile:
+                    line_num = 0
+                    for content in inputfile.readlines():
+                        content.strip()
 
-                                            # Take 80 seconds of measurements
-                                            if line_num < 89:
-                                                line_content = re.split(r"\s", line)
-                                                line_content = list(filter(None, line_content))
-                                                writer.writerow([int(line_content[9]), float(line_content[16])])
+                        # Check if it is a valid line
+                        if re.match(VALID_LINE, content):
+                            lines = content.split("\r")
+                            for line in lines:
+                                line.strip()
 
-                            readfile.close()
-                        writefile.close()
-                # Handle middleware info
-                for rep in range(1, 4):
-                    os.makedirs("{}/mw{}".format(cwd, machine))
-                    with open("{}/rep{}.csv".format(cwd, rep), 'w') as writefile:
-                        writer = csv.writer(writefile)
-                        writer.writerow(["SETS", "GETS", "MGETS", "INVLD", "TOT", "HITS", "RSP T", "Q T", "SVR T", "Q LEN"])
-                        with open("../logs/{}/{}_workers/1threads".format(experiment_name, workers) +\
-                                  "_{}clients_write/mw/mw{}_{}.log".format(nclients, machine, rep), 'r') as readfile:
-                            line_num = 0
-                            for line in readfile.readlines():
-                                # Check if line is valid
-                                contents = re.split(r"\s", line)
-                                contents = list(filter(None, contents))
-                                if contents == []:
-                                    continue
-                                if re.match(r"=+", line):
-                                    break
-                                if not (re.match(r"\d+", contents[0].strip()) or re.match(r"SETS", contents[0])):
-                                    continue
                                 line_num += 1
 
-                                # Skip second line to remove warm up
-                                if line_num < 3:
+                                # Don't print first 8 lines to remove warm up time
+                                if line_num < 9:
                                     continue
 
                                 # Take 80 seconds of measurements
-                                if line_num < 83:
-                                    writer.writerow(contents)
-                        readfile.close()
-                    writefile.close()
+                                if line_num < 89:
+                                    line_content = re.split(r"\s", line)
+                                    line_content = list(filter(None, line_content))
+                                    subclient_data.loc[line_num - 10] = np.array([
+                                        float(line_content[16]),
+                                        int(line_content[9]),
+                                    ])
+                inputfile.close()
+            memtier_data += subclient_data
 
+            # Get average latency across subclients
+            memtier_data["Latency"] /= subclient_count
+            rep_data += memtier_data
 
-def multigets(experiment_name):
-    """Docstring"""
+        # Get average latency across clients
+        rep_data["Latency"] /= memtier_count
+        client_writer.writerow([rep, rep_data["Throughput"].mean(), rep_data["Latency"].mean()])
 
-    experiment = "multigets"
-    pass
+    # Check if we need to handle middleware info
+    if mw_writer is None or mw_count == 0:
+        print("Please provide a middleware writer when handling middlewares, " +\
+              "proceeding without using middleware data.")
+        return
 
+    mw_writer.writerow(["Repetition",
+                        "Average Throughput",
+                        "Average Latency",
+                        "Average Gets",
+                        "Average Multigets"
+                        "Average Sets",
+                        "Average Invalids",
+                        "Average Hits",
+                        "Average Queue Length",
+                        "Average Queue Time",
+                        "Average Server Time"])
+    for rep in [1, 2, 3]:
+        rep_data = pd.DataFrame({"Gets": [0]*80,
+                                 "Hits": [0]*80,
+                                 "Invalids": [0]*80,
+                                 "Latency": [0]*80,
+                                 "Multigets": [0]*80,
+                                 "Queue length": [0]*80,
+                                 "Queue time": [0]*80,
+                                 "Server time": [0]*80,
+                                 "Sets": [0]*80,
+                                 "Total": [0]*80,})
+        for mw in range(1, mw_count + 1):
+            mw_data = pd.DataFrame({"Gets": [0]*80,
+                                    "Hits": [0]*80,
+                                    "Invalids": [0]*80,
+                                    "Latency": [0]*80,
+                                    "Multigets": [0]*80,
+                                    "Queue length": [0]*80,
+                                    "Queue time": [0]*80,
+                                    "Server time": [0]*80,
+                                    "Sets": [0]*80,
+                                    "Total": [0]*80,})
+            input_filename = os.path.join(
+                cwd,
+                "mw_{}_{}.log".format(mw, rep)
+            )
+            with open(input_filename) as inputfile:
+                line_num = 0
+                for line in inputfile.readlines():
+                    contents = re.split(r"\s", line)
+                    contents = list(filter(None, contents))
+                    if contents == []:
+                        continue
+                    if re.match(r"=+", line):
+                        break
+                    if not (re.match(r"\d+", contents[0].strip()) \
+                            or re.match(r"SETS", contents[0])):
+                        continue
+                    line_num += 1
 
+                    # Skip second line to remove warm up
+                    if line_num < 3:
+                        continue
+
+                    # Take 80 seconds of measurements
+                    if line_num < 83:
+                        mw_data.loc[line_num - 4] = np.array([
+                            contents[1],
+                            contents[5],
+                            contents[3],
+                            contents[6],
+                            contents[2],
+                            contents[9],
+                            contents[7],
+                            contents[8],
+                            contents[0],
+                            contents[4],
+                        ])
+            inputfile.close()
+        rep_data += mw_data
+
+        # Get average times and lengths across middlewares
+        rep_data[["Latency",
+                  "Queue length",
+                  "Queue time",
+                  "Server time",
+                 ]] /= mw_count
+
+        mw_writer.writerow([rep,
+                            rep_data["Throughput"].mean(),
+                            rep_data["Latency"].mean(),
+                            rep_data["Gets"].mean(),
+                            rep_data["Multigets"].mean(),
+                            rep_data["Sets"].mean(),
+                            rep_data["Invalids"].mean(),
+                            rep_data["Hits"].mean(),
+                            rep_data["Queue length"].mean(),
+                            rep_data["Queue time"].mean(),
+                            rep_data["Server time"].mean()])
 
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        for arg in sys.argv:
-            if arg == "all":
-                preprocess_memtier("2017-11-11_17h12(bench_memcached)", 3, 2)
-                preprocess_memtier("2017-11-11_18h21(bench_clients)", 2, 1)
-                preprocess_memtier("2017-11-12_16h58(bench_1mw)", 1, 2)
-                preprocess_middleware("2017-11-12_16h58(bench_1mw)", 1, 2)
-                preprocess_memtier("2017-11-13_18h55(bench_2mw)", 2, 1)
-                preprocess_middleware("2017-11-13_18h55(bench_2mw)", 2, 1)
-
-            elif arg == "throughput_writes":
-                throughput_writes("")
-
-                sys.exit(0)
-            elif arg == "./preprocess.py":
-                continue
-            elif re.match(r"name=[\w()-]+", arg):
-                experiment_name = re.match(r"name=[\w()-]+", arg).string.split("=")[1]
-            elif re.match(r"clients=\d+", arg):
-                clients = re.match(r"clients=\d+", arg).string.split("=")[1]
-            elif re.match(r"mws=\d+", arg):
-                mws = re.match(r"mws=\d+", arg).string.split("=")[1]
-            elif re.match(r"tc=\d+", arg):
-                tc = re.match(r"tc=\d+", arg).string.split("=")[1]
-            else:
-                print("Usage:\n\tpreprocess.py name=\"<name>\" clients=<client_count> mws=<mw_count> tc=<thread_count>")
-                sys.exit(1)
-        if experiment_name is None or clients is None or mws is None or tc is None:
-            print("Usage:\n\tpreprocess.py name=\"<name>\" clients=<client_count> mws=<mw_count> tc=<thread_count>")
-            sys.exit(1)
-
-        if int(mws) == 0:
-            preprocess_memtier(experiment_name, int(clients), int(tc))
-        else:
-            preprocess_memtier(experiment_name, int(clients), int(tc))
-            preprocess_middleware(experiment_name, int(mws), int(tc))
-
-    else:
-        print("Usage:\n\tpreprocess.py name=\"<name>\" clients=<client_count> mws=<mw_count> tc=<thread_count>")
-        sys.exit(1)
+    if sys.argv[1] == "all":
+        preprocess(name="benchmark_memcached",
+                   memtier_count=3,
+                   mw_count=0,
+                   operation_list=["0:1", "1:0"],
+                   sharded_list=["false"],
+                   worker_list=["no"],
+                   client_list=[2, 4, 8, 16, 24, 32, 40, 48, 56],
+                   subclient_count=1)
+        preprocess(name="benchmark_clients",
+                   memtier_count=1,
+                   mw_count=0,
+                   operation_list=["0:1", "1:0"],
+                   sharded_list=["false"],
+                   worker_list=["no"],
+                   client_list=[2, 4, 8, 16, 24, 32, 40, 48, 56],
+                   subclient_count=2)
+        preprocess(name="benchmark_1mw",
+                   memtier_count=1,
+                   mw_count=1,
+                   operation_list=["0:1", "1:0"],
+                   sharded_list=["false"],
+                   worker_list=[8, 16, 32, 64],
+                   client_list=[2, 4, 8, 16, 24, 32, 40, 48, 56],
+                   subclient_count=1)
+        preprocess(name="benchmark_2mw",
+                   memtier_count=1,
+                   mw_count=2,
+                   operation_list=["0:1", "1:0"],
+                   sharded_list=["false"],
+                   worker_list=[8, 16, 32, 64],
+                   client_list=[2, 4, 8, 16, 24, 32, 40, 48, 56],
+                   subclient_count=2)
+        preprocess(name="throughput_writes",
+                   memtier_count=3,
+                   mw_count=2,
+                   operation_list=["1:0"],
+                   sharded_list=["false"],
+                   worker_list=[8, 16, 32, 64],
+                   client_list=[2, 4, 8, 16, 24, 32, 40, 48, 56],
+                   subclient_count=2)
+        preprocess(name="get_and_multigets",
+                   memtier_count=3,
+                   mw_count=2,
+                   operation_list=["0:9", "0:6", "0:3", "0:1"],
+                   sharded_list=["true", "false"],
+                   worker_list=[32],
+                   client_list=[2],
+                   subclient_count=2)

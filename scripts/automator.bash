@@ -14,6 +14,7 @@
 #                       /dstat_mw_NN_RR.log
 #                       /dstat_server_NN_RR.log
 
+
 # Do not forget to remove the hosts from the known_hosts file before launching
 # the experiments
 #
@@ -152,19 +153,19 @@ function benchmark_memcached {
     ssh ${mw2_pub} "rm *.log";
 
     runtime=90;
-    memtier_options="--protocol=memcache_text --expiry-range=9999-10000 --key-maximum=10000 --hide-histogram --test-time=${runtime} --data-size=1024";
+    memtier_options="--protocol=memcache_text --expiry-range=9999-10000 --key-maximum=10000 --test-time=${runtime} --data-size=1024";
 
     # Config:
     threads=2;
     operations=(0:1 1:0);
     is_sharded=false;
     worker_list=no;
-    client_list=(2 4 8 14 20 26 32);
+    client_list=(2 4 8 16 24 32 40 48 56);
     repetitions=(1 2 3);
 
     echo "Starting benchmark_memcached ...";
     for op in "${operations[@]}"; do
-        mkdir ${log_dir}/${op};
+        mkdir ${log_dir}/ratio_${op};
         for sharded in "${is_sharded[@]}"; do
             mkdir ${log_dir}/ratio_${op}/sharded_${sharded};
             for workers in "${worker_list[@]}"; do
@@ -243,19 +244,19 @@ function benchmark_clients {
     ssh ${mw2_pub} "rm *.log";
 
     runtime=90;
-    memtier_options="--protocol=memcache_text --expiry-range=9999-10000 --key-maximum=10000 --hide-histogram --test-time=${runtime} --data-size=1024";
+    memtier_options="--protocol=memcache_text --expiry-range=9999-10000 --key-maximum=10000 --test-time=${runtime} --data-size=1024";
 
     # Config:
     threads=1;
     operations=(0:1 1:0);
     is_sharded=false;
     worker_list=no;
-    client_list=(2 4 8 14 20 26 32);
+    client_list=(2 4 8 16 24 32 40 48 56);
     repetitions=(1 2 3);
 
     echo "Starting benchmark_clients ...";
     for op in "${operations[@]}"; do
-        mkdir ${log_dir}/${op};
+        mkdir ${log_dir}/ratio_${op};
         for sharded in "${is_sharded[@]}"; do
             mkdir ${log_dir}/ratio_${op}/sharded_${sharded};
             for workers in "${worker_list[@]}"; do
@@ -326,7 +327,7 @@ function benchmark_1mw {
     ssh ${mw2_pub} "rm *.log";
 
     runtime=90;
-    memtier_options="--protocol=memcache_text --expiry-range=9999-10000 --key-maximum=10000 --hide-histogram --test-time=${runtime} --data-size=1024";
+    memtier_options="--protocol=memcache_text --expiry-range=9999-10000 --key-maximum=10000 --test-time=${runtime} --data-size=1024";
 
     # Make sure the middleware is not already running ...
     ssh ${mw1_pub} "sudo pkill -f middleware";
@@ -336,12 +337,12 @@ function benchmark_1mw {
     operations=(0:1 1:0);
     is_sharded=false;
     worker_list=(8 16 32 64);
-    client_list=(2 4 8 14 20 26 32);
+    client_list=(2 4 8 16 24 32 40 48 56);
     repetitions=(1 2 3);
 
     echo "Starting benchmark_1mw ...";
     for op in "${operations[@]}"; do
-        mkdir ${log_dir}/${op};
+        mkdir ${log_dir}/ratio_${op};
         for sharded in "${is_sharded[@]}"; do
             mkdir ${log_dir}/ratio_${op}/sharded_${sharded};
             for workers in "${worker_list[@]}"; do
@@ -424,7 +425,7 @@ function benchmark_2mw {
     ssh ${mw2_pub} "rm *.log";
 
     runtime=90;
-    memtier_options="--protocol=memcache_text --expiry-range=9999-10000 --key-maximum=10000 --hide-histogram --test-time=${runtime} --data-size=1024";
+    memtier_options="--protocol=memcache_text --expiry-range=9999-10000 --key-maximum=10000 --test-time=${runtime} --data-size=1024";
 
     # Make sure the middleware is not already running ...
     ssh ${mw1_pub} "sudo pkill -f middleware";
@@ -435,12 +436,12 @@ function benchmark_2mw {
     operations=(0:1 1:0);
     is_sharded=false;
     worker_list=(8 16 32 64);
-    client_list=(2 4 8 14 20 26 32);
+    client_list=(2 4 8 16 24 32 40 48 56);
     repetitions=(1 2 3);
 
     echo "Starting benchmark_2mw ...";
     for op in "${operations[@]}"; do
-        mkdir ${log_dir}/${op};
+        mkdir ${log_dir}/ratio_${op};
         for sharded in "${is_sharded[@]}"; do
             mkdir ${log_dir}/ratio_${op}/sharded_${sharded};
             for workers in "${worker_list[@]}"; do
@@ -534,7 +535,7 @@ function throughput_writes {
     ssh ${mw2_pub} "rm *.log";
 
     runtime=90;
-    memtier_options="--protocol=memcache_text --expiry-range=9999-10000 --key-maximum=10000 --hide-histogram --test-time=${runtime} --data-size=1024";
+    memtier_options="--protocol=memcache_text --expiry-range=9999-10000 --key-maximum=10000 --test-time=${runtime} --data-size=1024";
 
     # Make sure the middleware is not already running ...
     ssh ${mw1_pub} "sudo pkill -f middleware";
@@ -545,12 +546,12 @@ function throughput_writes {
     operations=1:0;
     is_sharded=false;
     worker_list=(8 16 32 64);
-    client_list=(2 4 8 14 20 26 32);
+    client_list=(2 4 8 16 24 32 40 48 56);
     repetitions=(1 2 3);
 
     echo "Starting throughput_writes ...";
     for op in "${operations[@]}"; do
-        mkdir ${log_dir}/${op};
+        mkdir ${log_dir}/ratio_${op};
         for sharded in "${is_sharded[@]}"; do
             mkdir ${log_dir}/ratio_${op}/sharded_${sharded};
             for workers in "${worker_list[@]}"; do
@@ -662,7 +663,7 @@ function get_and_multigets {
     ssh ${mw2_pub} "rm *.log";
 
     runtime=90;
-    memtier_options="--protocol=memcache_text --expiry-range=9999-10000 --key-maximum=10000 --hide-histogram --test-time=${runtime} --data-size=1024";
+    memtier_options="--protocol=memcache_text --expiry-range=9999-10000 --key-maximum=10000 --test-time=${runtime} --data-size=1024";
 
     # Make sure the middleware is not already running ...
     ssh ${mw1_pub} "sudo pkill -f middleware";
@@ -682,7 +683,7 @@ function get_and_multigets {
         if [ "${op}" == "0:6" ]; then multiget=6; fi
         if [ "${op}" == "0:3" ]; then multiget=3; fi
         if [ "${op}" == "0:1" ]; then multiget=1; fi
-        mkdir ${log_dir}/${op};
+        mkdir ${log_dir}/ratio_${op};
         for sharded in "${is_sharded[@]}"; do
             mkdir ${log_dir}/ratio_${op}/sharded_${sharded};
             for workers in "${worker_list[@]}"; do
