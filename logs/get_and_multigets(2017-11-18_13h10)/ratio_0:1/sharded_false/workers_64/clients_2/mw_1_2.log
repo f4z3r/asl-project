@@ -1,0 +1,931 @@
+Threads: 64, Sharded reads: false, Number of Memcached servers: 3.
+
+All measures in microseconds.
+  SETS   GETS  MGETS   INVLD    TOT   HITS     RSP T      Q T     SVR T  Q LEN
+     0  19488      0       0  19488  19488   1796.14   106.14   1648.80      0
+     0   2431      0       0   2431   2431   1776.34    79.42   1661.72      0
+     0   2426      0       0   2426   2426   1809.53    87.68   1684.26      1
+     0   2158      0       0   2158   2158   1928.87   109.80   1784.53      0
+     0   2474      0       0   2474   2474   1747.29    77.64   1634.27      0
+     0   2358      0       0   2358   2358   1836.06    86.93   1701.85      0
+     0   2310      0       0   2310   2310   1835.70    91.63   1693.73      0
+     0   2324      0       0   2324   2324   1844.03   115.23   1693.71      0
+     0   2307      0       0   2307   2307   1851.68   128.91   1679.62      0
+     0   2292      0       0   2292   2292   1864.93   113.77   1706.83      2
+     0   2013      0       0   2013   2013   2119.78   174.72   1876.47      0
+     0   2466      0       0   2466   2466   1741.15    79.33   1627.59      0
+     0   2445      0       0   2445   2445   1768.73    89.30   1639.65      0
+     0   2407      0       0   2407   2407   1783.11    81.12   1668.85      0
+     0   2424      0       0   2424   2424   1777.19    84.49   1658.16      0
+     0   2041      0       0   2041   2041   2043.90   152.25   1847.68      0
+     0   2356      0       0   2356   2356   1805.37    80.40   1689.53      0
+     0   2262      0       0   2262   2262   1854.87    97.66   1718.78      0
+     0   2308      0       0   2308   2308   1862.66    89.18   1735.49      1
+     0   2450      0       0   2450   2450   1747.49    78.78   1634.69      1
+     0   2277      0       0   2277   2277   1849.82    84.53   1730.57      0
+     0   2315      0       0   2315   2315   1803.40    94.37   1674.28      0
+     0   2238      0       0   2238   2238   1898.83   101.53   1763.66      0
+     0   2395      0       0   2395   2395   1801.24    79.86   1674.15      0
+     0   2248      0       0   2248   2248   1846.83   114.78   1695.02      0
+     0   2217      0       0   2217   2217   1947.99   135.14   1774.81      0
+     0   2303      0       0   2303   2303   1846.69    87.23   1722.08      1
+     0   2416      0       0   2416   2416   1806.74    87.94   1681.83      0
+     0   2336      0       0   2336   2336   1835.68    91.32   1710.88      0
+     0   2271      0       0   2271   2271   1876.55   102.20   1740.19      0
+     0   2257      0       0   2257   2257   1902.86   108.26   1760.25      0
+     0   2386      0       0   2386   2386   1811.35    86.87   1689.53      0
+     0   2338      0       0   2338   2338   1851.11    91.64   1723.58      0
+     0   2355      0       0   2355   2355   1828.11   102.73   1689.85      1
+     0   2414      0       0   2414   2414   1766.73    80.29   1647.43      0
+     0   2385      0       0   2385   2385   1817.77    82.69   1699.09      0
+     0   2136      0       0   2136   2136   1936.63   123.77   1776.34      0
+     0   2425      0       0   2425   2425   1793.39    96.14   1661.83      0
+     0   2420      0       0   2420   2420   1773.86    82.05   1655.15      0
+     0   2154      0       0   2154   2154   1941.07   148.33   1757.92      0
+     0   2138      0       0   2138   2138   1935.98    95.31   1807.88      0
+     0   2380      0       0   2380   2380   1807.50    78.59   1696.06      0
+     0   2496      0       0   2496   2496   1729.07    72.86   1621.07      0
+     0   2408      0       0   2408   2408   1810.26    83.97   1690.46      0
+     0   2308      0       0   2308   2308   1857.12   102.08   1710.75      0
+     0   2139      0       0   2139   2139   1930.48   122.96   1772.44      0
+     0   2348      0       0   2348   2348   1819.73    93.75   1692.23      1
+     0   2368      0       0   2368   2368   1808.46   100.63   1666.57      0
+     0   2385      0       0   2385   2385   1801.72    93.76   1671.12      0
+     0   2344      0       0   2344   2344   1834.01    80.05   1720.21      0
+     0   2395      0       0   2395   2395   1779.20    78.63   1666.10      0
+     0   2298      0       0   2298   2298   1869.58   116.53   1718.45      1
+     0   2431      0       0   2431   2431   1761.76    99.49   1627.22      2
+     0   2387      0       0   2387   2387   1828.48    89.24   1706.02      0
+     0   2118      0       0   2118   2118   1979.04   152.94   1792.97      0
+     0   2346      0       0   2346   2346   1825.02   115.30   1677.96      0
+     0   2447      0       0   2447   2447   1755.57    77.91   1636.13      0
+     0   2472      0       0   2472   2472   1766.67   110.91   1623.00      0
+     0   2469      0       0   2469   2469   1746.25    80.40   1628.62      0
+     0   2296      0       0   2296   2296   1849.34   112.08   1700.24      0
+     0   2370      0       0   2370   2370   1811.59   107.45   1665.08      0
+     0   2475      0       0   2475   2475   1741.63    91.96   1615.67      1
+     0   2347      0       0   2347   2347   1832.51   123.84   1675.73      0
+     0   2398      0       0   2398   2398   1820.89    82.09   1699.17      0
+     0   2432      0       0   2432   2432   1769.85    89.41   1645.65      0
+     0   2473      0       0   2473   2473   1769.04    75.74   1657.93      0
+     0   2176      0       0   2176   2176   1909.88   128.87   1746.92      0
+     0   2411      0       0   2411   2411   1813.18    81.80   1695.60      0
+     0   2350      0       0   2350   2350   1821.19    81.53   1685.88      0
+     0   1931      0       0   1931   1931   2133.33   192.37   1891.06      0
+     0   2376      0       0   2376   2376   1792.41    98.68   1661.55      0
+     0   2445      0       0   2445   2445   1759.87    80.47   1642.04      0
+     0   2467      0       0   2467   2467   1784.38    91.77   1659.53      0
+     0   2410      0       0   2410   2410   1800.67    80.30   1681.76      0
+     0   2420      0       0   2420   2420   1780.21   103.15   1641.26      0
+     0   2316      0       0   2316   2316   1850.21    86.52   1722.71      2
+     0   2415      0       0   2415   2415   1752.40    80.11   1638.55      0
+     0   2265      0       0   2265   2265   1860.85    99.19   1728.98      1
+     0   2429      0       0   2429   2429   1750.12    88.21   1627.43      0
+     0   2386      0       0   2386   2386   1787.88   116.32   1635.89      0
+     0   2380      0       0   2380   2380   1840.92   102.40   1701.59      0
+     0   2150      0       0   2150   2150   1896.84   102.19   1757.90      0
+     0    318      0       0    318    318   1853.53    81.74   1739.82      0
+     0      0      0       0      0      0       NaN      NaN       NaN      0
+     0      0      0       0      0      0       NaN      NaN       NaN      0
+     0      0      0       0      0      0       NaN      NaN       NaN      0
+================================================================================
+ALL STATS (timing measures are in microseconds)
+WORKER 0:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3279|    36.43|    36.43|     0.00|  1810.01|  1718.81|  1675.74
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 1:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3296|    36.62|    36.62|     0.00|  1829.94|  1726.67|  1685.95
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 2:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3240|    36.00|    36.00|     0.00|  1825.51|  1724.81|  1690.94
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 3:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3274|    36.38|    36.38|     0.00|  1800.97|  1705.42|  1667.38
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 4:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3268|    36.31|    36.31|     0.00|  1803.28|  1705.04|  1670.26
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 5:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3234|    35.93|    35.93|     0.00|  1861.77|  1754.55|  1704.91
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 6:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3266|    36.29|    36.29|     0.00|  1829.39|  1732.49|  1691.43
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 7:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3305|    36.72|    36.72|     0.00|  1818.22|  1712.91|  1675.79
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 8:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3231|    35.90|    35.90|     0.00|  1811.46|  1715.11|  1675.74
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 9:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3247|    36.08|    36.08|     0.00|  1850.17|  1747.96|  1713.54
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 10:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3279|    36.43|    36.43|     0.00|  1819.02|  1718.50|  1684.40
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 11:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3276|    36.40|    36.40|     0.00|  1833.95|  1733.08|  1699.24
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 12:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3277|    36.41|    36.41|     0.00|  1813.21|  1719.94|  1680.64
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 13:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3257|    36.19|    36.19|     0.00|  1827.99|  1731.21|  1696.61
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 14:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3221|    35.79|    35.79|     0.00|  1806.85|  1711.03|  1676.01
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 15:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3218|    35.76|    35.76|     0.00|  1806.34|  1712.84|  1677.54
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 16:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3314|    36.82|    36.82|     0.00|  1830.32|  1726.22|  1685.15
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 17:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3282|    36.47|    36.47|     0.00|  1869.80|  1766.72|  1726.86
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 18:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3257|    36.19|    36.19|     0.00|  1823.39|  1729.35|  1693.20
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 19:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3263|    36.26|    36.26|     0.00|  1813.20|  1712.27|  1676.40
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 20:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3287|    36.52|    36.52|     0.00|  1825.94|  1724.59|  1690.62
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 21:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3294|    36.60|    36.60|     0.00|  1805.65|  1717.84|  1671.67
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 22:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3296|    36.62|    36.62|     0.00|  1834.71|  1732.37|  1699.04
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 23:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3271|    36.34|    36.34|     0.00|  1837.03|  1740.11|  1698.67
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 24:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3278|    36.42|    36.42|     0.00|  1814.09|  1715.31|  1680.69
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 25:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3269|    36.32|    36.32|     0.00|  1820.05|  1714.81|  1675.95
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 26:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3305|    36.72|    36.72|     0.00|  1843.52|  1750.02|  1710.37
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 27:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3222|    35.80|    35.80|     0.00|  1817.50|  1721.38|  1686.41
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 28:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3203|    35.59|    35.59|     0.00|  1820.14|  1721.99|  1686.66
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 29:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3235|    35.94|    35.94|     0.00|  1820.29|  1727.05|  1691.47
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 30:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3326|    36.96|    36.96|     0.00|  1827.21|  1728.85|  1689.17
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 31:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3237|    35.97|    35.97|     0.00|  1831.48|  1724.44|  1690.73
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 32:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3300|    36.67|    36.67|     0.00|  1819.91|  1723.36|  1688.72
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 33:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3243|    36.03|    36.03|     0.00|  1790.64|  1701.38|  1667.60
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 34:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3279|    36.43|    36.43|     0.00|  1838.91|  1738.43|  1701.91
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 35:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3292|    36.58|    36.58|     0.00|  1847.56|  1754.87|  1717.73
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 36:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3260|    36.22|    36.22|     0.00|  1831.62|  1736.43|  1701.42
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 37:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3243|    36.03|    36.03|     0.00|  1860.56|  1762.80|  1726.64
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 38:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3346|    37.18|    37.18|     0.00|  1813.06|  1713.96|  1678.11
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 39:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3253|    36.14|    36.14|     0.00|  1814.64|  1718.24|  1681.73
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 40:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3222|    35.80|    35.80|     0.00|  1836.81|  1731.44|  1696.98
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 41:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3246|    36.07|    36.07|     0.00|  1816.89|  1714.74|  1680.42
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 42:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3259|    36.21|    36.21|     0.00|  1817.90|  1723.79|  1685.37
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 43:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3280|    36.44|    36.44|     0.00|  1834.72|  1742.44|  1705.81
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 44:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3284|    36.49|    36.49|     0.00|  1826.81|  1727.36|  1690.43
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 45:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3224|    35.82|    35.82|     0.00|  1818.36|  1724.07|  1690.71
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 46:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3261|    36.23|    36.23|     0.00|  1837.95|  1737.93|  1698.05
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 47:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3277|    36.41|    36.41|     0.00|  1818.29|  1712.79|  1679.02
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 48:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3292|    36.58|    36.58|     0.00|  1841.44|  1740.13|  1701.06
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 49:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3264|    36.27|    36.27|     0.00|  1801.47|  1707.03|  1671.76
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 50:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3268|    36.31|    36.31|     0.00|  1822.84|  1723.54|  1686.68
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 51:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3280|    36.44|    36.44|     0.00|  1852.18|  1749.68|  1713.32
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 52:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3273|    36.37|    36.37|     0.00|  1847.38|  1736.60|  1702.62
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 53:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3287|    36.52|    36.52|     0.00|  1867.83|  1771.12|  1731.79
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 54:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3286|    36.51|    36.51|     0.00|  1833.47|  1737.67|  1699.25
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 55:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3206|    35.62|    35.62|     0.00|  1853.98|  1751.97|  1713.82
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 56:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3260|    36.22|    36.22|     0.00|  1822.71|  1725.77|  1685.67
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 57:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3253|    36.14|    36.14|     0.00|  1809.66|  1710.24|  1663.46
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 58:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3282|    36.47|    36.47|     0.00|  1815.09|  1706.56|  1663.03
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 59:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3230|    35.89|    35.89|     0.00|  1848.00|  1742.17|  1697.32
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 60:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3304|    36.71|    36.71|     0.00|  1839.27|  1739.56|  1702.99
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 61:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3317|    36.86|    36.86|     0.00|  1846.69|  1748.05|  1711.33
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 62:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3268|    36.31|    36.31|     0.00|  1805.70|  1706.46|  1665.09
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 63:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |     3293|    36.59|    36.59|     0.00|  1798.50|  1701.68|  1663.81
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+================================================================================
+
+AGGREGATE FOR ALL WORKERS:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |   209139|  2323.77|  2323.77|     0.00|  1826.78|  1727.91|  1690.36
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+
+
+ HISTOGRAM
+  Response time (ms)   Percent
+                 0.1      0.00%
+                 0.2      0.00%
+                 0.3      0.00%
+                 0.4      0.05%
+                 0.5      2.12%
+                 0.6     11.54%
+                 0.7     23.08%
+                 0.8     28.14%
+                 0.9     29.66%
+                 1.0     30.34%
+                 1.1     30.83%
+                 1.2     31.17%
+                 1.3     31.48%
+                 1.4     31.73%
+                 1.5     31.91%
+                 1.6     32.05%
+                 1.7     32.16%
+                 1.8     32.33%
+                 1.9     34.10%
+                 2.0     41.12%
+                 2.1     54.68%
+                 2.2     68.51%
+                 2.3     77.99%
+                 2.4     83.61%
+                 2.5     87.21%
+                 2.6     89.85%
+                 2.7     91.77%
+                 2.8     93.18%
+                 2.9     94.22%
+                 3.0     94.99%
+                 3.1     95.61%
+                 3.2     96.07%
+                 3.3     96.43%
+                 3.4     96.72%
+                 3.5     96.96%
+                 3.6     97.17%
+                 3.7     97.37%
+                 3.8     97.55%
+                 3.9     97.71%
+                 4.0     97.85%
+                 4.1     97.97%
+                 4.2     98.11%
+                 4.3     98.23%
+                 4.4     98.36%
+                 4.5     98.48%
+                 4.6     98.59%
+                 4.7     98.71%
+                 4.8     98.79%
+                 4.9     98.87%
+                 5.0     98.95%
+                 5.1     99.01%
+                 5.2     99.06%
+                 5.3     99.12%
+                 5.4     99.16%
+                 5.5     99.22%
+                 5.6     99.27%
+                 5.7     99.32%
+                 5.8     99.36%
+                 5.9     99.40%
+                 6.0     99.42%
+                 6.1     99.45%
+                 6.2     99.47%
+                 6.3     99.49%
+                 6.4     99.51%
+                 6.5     99.52%
+                 6.6     99.54%
+                 6.7     99.56%
+                 6.8     99.57%
+                 6.9     99.59%
+                 7.0     99.61%
+                 7.1     99.62%
+                 7.2     99.64%
+                 7.3     99.65%
+                 7.4     99.66%
+                 7.5     99.67%
+                 7.6     99.68%
+                 7.7     99.69%
+                 7.8     99.71%
+                 7.9     99.72%
+                 8.0     99.73%
+                 8.1     99.74%
+                 8.2     99.75%
+                 8.3     99.76%
+                 8.4     99.77%
+                 8.5     99.78%
+                 8.6     99.79%
+                 8.7     99.80%
+                 8.8     99.81%
+                 8.9     99.82%
+                 9.0     99.82%
+                 9.1     99.83%
+                 9.2     99.84%
+                 9.3     99.85%
+                 9.4     99.86%
+                 9.5     99.86%
+                 9.6     99.87%
+                 9.7     99.87%
+                 9.8     99.87%
+                 9.9     99.88%
+                10.0     99.89%
+                10.1     99.89%
+                10.2     99.89%
+                10.3     99.90%
+                10.4     99.90%
+                10.5     99.90%
+                10.6     99.90%
+                10.7     99.91%
+                10.8     99.91%
+                10.9     99.91%
+                11.0     99.92%
+                11.1     99.92%
+                11.2     99.92%
+                11.3     99.92%
+                11.4     99.93%
+                11.5     99.93%
+                11.6     99.93%
+                11.7     99.93%
+                11.8     99.93%
+                11.9     99.93%
+                12.0     99.94%
+                12.1     99.94%
+                12.2     99.94%
+                12.3     99.94%
+                12.4     99.94%
+                12.5     99.94%
+                12.6     99.94%
+                12.7     99.94%
+                12.8     99.94%
+                12.9     99.94%
+                13.0     99.94%
+                13.1     99.94%
+                13.2     99.94%
+                13.3     99.94%
+                13.4     99.94%
+                13.5     99.94%
+                13.6     99.95%
+                13.7     99.95%
+                13.8     99.95%
+                13.9     99.95%
+                14.0     99.95%
+                14.1     99.95%
+                14.2     99.95%
+                14.3     99.95%
+                14.4     99.95%
+                14.5     99.95%
+                14.6     99.95%
+                14.7     99.95%
+                14.8     99.95%
+                14.9     99.95%
+                15.0     99.95%
+                15.1     99.95%
+                15.2     99.95%
+                15.3     99.95%
+                15.4     99.95%
+                15.5     99.95%
+                15.6     99.96%
+                15.7     99.96%
+                15.8     99.96%
+                15.9     99.96%
+                16.0     99.96%
+                16.1     99.96%
+                16.2     99.96%
+                16.3     99.96%
+                16.4     99.96%
+                16.5     99.96%
+                16.6     99.96%
+                16.7     99.96%
+                16.8     99.96%
+                16.9     99.96%
+                17.0     99.96%
+                17.1     99.96%
+                17.2     99.96%
+                17.3     99.96%
+                17.4     99.96%
+                17.5     99.96%
+                17.6     99.96%
+                17.7     99.96%
+                17.8     99.97%
+                17.9     99.97%
+                18.0     99.97%
+                18.1     99.97%
+                18.2     99.97%
+                18.3     99.97%
+                18.4     99.98%
+                18.5     99.98%
+                18.6     99.98%
+                18.7     99.98%
+                18.8     99.98%
+                18.9     99.98%
+                19.0     99.98%
+                19.1     99.98%
+                19.2     99.98%
+                19.3     99.98%
+                19.4     99.98%
+                19.5     99.98%
+                19.6     99.98%
+                19.7     99.98%
+                19.8     99.98%
+                19.9     99.98%
+                20.0     99.98%
+                20.1     99.99%
+                20.2     99.99%
+                20.3     99.99%
+                20.4     99.99%
+                20.5     99.99%
+                20.6     99.99%
+                20.7     99.99%
+                20.8     99.99%
+                20.9     99.99%
+                21.0     99.99%
+                21.1     99.99%
+                21.2     99.99%
+                21.3     99.99%
+                21.4     99.99%
+                21.5     99.99%
+                21.6     99.99%
+                21.7     99.99%
+                21.8     99.99%
+                21.9     99.99%
+                22.0     99.99%
+                22.1     99.99%
+                22.2     99.99%
+                22.3     99.99%
+                22.4     99.99%
+                22.5     99.99%
+                22.6     99.99%
+                22.7     99.99%
+                22.8     99.99%
+                22.9     99.99%
+                23.0     99.99%
+                23.1     99.99%
+                23.2     99.99%
+                23.3     99.99%
+                23.4     99.99%
+                23.5     99.99%
+                23.6     99.99%
+                23.7     99.99%
+                23.8     99.99%
+                23.9     99.99%
+                24.0     99.99%
+                24.1     99.99%
+                24.2     99.99%
+                24.3    100.00%
+                24.4    100.00%
+                24.5    100.00%
+                24.6    100.00%
+                24.7    100.00%
+                24.8    100.00%
+                24.9    100.00%
+                25.0    100.00%
+                25.1    100.00%
+                25.2    100.00%
+                25.3    100.00%
+                25.4    100.00%
+                25.5    100.00%
+                25.6    100.00%
+                25.7    100.00%
+                25.8    100.00%
+                25.9    100.00%
+                26.0    100.00%
+                26.1    100.00%
+                26.2    100.00%
+                26.3    100.00%
+                26.4    100.00%
+                26.5    100.00%
+                26.6    100.00%
+                26.7    100.00%
+                26.8    100.00%
+                26.9    100.00%
+                27.0    100.00%
+                27.1    100.00%
+                27.2    100.00%
+                27.3    100.00%
+                27.4    100.00%
+                27.5    100.00%
+                27.6    100.00%
+                27.7    100.00%
+                27.8    100.00%
+                27.9    100.00%
+                28.0    100.00%
+                28.1    100.00%
+                28.2    100.00%
+                28.3    100.00%
+                28.4    100.00%
+                28.5    100.00%
+                28.6    100.00%
+                28.7    100.00%
+                28.8    100.00%
+                28.9    100.00%
+                29.0    100.00%
+                29.1    100.00%
+                29.2    100.00%
+                29.3    100.00%
+                29.4    100.00%
+                29.5    100.00%
+                29.6    100.00%
+                29.7    100.00%
+                29.8    100.00%
+                29.9    100.00%
+                30.0    100.00%
+                30.1    100.00%
+                30.2    100.00%
+                30.3    100.00%
+                30.4    100.00%
+                30.5    100.00%
+                30.6    100.00%
+                30.7    100.00%
+                30.8    100.00%
+                30.9    100.00%
+                31.0    100.00%
+                31.1    100.00%
+                31.2    100.00%
+                31.3    100.00%
+

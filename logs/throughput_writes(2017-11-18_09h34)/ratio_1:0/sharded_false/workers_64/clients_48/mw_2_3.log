@@ -1,0 +1,3349 @@
+Threads: 64, Sharded reads: false, Number of Memcached servers: 3.
+
+All measures in microseconds.
+  SETS   GETS  MGETS   INVLD    TOT   HITS     RSP T      Q T     SVR T  Q LEN
+ 72586      0      0       0  72586  72586  13053.43  5966.84   7051.15     61
+  8569      0      0       0   8569   8569  13406.30  6213.76   7149.84     62
+  8821      0      0       0   8821   8821  12716.32  5766.48   6926.20     72
+  8049      0      0       0   8049   8049  13715.81  6057.74   7617.76     80
+  8843      0      0       0   8843   8843  12441.28  5426.32   6985.70     80
+  8825      0      0       0   8825   8825  13073.55  5999.56   7052.98     30
+  8566      0      0       0   8566   8566  13291.49  6035.88   7221.36     80
+  8843      0      0       0   8843   8843  13195.28  6117.10   7044.37     50
+  9438      0      0       0   9438   9438  12005.09  5389.46   6589.25     60
+  8085      0      0       0   8085   8085  14008.11  6296.63   7687.23     32
+  8606      0      0       0   8606   8606  13186.07  5955.05   7206.14     80
+  8831      0      0       0   8831   8831  13148.68  6067.47   7056.48     49
+  8412      0      0       0   8412   8412  12656.22  5748.91   6876.53     71
+  8517      0      0       0   8517   8517  14932.41  6969.16   7931.33     36
+  8184      0      0       0   8184   8184  13549.90  6052.49   7465.46      0
+  8345      0      0       0   8345   8345  13857.42  6444.76   7385.21     32
+  7726      0      0       0   7726   7726  14428.05  6360.80   8047.30     62
+  8665      0      0       0   8665   8665  13607.02  6443.23   7136.14     72
+  8408      0      0       0   8408   8408  13950.63  6541.04   7382.69     80
+  8127      0      0       0   8127   8127  14890.88  7180.12   7678.03     52
+  8508      0      0       0   8508   8508  13728.89  6422.87   7276.57     65
+  8832      0      0       0   8832   8832  13009.52  6001.05   6980.49     27
+  8377      0      0       0   8377   8377  13561.02  6217.26   7311.96     32
+  8711      0      0       0   8711   8711  13123.61  5992.34   7101.99     51
+  8689      0      0       0   8689   8689  13236.00  6055.98   7143.63     68
+  8821      0      0       0   8821   8821  13049.98  5961.61   7053.59     19
+  7890      0      0       0   7890   7890  14395.45  6539.40   7833.35     80
+  8347      0      0       0   8347   8347  13796.84  6363.81   7408.18     18
+  8657      0      0       0   8657   8657  13339.85  6147.46   7167.01     25
+  8533      0      0       0   8533   8533  13460.31  6174.51   7263.10     67
+  8583      0      0       0   8583   8583  13424.32  6209.36   7189.06     80
+  8004      0      0       0   8004   8004  14342.46  6606.33   7702.66      0
+  8509      0      0       0   8509   8509  13411.02  6117.92   7257.76     46
+  8015      0      0       0   8015   8015  13688.25  5976.98   7677.13     36
+  8269      0      0       0   8269   8269  13883.81  6298.81   7550.06     42
+  8624      0      0       0   8624   8624  13663.83  6417.05   7209.15     43
+  8398      0      0       0   8398   8398  13340.91  5975.62   7340.74     64
+  8581      0      0       0   8581   8581  13234.08  5958.65   7246.24     99
+  8275      0      0       0   8275   8275  13503.69  6292.97   7184.67     57
+  6994      0      0       0   6994   6994  17283.43  8250.65   9008.25     53
+  6677      0      0       0   6677   6677  16980.92  7360.18   9557.02     61
+  7788      0      0       0   7788   7788  12908.30  5357.13   7510.62     50
+  8977      0      0       0   8977   8977  13546.85  6182.95   7333.19     30
+  8335      0      0       0   8335   8335  13821.97  6352.39   7433.33     47
+  8439      0      0       0   8439   8439  13809.64  6239.93   7538.51     46
+  8584      0      0       0   8584   8584  13354.71  6106.89   7221.52     79
+  8091      0      0       0   8091   8091  14694.16  6985.22   7681.00     37
+  8447      0      0       0   8447   8447  13880.45  6457.48   7394.03     53
+  8239      0      0       0   8239   8239  14260.12  6746.73   7481.30     45
+  8015      0      0       0   8015   8015  13965.69  6310.75   7600.91     80
+  8481      0      0       0   8481   8481  13590.25  6259.24   7295.48     43
+  8509      0      0       0   8509   8509  13700.63  6348.69   7320.20     38
+  8270      0      0       0   8270   8270  13954.83  6464.97   7456.18     38
+  7921      0      0       0   7921   7921  14963.24  7070.36   7864.81     15
+  8165      0      0       0   8165   8165  14295.08  6658.77   7606.56     76
+  8238      0      0       0   8238   8238  14222.77  6687.78   7499.81     59
+  7129      0      0       0   7129   7129  16121.67  7417.00   8672.52     72
+  8256      0      0       0   8256   8256  13920.28  6363.03   7529.39     68
+  8243      0      0       0   8243   8243  14533.29  6950.41   7550.41     17
+  7131      0      0       0   7131   7131  15856.64  7129.27   8695.39     42
+  8517      0      0       0   8517   8517  13840.37  6521.53   7289.08     73
+  8156      0      0       0   8156   8156  14392.12  6681.96   7672.84     29
+  8418      0      0       0   8418   8418  14071.83  6627.19   7411.22     62
+  8232      0      0       0   8232   8232  14508.10  6945.28   7533.19     47
+  7197      0      0       0   7197   7197  15451.14  6879.54   8499.46     41
+  8017      0      0       0   8017   8017  13930.39  6247.03   7646.48     33
+  8749      0      0       0   8749   8749  11830.50  5109.28   6679.98     24
+  8394      0      0       0   8394   8394  13537.11  6169.81   7338.07     67
+  8436      0      0       0   8436   8436  13746.31  6389.76   7323.24      0
+  8378      0      0       0   8378   8378  13330.05  5946.63   7337.96     80
+  8358      0      0       0   8358   8358  13459.35  6047.95   7379.97     49
+  7647      0      0       0   7647   7647  14296.92  6370.40   7874.33     63
+  8414      0      0       0   8414   8414  13423.72  6078.38   7301.90     80
+  8546      0      0       0   8546   8546  13780.63  6451.71   7300.49     43
+  8647      0      0       0   8647   8647  13277.51  6062.24   7188.35     73
+  8560      0      0       0   8560   8560  13697.62  6410.62   7258.07     36
+  8278      0      0       0   8278   8278  13084.89  5683.97   7352.10     76
+  8564      0      0       0   8564   8564  13147.26  5915.30   7190.42     70
+  8574      0      0       0   8574   8574  13711.85  6494.57   7190.79     55
+  8306      0      0       0   8306   8306  13420.69  6007.26   7375.17     80
+  8464      0      0       0   8464   8464  13635.65  6316.18   7291.30     80
+  8641      0      0       0   8641   8641  13437.30  6247.22   7151.58     32
+  2867      0      0       0   2867   2867   6768.00  1210.80   5521.99      0
+     0      0      0       0      0      0       NaN      NaN       NaN      0
+     0      0      0       0      0      0       NaN      NaN       NaN      0
+     0      0      0       0      0      0       NaN      NaN       NaN      0
+     0      0      0       0      0      0       NaN      NaN       NaN      0
+     0      0      0       0      0      0       NaN      NaN       NaN      0
+================================================================================
+ALL STATS (timing measures are in microseconds)
+WORKER 0:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11783|   129.48|   129.48|     0.00| 13654.14|  7382.03|  7351.34
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 1:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11908|   130.86|   130.86|     0.00| 13715.70|  7296.48|  7268.75
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 2:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11771|   129.35|   129.35|     0.00| 13678.79|  7388.90|  7358.54
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 3:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11595|   127.42|   127.42|     0.00| 13702.83|  7495.12|  7464.95
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 4:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11794|   129.60|   129.60|     0.00| 13584.19|  7374.48|  7341.63
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 5:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11750|   129.12|   129.12|     0.00| 13627.08|  7392.48|  7359.80
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 6:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11719|   128.78|   128.78|     0.00| 13687.51|  7412.42|  7377.36
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 7:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11802|   129.69|   129.69|     0.00| 13585.08|  7366.49|  7335.04
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 8:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11588|   127.34|   127.34|     0.00| 13634.61|  7501.44|  7472.40
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 9:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11745|   129.07|   129.07|     0.00| 13645.68|  7399.01|  7364.82
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 10:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11705|   128.63|   128.63|     0.00| 13710.76|  7432.27|  7395.56
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 11:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11787|   129.53|   129.53|     0.00| 13704.83|  7378.55|  7346.96
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 12:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11821|   129.90|   129.90|     0.00| 13672.45|  7342.89|  7313.33
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 13:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11637|   127.88|   127.88|     0.00| 13668.61|  7472.36|  7437.15
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 14:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11765|   129.29|   129.29|     0.00| 13708.25|  7384.87|  7357.36
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 15:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11703|   128.60|   128.60|     0.00| 13598.70|  7432.47|  7399.02
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 16:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11789|   129.55|   129.55|     0.00| 13704.49|  7370.27|  7338.82
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 17:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11579|   127.24|   127.24|     0.00| 13731.60|  7509.39|  7475.47
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 18:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11890|   130.66|   130.66|     0.00| 13619.99|  7305.59|  7275.07
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 19:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11777|   129.42|   129.42|     0.00| 13579.87|  7379.93|  7352.19
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 20:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11879|   130.54|   130.54|     0.00| 13703.64|  7318.57|  7291.71
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 21:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11625|   127.75|   127.75|     0.00| 13593.33|  7479.89|  7449.77
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 22:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11747|   129.09|   129.09|     0.00| 13622.35|  7394.26|  7367.53
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 23:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11651|   128.03|   128.03|     0.00| 13667.07|  7458.20|  7422.30
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 24:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11715|   128.74|   128.74|     0.00| 13643.69|  7414.17|  7383.97
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 25:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11685|   128.41|   128.41|     0.00| 13723.86|  7433.33|  7396.92
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 26:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11669|   128.23|   128.23|     0.00| 13659.73|  7444.36|  7409.97
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 27:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11702|   128.59|   128.59|     0.00| 13721.32|  7430.25|  7392.44
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 28:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11737|   128.98|   128.98|     0.00| 13647.61|  7405.09|  7373.38
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 29:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11791|   129.57|   129.57|     0.00| 13645.75|  7370.89|  7341.73
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 30:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11816|   129.85|   129.85|     0.00| 13663.01|  7348.27|  7321.90
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 31:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11695|   128.52|   128.52|     0.00| 13737.34|  7429.48|  7394.66
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 32:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11768|   129.32|   129.32|     0.00| 13670.77|  7386.27|  7358.91
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 33:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11797|   129.64|   129.64|     0.00| 13704.18|  7374.15|  7343.86
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 34:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11727|   128.87|   128.87|     0.00| 13677.31|  7413.28|  7380.02
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 35:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11932|   131.12|   131.12|     0.00| 13718.03|  7281.44|  7252.12
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 36:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11629|   127.79|   127.79|     0.00| 13619.11|  7472.00|  7435.57
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 37:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11643|   127.95|   127.95|     0.00| 13754.19|  7461.48|  7421.76
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 38:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11543|   126.85|   126.85|     0.00| 13710.91|  7528.11|  7488.03
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 39:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11706|   128.64|   128.64|     0.00| 13676.32|  7422.79|  7391.33
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 40:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11722|   128.81|   128.81|     0.00| 13586.08|  7409.99|  7373.50
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 41:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11767|   129.31|   129.31|     0.00| 13606.65|  7390.61|  7358.40
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 42:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11627|   127.77|   127.77|     0.00| 13694.08|  7475.73|  7442.49
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 43:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11831|   130.01|   130.01|     0.00| 13637.08|  7352.17|  7319.84
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 44:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11725|   128.85|   128.85|     0.00| 13695.05|  7408.04|  7375.86
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 45:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11624|   127.74|   127.74|     0.00| 13683.12|  7476.75|  7442.56
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 46:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11696|   128.53|   128.53|     0.00| 13650.09|  7426.53|  7389.03
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 47:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11831|   130.01|   130.01|     0.00| 13676.42|  7351.53|  7320.93
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 48:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11694|   128.51|   128.51|     0.00| 13688.63|  7431.58|  7401.00
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 49:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11631|   127.81|   127.81|     0.00| 13650.56|  7467.69|  7434.61
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 50:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11653|   128.05|   128.05|     0.00| 13620.34|  7459.14|  7423.78
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 51:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11729|   128.89|   128.89|     0.00| 13603.36|  7412.88|  7374.32
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 52:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11815|   129.84|   129.84|     0.00| 13622.58|  7352.44|  7317.23
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 53:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11786|   129.52|   129.52|     0.00| 13619.28|  7377.94|  7344.62
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 54:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11675|   128.30|   128.30|     0.00| 13730.12|  7452.11|  7418.63
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 55:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11753|   129.15|   129.15|     0.00| 13585.14|  7393.67|  7357.56
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 56:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11778|   129.43|   129.43|     0.00| 13682.72|  7376.51|  7346.86
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 57:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11612|   127.60|   127.60|     0.00| 13731.67|  7480.84|  7440.14
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 58:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11849|   130.21|   130.21|     0.00| 13694.49|  7343.88|  7310.98
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 59:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11581|   127.26|   127.26|     0.00| 13688.50|  7507.25|  7467.57
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 60:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11596|   127.43|   127.43|     0.00| 13658.46|  7494.65|  7457.39
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 61:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11710|   128.68|   128.68|     0.00| 13665.87|  7425.05|  7397.18
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 62:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11681|   128.36|   128.36|     0.00| 13695.30|  7436.86|  7401.45
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+WORKER 63:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |    11627|   127.77|   127.77|     0.00| 13702.12|  7472.27|  7434.05
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+================================================================================
+================================================================================
+
+AGGREGATE FOR ALL WORKERS:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |   750358|  8245.69|  8245.69|     0.00| 13666.24|  7413.03|  7380.14
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: NaN
+
+
+ HISTOGRAM
+  Response time (ms)   Percent
+                 0.1      0.00%
+                 0.2      0.00%
+                 0.3      0.00%
+                 0.4      0.00%
+                 0.5      0.00%
+                 0.6      0.00%
+                 0.7      0.00%
+                 0.8      0.00%
+                 0.9      0.00%
+                 1.0      0.00%
+                 1.1      0.00%
+                 1.2      0.00%
+                 1.3      0.00%
+                 1.4      0.00%
+                 1.5      0.00%
+                 1.6      0.00%
+                 1.7      0.00%
+                 1.8      0.00%
+                 1.9      0.00%
+                 2.0      0.01%
+                 2.1      0.03%
+                 2.2      0.05%
+                 2.3      0.08%
+                 2.4      0.10%
+                 2.5      0.14%
+                 2.6      0.18%
+                 2.7      0.23%
+                 2.8      0.27%
+                 2.9      0.31%
+                 3.0      0.35%
+                 3.1      0.40%
+                 3.2      0.45%
+                 3.3      0.50%
+                 3.4      0.53%
+                 3.5      0.57%
+                 3.6      0.63%
+                 3.7      0.69%
+                 3.8      0.75%
+                 3.9      0.80%
+                 4.0      0.87%
+                 4.1      0.95%
+                 4.2      1.02%
+                 4.3      1.09%
+                 4.4      1.17%
+                 4.5      1.25%
+                 4.6      1.32%
+                 4.7      1.39%
+                 4.8      1.47%
+                 4.9      1.55%
+                 5.0      1.63%
+                 5.1      1.70%
+                 5.2      1.78%
+                 5.3      1.85%
+                 5.4      1.92%
+                 5.5      2.00%
+                 5.6      2.08%
+                 5.7      2.15%
+                 5.8      2.22%
+                 5.9      2.30%
+                 6.0      2.36%
+                 6.1      2.45%
+                 6.2      2.53%
+                 6.3      2.61%
+                 6.4      2.72%
+                 6.5      2.82%
+                 6.6      2.93%
+                 6.7      3.02%
+                 6.8      3.13%
+                 6.9      3.24%
+                 7.0      3.35%
+                 7.1      3.46%
+                 7.2      3.59%
+                 7.3      3.73%
+                 7.4      3.85%
+                 7.5      3.99%
+                 7.6      4.13%
+                 7.7      4.29%
+                 7.8      4.47%
+                 7.9      4.66%
+                 8.0      4.88%
+                 8.1      5.11%
+                 8.2      5.34%
+                 8.3      5.60%
+                 8.4      5.89%
+                 8.5      6.18%
+                 8.6      6.52%
+                 8.7      6.86%
+                 8.8      7.26%
+                 8.9      7.68%
+                 9.0      8.10%
+                 9.1      8.55%
+                 9.2      9.05%
+                 9.3      9.64%
+                 9.4     10.29%
+                 9.5     11.01%
+                 9.6     11.83%
+                 9.7     12.70%
+                 9.8     13.67%
+                 9.9     14.63%
+                10.0     15.64%
+                10.1     16.78%
+                10.2     17.95%
+                10.3     19.20%
+                10.4     20.47%
+                10.5     21.82%
+                10.6     23.23%
+                10.7     24.66%
+                10.8     26.16%
+                10.9     27.71%
+                11.0     29.38%
+                11.1     31.08%
+                11.2     32.81%
+                11.3     34.52%
+                11.4     36.36%
+                11.5     38.13%
+                11.6     39.82%
+                11.7     41.49%
+                11.8     43.10%
+                11.9     44.61%
+                12.0     46.06%
+                12.1     47.46%
+                12.2     48.77%
+                12.3     50.01%
+                12.4     51.11%
+                12.5     52.16%
+                12.6     53.14%
+                12.7     54.07%
+                12.8     54.97%
+                12.9     55.78%
+                13.0     56.56%
+                13.1     57.33%
+                13.2     58.08%
+                13.3     58.78%
+                13.4     59.45%
+                13.5     60.11%
+                13.6     60.77%
+                13.7     61.40%
+                13.8     62.02%
+                13.9     62.62%
+                14.0     63.25%
+                14.1     63.85%
+                14.2     64.41%
+                14.3     64.98%
+                14.4     65.53%
+                14.5     66.07%
+                14.6     66.59%
+                14.7     67.11%
+                14.8     67.60%
+                14.9     68.11%
+                15.0     68.60%
+                15.1     69.06%
+                15.2     69.52%
+                15.3     70.05%
+                15.4     70.53%
+                15.5     71.01%
+                15.6     71.45%
+                15.7     71.94%
+                15.8     72.41%
+                15.9     72.87%
+                16.0     73.38%
+                16.1     73.89%
+                16.2     74.38%
+                16.3     74.88%
+                16.4     75.41%
+                16.5     75.93%
+                16.6     76.48%
+                16.7     77.05%
+                16.8     77.62%
+                16.9     78.16%
+                17.0     78.73%
+                17.1     79.29%
+                17.2     79.88%
+                17.3     80.47%
+                17.4     81.07%
+                17.5     81.67%
+                17.6     82.25%
+                17.7     82.78%
+                17.8     83.32%
+                17.9     83.86%
+                18.0     84.39%
+                18.1     84.90%
+                18.2     85.39%
+                18.3     85.90%
+                18.4     86.38%
+                18.5     86.86%
+                18.6     87.31%
+                18.7     87.73%
+                18.8     88.15%
+                18.9     88.58%
+                19.0     88.98%
+                19.1     89.36%
+                19.2     89.77%
+                19.3     90.16%
+                19.4     90.53%
+                19.5     90.92%
+                19.6     91.29%
+                19.7     91.65%
+                19.8     92.00%
+                19.9     92.33%
+                20.0     92.63%
+                20.1     92.94%
+                20.2     93.22%
+                20.3     93.49%
+                20.4     93.76%
+                20.5     94.02%
+                20.6     94.29%
+                20.7     94.52%
+                20.8     94.74%
+                20.9     94.96%
+                21.0     95.16%
+                21.1     95.36%
+                21.2     95.54%
+                21.3     95.72%
+                21.4     95.88%
+                21.5     96.06%
+                21.6     96.21%
+                21.7     96.36%
+                21.8     96.51%
+                21.9     96.65%
+                22.0     96.78%
+                22.1     96.91%
+                22.2     97.02%
+                22.3     97.13%
+                22.4     97.23%
+                22.5     97.32%
+                22.6     97.41%
+                22.7     97.49%
+                22.8     97.57%
+                22.9     97.65%
+                23.0     97.72%
+                23.1     97.78%
+                23.2     97.83%
+                23.3     97.88%
+                23.4     97.93%
+                23.5     97.98%
+                23.6     98.04%
+                23.7     98.08%
+                23.8     98.12%
+                23.9     98.16%
+                24.0     98.21%
+                24.1     98.26%
+                24.2     98.31%
+                24.3     98.36%
+                24.4     98.40%
+                24.5     98.44%
+                24.6     98.47%
+                24.7     98.50%
+                24.8     98.52%
+                24.9     98.55%
+                25.0     98.58%
+                25.1     98.61%
+                25.2     98.63%
+                25.3     98.65%
+                25.4     98.66%
+                25.5     98.69%
+                25.6     98.71%
+                25.7     98.73%
+                25.8     98.74%
+                25.9     98.76%
+                26.0     98.77%
+                26.1     98.79%
+                26.2     98.81%
+                26.3     98.83%
+                26.4     98.85%
+                26.5     98.87%
+                26.6     98.89%
+                26.7     98.90%
+                26.8     98.92%
+                26.9     98.94%
+                27.0     98.95%
+                27.1     98.97%
+                27.2     98.98%
+                27.3     99.00%
+                27.4     99.01%
+                27.5     99.02%
+                27.6     99.03%
+                27.7     99.05%
+                27.8     99.06%
+                27.9     99.07%
+                28.0     99.09%
+                28.1     99.10%
+                28.2     99.11%
+                28.3     99.12%
+                28.4     99.14%
+                28.5     99.15%
+                28.6     99.16%
+                28.7     99.17%
+                28.8     99.17%
+                28.9     99.18%
+                29.0     99.19%
+                29.1     99.20%
+                29.2     99.20%
+                29.3     99.21%
+                29.4     99.22%
+                29.5     99.22%
+                29.6     99.23%
+                29.7     99.24%
+                29.8     99.24%
+                29.9     99.25%
+                30.0     99.25%
+                30.1     99.26%
+                30.2     99.26%
+                30.3     99.27%
+                30.4     99.27%
+                30.5     99.27%
+                30.6     99.28%
+                30.7     99.28%
+                30.8     99.29%
+                30.9     99.29%
+                31.0     99.30%
+                31.1     99.30%
+                31.2     99.31%
+                31.3     99.31%
+                31.4     99.32%
+                31.5     99.33%
+                31.6     99.33%
+                31.7     99.34%
+                31.8     99.34%
+                31.9     99.35%
+                32.0     99.35%
+                32.1     99.36%
+                32.2     99.36%
+                32.3     99.36%
+                32.4     99.37%
+                32.5     99.37%
+                32.6     99.38%
+                32.7     99.38%
+                32.8     99.38%
+                32.9     99.39%
+                33.0     99.40%
+                33.1     99.40%
+                33.2     99.40%
+                33.3     99.41%
+                33.4     99.41%
+                33.5     99.42%
+                33.6     99.42%
+                33.7     99.42%
+                33.8     99.43%
+                33.9     99.44%
+                34.0     99.44%
+                34.1     99.44%
+                34.2     99.44%
+                34.3     99.45%
+                34.4     99.45%
+                34.5     99.45%
+                34.6     99.46%
+                34.7     99.46%
+                34.8     99.46%
+                34.9     99.47%
+                35.0     99.47%
+                35.1     99.48%
+                35.2     99.48%
+                35.3     99.48%
+                35.4     99.49%
+                35.5     99.49%
+                35.6     99.50%
+                35.7     99.50%
+                35.8     99.50%
+                35.9     99.50%
+                36.0     99.50%
+                36.1     99.51%
+                36.2     99.51%
+                36.3     99.51%
+                36.4     99.51%
+                36.5     99.51%
+                36.6     99.52%
+                36.7     99.52%
+                36.8     99.52%
+                36.9     99.52%
+                37.0     99.53%
+                37.1     99.53%
+                37.2     99.53%
+                37.3     99.54%
+                37.4     99.54%
+                37.5     99.54%
+                37.6     99.54%
+                37.7     99.54%
+                37.8     99.55%
+                37.9     99.55%
+                38.0     99.55%
+                38.1     99.55%
+                38.2     99.55%
+                38.3     99.56%
+                38.4     99.56%
+                38.5     99.56%
+                38.6     99.56%
+                38.7     99.56%
+                38.8     99.57%
+                38.9     99.57%
+                39.0     99.57%
+                39.1     99.57%
+                39.2     99.57%
+                39.3     99.58%
+                39.4     99.58%
+                39.5     99.58%
+                39.6     99.58%
+                39.7     99.58%
+                39.8     99.59%
+                39.9     99.59%
+                40.0     99.59%
+                40.1     99.59%
+                40.2     99.59%
+                40.3     99.59%
+                40.4     99.59%
+                40.5     99.59%
+                40.6     99.59%
+                40.7     99.59%
+                40.8     99.60%
+                40.9     99.60%
+                41.0     99.60%
+                41.1     99.60%
+                41.2     99.60%
+                41.3     99.61%
+                41.4     99.61%
+                41.5     99.61%
+                41.6     99.62%
+                41.7     99.62%
+                41.8     99.62%
+                41.9     99.62%
+                42.0     99.62%
+                42.1     99.62%
+                42.2     99.63%
+                42.3     99.63%
+                42.4     99.63%
+                42.5     99.63%
+                42.6     99.63%
+                42.7     99.63%
+                42.8     99.63%
+                42.9     99.63%
+                43.0     99.63%
+                43.1     99.64%
+                43.2     99.64%
+                43.3     99.64%
+                43.4     99.64%
+                43.5     99.64%
+                43.6     99.64%
+                43.7     99.64%
+                43.8     99.64%
+                43.9     99.64%
+                44.0     99.64%
+                44.1     99.64%
+                44.2     99.64%
+                44.3     99.64%
+                44.4     99.65%
+                44.5     99.65%
+                44.6     99.65%
+                44.7     99.65%
+                44.8     99.65%
+                44.9     99.65%
+                45.0     99.65%
+                45.1     99.65%
+                45.2     99.66%
+                45.3     99.66%
+                45.4     99.66%
+                45.5     99.66%
+                45.6     99.66%
+                45.7     99.66%
+                45.8     99.66%
+                45.9     99.66%
+                46.0     99.66%
+                46.1     99.66%
+                46.2     99.66%
+                46.3     99.66%
+                46.4     99.66%
+                46.5     99.66%
+                46.6     99.66%
+                46.7     99.66%
+                46.8     99.66%
+                46.9     99.67%
+                47.0     99.67%
+                47.1     99.67%
+                47.2     99.67%
+                47.3     99.67%
+                47.4     99.67%
+                47.5     99.67%
+                47.6     99.67%
+                47.7     99.67%
+                47.8     99.67%
+                47.9     99.67%
+                48.0     99.68%
+                48.1     99.68%
+                48.2     99.68%
+                48.3     99.68%
+                48.4     99.68%
+                48.5     99.68%
+                48.6     99.68%
+                48.7     99.68%
+                48.8     99.68%
+                48.9     99.68%
+                49.0     99.69%
+                49.1     99.69%
+                49.2     99.69%
+                49.3     99.69%
+                49.4     99.69%
+                49.5     99.69%
+                49.6     99.69%
+                49.7     99.69%
+                49.8     99.69%
+                49.9     99.69%
+                50.0     99.69%
+                50.1     99.69%
+                50.2     99.69%
+                50.3     99.69%
+                50.4     99.69%
+                50.5     99.69%
+                50.6     99.69%
+                50.7     99.69%
+                50.8     99.70%
+                50.9     99.70%
+                51.0     99.70%
+                51.1     99.70%
+                51.2     99.70%
+                51.3     99.70%
+                51.4     99.70%
+                51.5     99.70%
+                51.6     99.70%
+                51.7     99.70%
+                51.8     99.70%
+                51.9     99.70%
+                52.0     99.70%
+                52.1     99.70%
+                52.2     99.70%
+                52.3     99.70%
+                52.4     99.71%
+                52.5     99.71%
+                52.6     99.71%
+                52.7     99.71%
+                52.8     99.71%
+                52.9     99.71%
+                53.0     99.71%
+                53.1     99.71%
+                53.2     99.71%
+                53.3     99.71%
+                53.4     99.71%
+                53.5     99.71%
+                53.6     99.71%
+                53.7     99.71%
+                53.8     99.71%
+                53.9     99.71%
+                54.0     99.71%
+                54.1     99.71%
+                54.2     99.71%
+                54.3     99.71%
+                54.4     99.72%
+                54.5     99.72%
+                54.6     99.72%
+                54.7     99.72%
+                54.8     99.72%
+                54.9     99.72%
+                55.0     99.72%
+                55.1     99.72%
+                55.2     99.72%
+                55.3     99.72%
+                55.4     99.72%
+                55.5     99.72%
+                55.6     99.72%
+                55.7     99.72%
+                55.8     99.73%
+                55.9     99.73%
+                56.0     99.73%
+                56.1     99.73%
+                56.2     99.73%
+                56.3     99.73%
+                56.4     99.73%
+                56.5     99.73%
+                56.6     99.73%
+                56.7     99.73%
+                56.8     99.73%
+                56.9     99.73%
+                57.0     99.73%
+                57.1     99.73%
+                57.2     99.73%
+                57.3     99.73%
+                57.4     99.73%
+                57.5     99.73%
+                57.6     99.73%
+                57.7     99.73%
+                57.8     99.73%
+                57.9     99.73%
+                58.0     99.73%
+                58.1     99.74%
+                58.2     99.74%
+                58.3     99.74%
+                58.4     99.74%
+                58.5     99.74%
+                58.6     99.74%
+                58.7     99.74%
+                58.8     99.74%
+                58.9     99.74%
+                59.0     99.74%
+                59.1     99.74%
+                59.2     99.74%
+                59.3     99.74%
+                59.4     99.74%
+                59.5     99.74%
+                59.6     99.74%
+                59.7     99.75%
+                59.8     99.75%
+                59.9     99.75%
+                60.0     99.75%
+                60.1     99.75%
+                60.2     99.75%
+                60.3     99.75%
+                60.4     99.75%
+                60.5     99.75%
+                60.6     99.75%
+                60.7     99.75%
+                60.8     99.75%
+                60.9     99.75%
+                61.0     99.75%
+                61.1     99.75%
+                61.2     99.75%
+                61.3     99.76%
+                61.4     99.76%
+                61.5     99.76%
+                61.6     99.76%
+                61.7     99.76%
+                61.8     99.76%
+                61.9     99.76%
+                62.0     99.76%
+                62.1     99.76%
+                62.2     99.77%
+                62.3     99.77%
+                62.4     99.77%
+                62.5     99.77%
+                62.6     99.77%
+                62.7     99.77%
+                62.8     99.77%
+                62.9     99.77%
+                63.0     99.77%
+                63.1     99.77%
+                63.2     99.77%
+                63.3     99.77%
+                63.4     99.78%
+                63.5     99.78%
+                63.6     99.78%
+                63.7     99.78%
+                63.8     99.78%
+                63.9     99.78%
+                64.0     99.78%
+                64.1     99.78%
+                64.2     99.78%
+                64.3     99.78%
+                64.4     99.78%
+                64.5     99.78%
+                64.6     99.78%
+                64.7     99.78%
+                64.8     99.78%
+                64.9     99.78%
+                65.0     99.78%
+                65.1     99.78%
+                65.2     99.78%
+                65.3     99.78%
+                65.4     99.78%
+                65.5     99.78%
+                65.6     99.78%
+                65.7     99.78%
+                65.8     99.78%
+                65.9     99.78%
+                66.0     99.78%
+                66.1     99.78%
+                66.2     99.78%
+                66.3     99.78%
+                66.4     99.78%
+                66.5     99.78%
+                66.6     99.78%
+                66.7     99.78%
+                66.8     99.78%
+                66.9     99.78%
+                67.0     99.78%
+                67.1     99.78%
+                67.2     99.78%
+                67.3     99.78%
+                67.4     99.79%
+                67.5     99.79%
+                67.6     99.79%
+                67.7     99.79%
+                67.8     99.80%
+                67.9     99.80%
+                68.0     99.80%
+                68.1     99.80%
+                68.2     99.80%
+                68.3     99.80%
+                68.4     99.80%
+                68.5     99.80%
+                68.6     99.81%
+                68.7     99.81%
+                68.8     99.81%
+                68.9     99.81%
+                69.0     99.81%
+                69.1     99.81%
+                69.2     99.81%
+                69.3     99.81%
+                69.4     99.81%
+                69.5     99.81%
+                69.6     99.81%
+                69.7     99.81%
+                69.8     99.81%
+                69.9     99.81%
+                70.0     99.81%
+                70.1     99.82%
+                70.2     99.82%
+                70.3     99.82%
+                70.4     99.82%
+                70.5     99.82%
+                70.6     99.82%
+                70.7     99.82%
+                70.8     99.82%
+                70.9     99.82%
+                71.0     99.82%
+                71.1     99.82%
+                71.2     99.82%
+                71.3     99.82%
+                71.4     99.82%
+                71.5     99.82%
+                71.6     99.82%
+                71.7     99.82%
+                71.8     99.82%
+                71.9     99.82%
+                72.0     99.82%
+                72.1     99.82%
+                72.2     99.82%
+                72.3     99.82%
+                72.4     99.82%
+                72.5     99.82%
+                72.6     99.82%
+                72.7     99.82%
+                72.8     99.82%
+                72.9     99.82%
+                73.0     99.82%
+                73.1     99.82%
+                73.2     99.82%
+                73.3     99.82%
+                73.4     99.82%
+                73.5     99.82%
+                73.6     99.82%
+                73.7     99.82%
+                73.8     99.82%
+                73.9     99.82%
+                74.0     99.82%
+                74.1     99.82%
+                74.2     99.82%
+                74.3     99.82%
+                74.4     99.82%
+                74.5     99.82%
+                74.6     99.82%
+                74.7     99.82%
+                74.8     99.82%
+                74.9     99.82%
+                75.0     99.83%
+                75.1     99.83%
+                75.2     99.83%
+                75.3     99.83%
+                75.4     99.83%
+                75.5     99.83%
+                75.6     99.83%
+                75.7     99.83%
+                75.8     99.83%
+                75.9     99.83%
+                76.0     99.83%
+                76.1     99.83%
+                76.2     99.83%
+                76.3     99.83%
+                76.4     99.83%
+                76.5     99.83%
+                76.6     99.83%
+                76.7     99.83%
+                76.8     99.83%
+                76.9     99.83%
+                77.0     99.83%
+                77.1     99.83%
+                77.2     99.83%
+                77.3     99.83%
+                77.4     99.83%
+                77.5     99.83%
+                77.6     99.83%
+                77.7     99.83%
+                77.8     99.83%
+                77.9     99.84%
+                78.0     99.84%
+                78.1     99.84%
+                78.2     99.84%
+                78.3     99.84%
+                78.4     99.84%
+                78.5     99.84%
+                78.6     99.84%
+                78.7     99.84%
+                78.8     99.84%
+                78.9     99.84%
+                79.0     99.84%
+                79.1     99.84%
+                79.2     99.84%
+                79.3     99.84%
+                79.4     99.84%
+                79.5     99.84%
+                79.6     99.84%
+                79.7     99.84%
+                79.8     99.84%
+                79.9     99.84%
+                80.0     99.84%
+                80.1     99.84%
+                80.2     99.84%
+                80.3     99.84%
+                80.4     99.84%
+                80.5     99.84%
+                80.6     99.84%
+                80.7     99.84%
+                80.8     99.84%
+                80.9     99.84%
+                81.0     99.84%
+                81.1     99.84%
+                81.2     99.84%
+                81.3     99.84%
+                81.4     99.84%
+                81.5     99.84%
+                81.6     99.84%
+                81.7     99.84%
+                81.8     99.84%
+                81.9     99.84%
+                82.0     99.84%
+                82.1     99.84%
+                82.2     99.84%
+                82.3     99.84%
+                82.4     99.84%
+                82.5     99.84%
+                82.6     99.84%
+                82.7     99.84%
+                82.8     99.84%
+                82.9     99.84%
+                83.0     99.84%
+                83.1     99.84%
+                83.2     99.84%
+                83.3     99.84%
+                83.4     99.84%
+                83.5     99.84%
+                83.6     99.84%
+                83.7     99.84%
+                83.8     99.84%
+                83.9     99.84%
+                84.0     99.84%
+                84.1     99.84%
+                84.2     99.84%
+                84.3     99.84%
+                84.4     99.84%
+                84.5     99.84%
+                84.6     99.84%
+                84.7     99.84%
+                84.8     99.84%
+                84.9     99.84%
+                85.0     99.84%
+                85.1     99.84%
+                85.2     99.84%
+                85.3     99.84%
+                85.4     99.84%
+                85.5     99.84%
+                85.6     99.84%
+                85.7     99.84%
+                85.8     99.84%
+                85.9     99.84%
+                86.0     99.84%
+                86.1     99.84%
+                86.2     99.84%
+                86.3     99.84%
+                86.4     99.84%
+                86.5     99.84%
+                86.6     99.84%
+                86.7     99.84%
+                86.8     99.84%
+                86.9     99.84%
+                87.0     99.84%
+                87.1     99.84%
+                87.2     99.84%
+                87.3     99.84%
+                87.4     99.84%
+                87.5     99.84%
+                87.6     99.85%
+                87.7     99.85%
+                87.8     99.85%
+                87.9     99.85%
+                88.0     99.85%
+                88.1     99.85%
+                88.2     99.85%
+                88.3     99.85%
+                88.4     99.85%
+                88.5     99.85%
+                88.6     99.85%
+                88.7     99.85%
+                88.8     99.85%
+                88.9     99.85%
+                89.0     99.85%
+                89.1     99.85%
+                89.2     99.85%
+                89.3     99.85%
+                89.4     99.85%
+                89.5     99.85%
+                89.6     99.85%
+                89.7     99.86%
+                89.8     99.86%
+                89.9     99.86%
+                90.0     99.86%
+                90.1     99.86%
+                90.2     99.86%
+                90.3     99.86%
+                90.4     99.86%
+                90.5     99.86%
+                90.6     99.86%
+                90.7     99.86%
+                90.8     99.86%
+                90.9     99.86%
+                91.0     99.86%
+                91.1     99.86%
+                91.2     99.86%
+                91.3     99.86%
+                91.4     99.86%
+                91.5     99.86%
+                91.6     99.86%
+                91.7     99.86%
+                91.8     99.86%
+                91.9     99.86%
+                92.0     99.86%
+                92.1     99.86%
+                92.2     99.86%
+                92.3     99.86%
+                92.4     99.86%
+                92.5     99.86%
+                92.6     99.86%
+                92.7     99.86%
+                92.8     99.87%
+                92.9     99.87%
+                93.0     99.87%
+                93.1     99.87%
+                93.2     99.87%
+                93.3     99.87%
+                93.4     99.87%
+                93.5     99.87%
+                93.6     99.87%
+                93.7     99.87%
+                93.8     99.87%
+                93.9     99.87%
+                94.0     99.87%
+                94.1     99.87%
+                94.2     99.87%
+                94.3     99.87%
+                94.4     99.87%
+                94.5     99.87%
+                94.6     99.87%
+                94.7     99.87%
+                94.8     99.87%
+                94.9     99.87%
+                95.0     99.87%
+                95.1     99.88%
+                95.2     99.88%
+                95.3     99.88%
+                95.4     99.88%
+                95.5     99.88%
+                95.6     99.88%
+                95.7     99.88%
+                95.8     99.88%
+                95.9     99.88%
+                96.0     99.88%
+                96.1     99.88%
+                96.2     99.88%
+                96.3     99.88%
+                96.4     99.88%
+                96.5     99.88%
+                96.6     99.88%
+                96.7     99.88%
+                96.8     99.88%
+                96.9     99.88%
+                97.0     99.88%
+                97.1     99.88%
+                97.2     99.89%
+                97.3     99.89%
+                97.4     99.89%
+                97.5     99.89%
+                97.6     99.89%
+                97.7     99.89%
+                97.8     99.89%
+                97.9     99.89%
+                98.0     99.89%
+                98.1     99.89%
+                98.2     99.90%
+                98.3     99.90%
+                98.4     99.90%
+                98.5     99.90%
+                98.6     99.90%
+                98.7     99.90%
+                98.8     99.90%
+                98.9     99.90%
+                99.0     99.90%
+                99.1     99.90%
+                99.2     99.91%
+                99.3     99.91%
+                99.4     99.91%
+                99.5     99.91%
+                99.6     99.91%
+                99.7     99.91%
+                99.8     99.91%
+                99.9     99.91%
+               100.0     99.91%
+               100.1     99.91%
+               100.2     99.91%
+               100.3     99.91%
+               100.4     99.91%
+               100.5     99.91%
+               100.6     99.91%
+               100.7     99.91%
+               100.8     99.91%
+               100.9     99.91%
+               101.0     99.91%
+               101.1     99.91%
+               101.2     99.91%
+               101.3     99.91%
+               101.4     99.91%
+               101.5     99.91%
+               101.6     99.91%
+               101.7     99.91%
+               101.8     99.91%
+               101.9     99.91%
+               102.0     99.91%
+               102.1     99.91%
+               102.2     99.91%
+               102.3     99.91%
+               102.4     99.91%
+               102.5     99.91%
+               102.6     99.91%
+               102.7     99.91%
+               102.8     99.91%
+               102.9     99.91%
+               103.0     99.91%
+               103.1     99.91%
+               103.2     99.91%
+               103.3     99.91%
+               103.4     99.91%
+               103.5     99.91%
+               103.6     99.91%
+               103.7     99.91%
+               103.8     99.91%
+               103.9     99.91%
+               104.0     99.91%
+               104.1     99.91%
+               104.2     99.91%
+               104.3     99.91%
+               104.4     99.91%
+               104.5     99.91%
+               104.6     99.91%
+               104.7     99.91%
+               104.8     99.91%
+               104.9     99.91%
+               105.0     99.91%
+               105.1     99.91%
+               105.2     99.91%
+               105.3     99.91%
+               105.4     99.91%
+               105.5     99.91%
+               105.6     99.91%
+               105.7     99.91%
+               105.8     99.91%
+               105.9     99.91%
+               106.0     99.91%
+               106.1     99.91%
+               106.2     99.91%
+               106.3     99.91%
+               106.4     99.91%
+               106.5     99.91%
+               106.6     99.91%
+               106.7     99.91%
+               106.8     99.91%
+               106.9     99.91%
+               107.0     99.91%
+               107.1     99.91%
+               107.2     99.91%
+               107.3     99.91%
+               107.4     99.91%
+               107.5     99.91%
+               107.6     99.91%
+               107.7     99.91%
+               107.8     99.91%
+               107.9     99.91%
+               108.0     99.91%
+               108.1     99.91%
+               108.2     99.91%
+               108.3     99.91%
+               108.4     99.91%
+               108.5     99.91%
+               108.6     99.91%
+               108.7     99.91%
+               108.8     99.91%
+               108.9     99.91%
+               109.0     99.91%
+               109.1     99.91%
+               109.2     99.91%
+               109.3     99.91%
+               109.4     99.91%
+               109.5     99.91%
+               109.6     99.91%
+               109.7     99.91%
+               109.8     99.91%
+               109.9     99.91%
+               110.0     99.91%
+               110.1     99.91%
+               110.2     99.91%
+               110.3     99.91%
+               110.4     99.91%
+               110.5     99.91%
+               110.6     99.91%
+               110.7     99.91%
+               110.8     99.91%
+               110.9     99.91%
+               111.0     99.91%
+               111.1     99.91%
+               111.2     99.91%
+               111.3     99.91%
+               111.4     99.91%
+               111.5     99.91%
+               111.6     99.91%
+               111.7     99.91%
+               111.8     99.91%
+               111.9     99.91%
+               112.0     99.91%
+               112.1     99.91%
+               112.2     99.91%
+               112.3     99.91%
+               112.4     99.91%
+               112.5     99.91%
+               112.6     99.91%
+               112.7     99.91%
+               112.8     99.91%
+               112.9     99.91%
+               113.0     99.91%
+               113.1     99.91%
+               113.2     99.91%
+               113.3     99.91%
+               113.4     99.91%
+               113.5     99.91%
+               113.6     99.91%
+               113.7     99.91%
+               113.8     99.91%
+               113.9     99.91%
+               114.0     99.91%
+               114.1     99.91%
+               114.2     99.91%
+               114.3     99.91%
+               114.4     99.91%
+               114.5     99.91%
+               114.6     99.91%
+               114.7     99.91%
+               114.8     99.91%
+               114.9     99.91%
+               115.0     99.91%
+               115.1     99.91%
+               115.2     99.91%
+               115.3     99.91%
+               115.4     99.91%
+               115.5     99.91%
+               115.6     99.91%
+               115.7     99.91%
+               115.8     99.91%
+               115.9     99.91%
+               116.0     99.91%
+               116.1     99.91%
+               116.2     99.91%
+               116.3     99.91%
+               116.4     99.91%
+               116.5     99.91%
+               116.6     99.91%
+               116.7     99.91%
+               116.8     99.91%
+               116.9     99.91%
+               117.0     99.91%
+               117.1     99.91%
+               117.2     99.91%
+               117.3     99.91%
+               117.4     99.91%
+               117.5     99.91%
+               117.6     99.91%
+               117.7     99.91%
+               117.8     99.91%
+               117.9     99.91%
+               118.0     99.91%
+               118.1     99.91%
+               118.2     99.91%
+               118.3     99.91%
+               118.4     99.91%
+               118.5     99.91%
+               118.6     99.91%
+               118.7     99.91%
+               118.8     99.91%
+               118.9     99.91%
+               119.0     99.91%
+               119.1     99.91%
+               119.2     99.91%
+               119.3     99.91%
+               119.4     99.91%
+               119.5     99.91%
+               119.6     99.91%
+               119.7     99.91%
+               119.8     99.91%
+               119.9     99.91%
+               120.0     99.91%
+               120.1     99.91%
+               120.2     99.91%
+               120.3     99.91%
+               120.4     99.91%
+               120.5     99.91%
+               120.6     99.91%
+               120.7     99.91%
+               120.8     99.91%
+               120.9     99.91%
+               121.0     99.91%
+               121.1     99.91%
+               121.2     99.91%
+               121.3     99.91%
+               121.4     99.91%
+               121.5     99.91%
+               121.6     99.91%
+               121.7     99.92%
+               121.8     99.92%
+               121.9     99.92%
+               122.0     99.92%
+               122.1     99.92%
+               122.2     99.92%
+               122.3     99.92%
+               122.4     99.92%
+               122.5     99.92%
+               122.6     99.92%
+               122.7     99.92%
+               122.8     99.92%
+               122.9     99.92%
+               123.0     99.92%
+               123.1     99.92%
+               123.2     99.92%
+               123.3     99.92%
+               123.4     99.92%
+               123.5     99.92%
+               123.6     99.92%
+               123.7     99.92%
+               123.8     99.92%
+               123.9     99.92%
+               124.0     99.92%
+               124.1     99.92%
+               124.2     99.92%
+               124.3     99.92%
+               124.4     99.92%
+               124.5     99.92%
+               124.6     99.92%
+               124.7     99.92%
+               124.8     99.92%
+               124.9     99.92%
+               125.0     99.92%
+               125.1     99.92%
+               125.2     99.92%
+               125.3     99.92%
+               125.4     99.92%
+               125.5     99.92%
+               125.6     99.92%
+               125.7     99.92%
+               125.8     99.92%
+               125.9     99.93%
+               126.0     99.93%
+               126.1     99.93%
+               126.2     99.93%
+               126.3     99.93%
+               126.4     99.93%
+               126.5     99.93%
+               126.6     99.93%
+               126.7     99.93%
+               126.8     99.93%
+               126.9     99.93%
+               127.0     99.93%
+               127.1     99.93%
+               127.2     99.93%
+               127.3     99.93%
+               127.4     99.93%
+               127.5     99.93%
+               127.6     99.93%
+               127.7     99.93%
+               127.8     99.94%
+               127.9     99.94%
+               128.0     99.94%
+               128.1     99.94%
+               128.2     99.94%
+               128.3     99.94%
+               128.4     99.94%
+               128.5     99.94%
+               128.6     99.94%
+               128.7     99.94%
+               128.8     99.94%
+               128.9     99.94%
+               129.0     99.94%
+               129.1     99.94%
+               129.2     99.94%
+               129.3     99.94%
+               129.4     99.94%
+               129.5     99.94%
+               129.6     99.94%
+               129.7     99.94%
+               129.8     99.94%
+               129.9     99.94%
+               130.0     99.94%
+               130.1     99.94%
+               130.2     99.94%
+               130.3     99.95%
+               130.4     99.95%
+               130.5     99.95%
+               130.6     99.95%
+               130.7     99.95%
+               130.8     99.95%
+               130.9     99.95%
+               131.0     99.95%
+               131.1     99.95%
+               131.2     99.95%
+               131.3     99.95%
+               131.4     99.95%
+               131.5     99.95%
+               131.6     99.95%
+               131.7     99.95%
+               131.8     99.95%
+               131.9     99.95%
+               132.0     99.95%
+               132.1     99.95%
+               132.2     99.95%
+               132.3     99.95%
+               132.4     99.95%
+               132.5     99.95%
+               132.6     99.96%
+               132.7     99.96%
+               132.8     99.96%
+               132.9     99.96%
+               133.0     99.96%
+               133.1     99.96%
+               133.2     99.96%
+               133.3     99.96%
+               133.4     99.96%
+               133.5     99.96%
+               133.6     99.96%
+               133.7     99.96%
+               133.8     99.96%
+               133.9     99.96%
+               134.0     99.96%
+               134.1     99.96%
+               134.2     99.96%
+               134.3     99.96%
+               134.4     99.96%
+               134.5     99.96%
+               134.6     99.96%
+               134.7     99.96%
+               134.8     99.96%
+               134.9     99.96%
+               135.0     99.96%
+               135.1     99.96%
+               135.2     99.96%
+               135.3     99.96%
+               135.4     99.96%
+               135.5     99.96%
+               135.6     99.96%
+               135.7     99.96%
+               135.8     99.96%
+               135.9     99.96%
+               136.0     99.96%
+               136.1     99.96%
+               136.2     99.96%
+               136.3     99.96%
+               136.4     99.96%
+               136.5     99.96%
+               136.6     99.96%
+               136.7     99.96%
+               136.8     99.96%
+               136.9     99.96%
+               137.0     99.96%
+               137.1     99.96%
+               137.2     99.96%
+               137.3     99.96%
+               137.4     99.96%
+               137.5     99.96%
+               137.6     99.96%
+               137.7     99.96%
+               137.8     99.96%
+               137.9     99.96%
+               138.0     99.96%
+               138.1     99.96%
+               138.2     99.96%
+               138.3     99.96%
+               138.4     99.96%
+               138.5     99.96%
+               138.6     99.96%
+               138.7     99.96%
+               138.8     99.96%
+               138.9     99.96%
+               139.0     99.96%
+               139.1     99.96%
+               139.2     99.96%
+               139.3     99.96%
+               139.4     99.96%
+               139.5     99.96%
+               139.6     99.96%
+               139.7     99.96%
+               139.8     99.96%
+               139.9     99.96%
+               140.0     99.96%
+               140.1     99.96%
+               140.2     99.96%
+               140.3     99.96%
+               140.4     99.96%
+               140.5     99.96%
+               140.6     99.96%
+               140.7     99.96%
+               140.8     99.96%
+               140.9     99.96%
+               141.0     99.96%
+               141.1     99.96%
+               141.2     99.96%
+               141.3     99.96%
+               141.4     99.96%
+               141.5     99.96%
+               141.6     99.96%
+               141.7     99.96%
+               141.8     99.96%
+               141.9     99.96%
+               142.0     99.96%
+               142.1     99.96%
+               142.2     99.96%
+               142.3     99.96%
+               142.4     99.96%
+               142.5     99.96%
+               142.6     99.96%
+               142.7     99.96%
+               142.8     99.96%
+               142.9     99.96%
+               143.0     99.96%
+               143.1     99.96%
+               143.2     99.96%
+               143.3     99.96%
+               143.4     99.96%
+               143.5     99.97%
+               143.6     99.97%
+               143.7     99.97%
+               143.8     99.97%
+               143.9     99.97%
+               144.0     99.97%
+               144.1     99.97%
+               144.2     99.97%
+               144.3     99.97%
+               144.4     99.97%
+               144.5     99.97%
+               144.6     99.97%
+               144.7     99.97%
+               144.8     99.97%
+               144.9     99.97%
+               145.0     99.97%
+               145.1     99.97%
+               145.2     99.97%
+               145.3     99.97%
+               145.4     99.97%
+               145.5     99.97%
+               145.6     99.97%
+               145.7     99.97%
+               145.8     99.97%
+               145.9     99.97%
+               146.0     99.97%
+               146.1     99.97%
+               146.2     99.97%
+               146.3     99.97%
+               146.4     99.97%
+               146.5     99.97%
+               146.6     99.97%
+               146.7     99.97%
+               146.8     99.97%
+               146.9     99.97%
+               147.0     99.97%
+               147.1     99.97%
+               147.2     99.97%
+               147.3     99.97%
+               147.4     99.97%
+               147.5     99.97%
+               147.6     99.97%
+               147.7     99.97%
+               147.8     99.97%
+               147.9     99.97%
+               148.0     99.97%
+               148.1     99.97%
+               148.2     99.97%
+               148.3     99.97%
+               148.4     99.97%
+               148.5     99.97%
+               148.6     99.97%
+               148.7     99.97%
+               148.8     99.97%
+               148.9     99.97%
+               149.0     99.97%
+               149.1     99.97%
+               149.2     99.97%
+               149.3     99.97%
+               149.4     99.97%
+               149.5     99.97%
+               149.6     99.97%
+               149.7     99.97%
+               149.8     99.97%
+               149.9     99.97%
+               150.0     99.97%
+               150.1     99.97%
+               150.2     99.97%
+               150.3     99.97%
+               150.4     99.97%
+               150.5     99.97%
+               150.6     99.97%
+               150.7     99.97%
+               150.8     99.97%
+               150.9     99.97%
+               151.0     99.97%
+               151.1     99.97%
+               151.2     99.97%
+               151.3     99.97%
+               151.4     99.97%
+               151.5     99.97%
+               151.6     99.97%
+               151.7     99.97%
+               151.8     99.97%
+               151.9     99.97%
+               152.0     99.97%
+               152.1     99.97%
+               152.2     99.97%
+               152.3     99.97%
+               152.4     99.97%
+               152.5     99.97%
+               152.6     99.97%
+               152.7     99.97%
+               152.8     99.97%
+               152.9     99.97%
+               153.0     99.97%
+               153.1     99.97%
+               153.2     99.97%
+               153.3     99.97%
+               153.4     99.97%
+               153.5     99.97%
+               153.6     99.97%
+               153.7     99.97%
+               153.8     99.97%
+               153.9     99.97%
+               154.0     99.97%
+               154.1     99.97%
+               154.2     99.97%
+               154.3     99.97%
+               154.4     99.97%
+               154.5     99.97%
+               154.6     99.97%
+               154.7     99.97%
+               154.8     99.97%
+               154.9     99.97%
+               155.0     99.97%
+               155.1     99.97%
+               155.2     99.97%
+               155.3     99.97%
+               155.4     99.97%
+               155.5     99.97%
+               155.6     99.97%
+               155.7     99.97%
+               155.8     99.97%
+               155.9     99.97%
+               156.0     99.97%
+               156.1     99.97%
+               156.2     99.97%
+               156.3     99.97%
+               156.4     99.97%
+               156.5     99.97%
+               156.6     99.97%
+               156.7     99.97%
+               156.8     99.97%
+               156.9     99.97%
+               157.0     99.97%
+               157.1     99.97%
+               157.2     99.97%
+               157.3     99.97%
+               157.4     99.97%
+               157.5     99.97%
+               157.6     99.97%
+               157.7     99.97%
+               157.8     99.97%
+               157.9     99.97%
+               158.0     99.97%
+               158.1     99.97%
+               158.2     99.97%
+               158.3     99.97%
+               158.4     99.97%
+               158.5     99.97%
+               158.6     99.97%
+               158.7     99.97%
+               158.8     99.97%
+               158.9     99.97%
+               159.0     99.97%
+               159.1     99.97%
+               159.2     99.97%
+               159.3     99.97%
+               159.4     99.97%
+               159.5     99.97%
+               159.6     99.97%
+               159.7     99.97%
+               159.8     99.97%
+               159.9     99.97%
+               160.0     99.97%
+               160.1     99.97%
+               160.2     99.97%
+               160.3     99.97%
+               160.4     99.97%
+               160.5     99.97%
+               160.6     99.97%
+               160.7     99.97%
+               160.8     99.97%
+               160.9     99.97%
+               161.0     99.97%
+               161.1     99.97%
+               161.2     99.97%
+               161.3     99.97%
+               161.4     99.97%
+               161.5     99.97%
+               161.6     99.97%
+               161.7     99.97%
+               161.8     99.97%
+               161.9     99.97%
+               162.0     99.97%
+               162.1     99.97%
+               162.2     99.97%
+               162.3     99.97%
+               162.4     99.97%
+               162.5     99.97%
+               162.6     99.97%
+               162.7     99.97%
+               162.8     99.97%
+               162.9     99.97%
+               163.0     99.97%
+               163.1     99.97%
+               163.2     99.97%
+               163.3     99.97%
+               163.4     99.97%
+               163.5     99.97%
+               163.6     99.97%
+               163.7     99.97%
+               163.8     99.97%
+               163.9     99.97%
+               164.0     99.97%
+               164.1     99.97%
+               164.2     99.97%
+               164.3     99.97%
+               164.4     99.97%
+               164.5     99.97%
+               164.6     99.97%
+               164.7     99.97%
+               164.8     99.97%
+               164.9     99.97%
+               165.0     99.97%
+               165.1     99.97%
+               165.2     99.97%
+               165.3     99.97%
+               165.4     99.97%
+               165.5     99.97%
+               165.6     99.97%
+               165.7     99.97%
+               165.8     99.97%
+               165.9     99.97%
+               166.0     99.97%
+               166.1     99.97%
+               166.2     99.97%
+               166.3     99.97%
+               166.4     99.97%
+               166.5     99.97%
+               166.6     99.97%
+               166.7     99.97%
+               166.8     99.97%
+               166.9     99.97%
+               167.0     99.97%
+               167.1     99.97%
+               167.2     99.97%
+               167.3     99.97%
+               167.4     99.97%
+               167.5     99.97%
+               167.6     99.97%
+               167.7     99.97%
+               167.8     99.97%
+               167.9     99.97%
+               168.0     99.97%
+               168.1     99.97%
+               168.2     99.97%
+               168.3     99.97%
+               168.4     99.97%
+               168.5     99.97%
+               168.6     99.97%
+               168.7     99.97%
+               168.8     99.97%
+               168.9     99.97%
+               169.0     99.97%
+               169.1     99.97%
+               169.2     99.97%
+               169.3     99.97%
+               169.4     99.97%
+               169.5     99.97%
+               169.6     99.97%
+               169.7     99.97%
+               169.8     99.97%
+               169.9     99.97%
+               170.0     99.97%
+               170.1     99.97%
+               170.2     99.97%
+               170.3     99.97%
+               170.4     99.97%
+               170.5     99.97%
+               170.6     99.97%
+               170.7     99.97%
+               170.8     99.97%
+               170.9     99.97%
+               171.0     99.97%
+               171.1     99.97%
+               171.2     99.97%
+               171.3     99.97%
+               171.4     99.97%
+               171.5     99.97%
+               171.6     99.97%
+               171.7     99.97%
+               171.8     99.97%
+               171.9     99.97%
+               172.0     99.97%
+               172.1     99.97%
+               172.2     99.97%
+               172.3     99.97%
+               172.4     99.97%
+               172.5     99.97%
+               172.6     99.97%
+               172.7     99.97%
+               172.8     99.97%
+               172.9     99.97%
+               173.0     99.97%
+               173.1     99.97%
+               173.2     99.97%
+               173.3     99.97%
+               173.4     99.97%
+               173.5     99.97%
+               173.6     99.97%
+               173.7     99.97%
+               173.8     99.97%
+               173.9     99.97%
+               174.0     99.97%
+               174.1     99.97%
+               174.2     99.97%
+               174.3     99.97%
+               174.4     99.97%
+               174.5     99.97%
+               174.6     99.97%
+               174.7     99.97%
+               174.8     99.97%
+               174.9     99.97%
+               175.0     99.97%
+               175.1     99.97%
+               175.2     99.97%
+               175.3     99.97%
+               175.4     99.97%
+               175.5     99.97%
+               175.6     99.97%
+               175.7     99.97%
+               175.8     99.97%
+               175.9     99.97%
+               176.0     99.97%
+               176.1     99.97%
+               176.2     99.97%
+               176.3     99.97%
+               176.4     99.97%
+               176.5     99.97%
+               176.6     99.97%
+               176.7     99.97%
+               176.8     99.97%
+               176.9     99.97%
+               177.0     99.97%
+               177.1     99.97%
+               177.2     99.97%
+               177.3     99.97%
+               177.4     99.97%
+               177.5     99.97%
+               177.6     99.97%
+               177.7     99.97%
+               177.8     99.97%
+               177.9     99.97%
+               178.0     99.97%
+               178.1     99.97%
+               178.2     99.97%
+               178.3     99.97%
+               178.4     99.97%
+               178.5     99.97%
+               178.6     99.97%
+               178.7     99.97%
+               178.8     99.97%
+               178.9     99.97%
+               179.0     99.97%
+               179.1     99.97%
+               179.2     99.97%
+               179.3     99.97%
+               179.4     99.97%
+               179.5     99.97%
+               179.6     99.97%
+               179.7     99.97%
+               179.8     99.97%
+               179.9     99.97%
+               180.0     99.97%
+               180.1     99.97%
+               180.2     99.97%
+               180.3     99.97%
+               180.4     99.97%
+               180.5     99.97%
+               180.6     99.97%
+               180.7     99.97%
+               180.8     99.97%
+               180.9     99.97%
+               181.0     99.97%
+               181.1     99.97%
+               181.2     99.97%
+               181.3     99.97%
+               181.4     99.97%
+               181.5     99.97%
+               181.6     99.97%
+               181.7     99.97%
+               181.8     99.97%
+               181.9     99.97%
+               182.0     99.97%
+               182.1     99.97%
+               182.2     99.97%
+               182.3     99.97%
+               182.4     99.97%
+               182.5     99.97%
+               182.6     99.97%
+               182.7     99.97%
+               182.8     99.97%
+               182.9     99.97%
+               183.0     99.97%
+               183.1     99.97%
+               183.2     99.97%
+               183.3     99.97%
+               183.4     99.97%
+               183.5     99.97%
+               183.6     99.97%
+               183.7     99.97%
+               183.8     99.97%
+               183.9     99.97%
+               184.0     99.97%
+               184.1     99.97%
+               184.2     99.97%
+               184.3     99.97%
+               184.4     99.97%
+               184.5     99.97%
+               184.6     99.97%
+               184.7     99.97%
+               184.8     99.97%
+               184.9     99.97%
+               185.0     99.97%
+               185.1     99.97%
+               185.2     99.97%
+               185.3     99.97%
+               185.4     99.97%
+               185.5     99.97%
+               185.6     99.97%
+               185.7     99.97%
+               185.8     99.97%
+               185.9     99.97%
+               186.0     99.97%
+               186.1     99.97%
+               186.2     99.97%
+               186.3     99.97%
+               186.4     99.97%
+               186.5     99.97%
+               186.6     99.97%
+               186.7     99.97%
+               186.8     99.97%
+               186.9     99.97%
+               187.0     99.97%
+               187.1     99.97%
+               187.2     99.97%
+               187.3     99.97%
+               187.4     99.97%
+               187.5     99.97%
+               187.6     99.97%
+               187.7     99.97%
+               187.8     99.97%
+               187.9     99.97%
+               188.0     99.97%
+               188.1     99.97%
+               188.2     99.97%
+               188.3     99.97%
+               188.4     99.97%
+               188.5     99.97%
+               188.6     99.97%
+               188.7     99.97%
+               188.8     99.97%
+               188.9     99.97%
+               189.0     99.97%
+               189.1     99.97%
+               189.2     99.97%
+               189.3     99.97%
+               189.4     99.97%
+               189.5     99.97%
+               189.6     99.97%
+               189.7     99.97%
+               189.8     99.97%
+               189.9     99.97%
+               190.0     99.97%
+               190.1     99.97%
+               190.2     99.97%
+               190.3     99.97%
+               190.4     99.97%
+               190.5     99.97%
+               190.6     99.97%
+               190.7     99.97%
+               190.8     99.97%
+               190.9     99.97%
+               191.0     99.97%
+               191.1     99.97%
+               191.2     99.97%
+               191.3     99.97%
+               191.4     99.97%
+               191.5     99.97%
+               191.6     99.97%
+               191.7     99.97%
+               191.8     99.97%
+               191.9     99.97%
+               192.0     99.97%
+               192.1     99.97%
+               192.2     99.97%
+               192.3     99.97%
+               192.4     99.97%
+               192.5     99.97%
+               192.6     99.97%
+               192.7     99.97%
+               192.8     99.97%
+               192.9     99.97%
+               193.0     99.97%
+               193.1     99.97%
+               193.2     99.97%
+               193.3     99.97%
+               193.4     99.97%
+               193.5     99.97%
+               193.6     99.97%
+               193.7     99.97%
+               193.8     99.97%
+               193.9     99.97%
+               194.0     99.97%
+               194.1     99.97%
+               194.2     99.97%
+               194.3     99.97%
+               194.4     99.97%
+               194.5     99.97%
+               194.6     99.97%
+               194.7     99.97%
+               194.8     99.97%
+               194.9     99.97%
+               195.0     99.97%
+               195.1     99.97%
+               195.2     99.97%
+               195.3     99.97%
+               195.4     99.97%
+               195.5     99.97%
+               195.6     99.97%
+               195.7     99.97%
+               195.8     99.97%
+               195.9     99.97%
+               196.0     99.97%
+               196.1     99.97%
+               196.2     99.97%
+               196.3     99.97%
+               196.4     99.97%
+               196.5     99.97%
+               196.6     99.97%
+               196.7     99.97%
+               196.8     99.97%
+               196.9     99.97%
+               197.0     99.97%
+               197.1     99.97%
+               197.2     99.97%
+               197.3     99.97%
+               197.4     99.97%
+               197.5     99.97%
+               197.6     99.97%
+               197.7     99.97%
+               197.8     99.97%
+               197.9     99.97%
+               198.0     99.97%
+               198.1     99.97%
+               198.2     99.97%
+               198.3     99.97%
+               198.4     99.97%
+               198.5     99.97%
+               198.6     99.97%
+               198.7     99.97%
+               198.8     99.97%
+               198.9     99.97%
+               199.0     99.97%
+               199.1     99.97%
+               199.2     99.97%
+               199.3     99.97%
+               199.4     99.97%
+               199.5     99.97%
+               199.6     99.97%
+               199.7     99.97%
+               199.8     99.97%
+               199.9     99.97%
+               200.0     99.97%
+               200.1     99.97%
+               200.2     99.97%
+               200.3     99.97%
+               200.4     99.97%
+               200.5     99.97%
+               200.6     99.97%
+               200.7     99.97%
+               200.8     99.97%
+               200.9     99.97%
+               201.0     99.97%
+               201.1     99.97%
+               201.2     99.97%
+               201.3     99.97%
+               201.4     99.97%
+               201.5     99.97%
+               201.6     99.97%
+               201.7     99.97%
+               201.8     99.97%
+               201.9     99.97%
+               202.0     99.97%
+               202.1     99.97%
+               202.2     99.97%
+               202.3     99.97%
+               202.4     99.97%
+               202.5     99.97%
+               202.6     99.97%
+               202.7     99.97%
+               202.8     99.97%
+               202.9     99.97%
+               203.0     99.97%
+               203.1     99.97%
+               203.2     99.97%
+               203.3     99.97%
+               203.4     99.97%
+               203.5     99.97%
+               203.6     99.97%
+               203.7     99.97%
+               203.8     99.97%
+               203.9     99.98%
+               204.0     99.98%
+               204.1     99.98%
+               204.2     99.98%
+               204.3     99.98%
+               204.4     99.98%
+               204.5     99.98%
+               204.6     99.98%
+               204.7     99.98%
+               204.8     99.98%
+               204.9     99.98%
+               205.0     99.98%
+               205.1     99.98%
+               205.2     99.98%
+               205.3     99.98%
+               205.4     99.98%
+               205.5     99.98%
+               205.6     99.98%
+               205.7     99.98%
+               205.8     99.98%
+               205.9     99.98%
+               206.0     99.98%
+               206.1     99.98%
+               206.2     99.98%
+               206.3     99.98%
+               206.4     99.98%
+               206.5     99.98%
+               206.6     99.98%
+               206.7     99.98%
+               206.8     99.98%
+               206.9     99.98%
+               207.0     99.98%
+               207.1     99.98%
+               207.2     99.98%
+               207.3     99.98%
+               207.4     99.98%
+               207.5     99.98%
+               207.6     99.98%
+               207.7     99.98%
+               207.8     99.98%
+               207.9     99.98%
+               208.0     99.98%
+               208.1     99.98%
+               208.2     99.98%
+               208.3     99.98%
+               208.4     99.98%
+               208.5     99.98%
+               208.6     99.98%
+               208.7     99.98%
+               208.8     99.98%
+               208.9     99.98%
+               209.0     99.98%
+               209.1     99.98%
+               209.2     99.98%
+               209.3     99.98%
+               209.4     99.98%
+               209.5     99.98%
+               209.6     99.98%
+               209.7     99.98%
+               209.8     99.98%
+               209.9     99.98%
+               210.0     99.98%
+               210.1     99.98%
+               210.2     99.98%
+               210.3     99.98%
+               210.4     99.98%
+               210.5     99.98%
+               210.6     99.98%
+               210.7     99.98%
+               210.8     99.98%
+               210.9     99.98%
+               211.0     99.98%
+               211.1     99.98%
+               211.2     99.98%
+               211.3     99.98%
+               211.4     99.98%
+               211.5     99.98%
+               211.6     99.98%
+               211.7     99.98%
+               211.8     99.98%
+               211.9     99.98%
+               212.0     99.98%
+               212.1     99.98%
+               212.2     99.98%
+               212.3     99.98%
+               212.4     99.98%
+               212.5     99.98%
+               212.6     99.98%
+               212.7     99.98%
+               212.8     99.98%
+               212.9     99.98%
+               213.0     99.98%
+               213.1     99.98%
+               213.2     99.98%
+               213.3     99.98%
+               213.4     99.98%
+               213.5     99.98%
+               213.6     99.98%
+               213.7     99.98%
+               213.8     99.98%
+               213.9     99.98%
+               214.0     99.98%
+               214.1     99.98%
+               214.2     99.98%
+               214.3     99.98%
+               214.4     99.98%
+               214.5     99.98%
+               214.6     99.98%
+               214.7     99.98%
+               214.8     99.98%
+               214.9     99.98%
+               215.0     99.98%
+               215.1     99.98%
+               215.2     99.98%
+               215.3     99.98%
+               215.4     99.98%
+               215.5     99.98%
+               215.6     99.98%
+               215.7     99.98%
+               215.8     99.98%
+               215.9     99.98%
+               216.0     99.98%
+               216.1     99.98%
+               216.2     99.98%
+               216.3     99.98%
+               216.4     99.98%
+               216.5     99.98%
+               216.6     99.98%
+               216.7     99.98%
+               216.8     99.98%
+               216.9     99.98%
+               217.0     99.98%
+               217.1     99.98%
+               217.2     99.98%
+               217.3     99.98%
+               217.4     99.98%
+               217.5     99.98%
+               217.6     99.98%
+               217.7     99.98%
+               217.8     99.98%
+               217.9     99.98%
+               218.0     99.98%
+               218.1     99.98%
+               218.2     99.98%
+               218.3     99.98%
+               218.4     99.98%
+               218.5     99.98%
+               218.6     99.98%
+               218.7     99.98%
+               218.8     99.98%
+               218.9     99.98%
+               219.0     99.98%
+               219.1     99.98%
+               219.2     99.98%
+               219.3     99.98%
+               219.4     99.98%
+               219.5     99.98%
+               219.6     99.98%
+               219.7     99.98%
+               219.8     99.98%
+               219.9     99.98%
+               220.0     99.98%
+               220.1     99.98%
+               220.2     99.98%
+               220.3     99.98%
+               220.4     99.98%
+               220.5     99.98%
+               220.6     99.98%
+               220.7     99.98%
+               220.8     99.98%
+               220.9     99.98%
+               221.0     99.98%
+               221.1     99.98%
+               221.2     99.98%
+               221.3     99.98%
+               221.4     99.98%
+               221.5     99.98%
+               221.6     99.98%
+               221.7     99.98%
+               221.8     99.98%
+               221.9     99.98%
+               222.0     99.98%
+               222.1     99.98%
+               222.2     99.98%
+               222.3     99.98%
+               222.4     99.98%
+               222.5     99.98%
+               222.6     99.98%
+               222.7     99.98%
+               222.8     99.98%
+               222.9     99.98%
+               223.0     99.98%
+               223.1     99.98%
+               223.2     99.98%
+               223.3     99.98%
+               223.4     99.98%
+               223.5     99.98%
+               223.6     99.98%
+               223.7     99.98%
+               223.8     99.98%
+               223.9     99.98%
+               224.0     99.98%
+               224.1     99.98%
+               224.2     99.98%
+               224.3     99.98%
+               224.4     99.98%
+               224.5     99.98%
+               224.6     99.98%
+               224.7     99.98%
+               224.8     99.98%
+               224.9     99.98%
+               225.0     99.98%
+               225.1     99.98%
+               225.2     99.98%
+               225.3     99.98%
+               225.4     99.98%
+               225.5     99.98%
+               225.6     99.98%
+               225.7     99.98%
+               225.8     99.98%
+               225.9     99.98%
+               226.0     99.98%
+               226.1     99.98%
+               226.2     99.98%
+               226.3     99.98%
+               226.4     99.98%
+               226.5     99.98%
+               226.6     99.98%
+               226.7     99.98%
+               226.8     99.98%
+               226.9     99.98%
+               227.0     99.98%
+               227.1     99.98%
+               227.2     99.98%
+               227.3     99.98%
+               227.4     99.98%
+               227.5     99.98%
+               227.6     99.98%
+               227.7     99.98%
+               227.8     99.98%
+               227.9     99.98%
+               228.0     99.98%
+               228.1     99.98%
+               228.2     99.98%
+               228.3     99.98%
+               228.4     99.98%
+               228.5     99.98%
+               228.6     99.98%
+               228.7     99.98%
+               228.8     99.98%
+               228.9     99.98%
+               229.0     99.98%
+               229.1     99.98%
+               229.2     99.98%
+               229.3     99.98%
+               229.4     99.98%
+               229.5     99.98%
+               229.6     99.98%
+               229.7     99.98%
+               229.8     99.98%
+               229.9     99.98%
+               230.0     99.98%
+               230.1     99.98%
+               230.2     99.98%
+               230.3     99.98%
+               230.4     99.98%
+               230.5     99.98%
+               230.6     99.98%
+               230.7     99.98%
+               230.8     99.98%
+               230.9     99.98%
+               231.0     99.98%
+               231.1     99.98%
+               231.2     99.98%
+               231.3     99.98%
+               231.4     99.98%
+               231.5     99.98%
+               231.6     99.98%
+               231.7     99.98%
+               231.8     99.98%
+               231.9     99.98%
+               232.0     99.98%
+               232.1     99.98%
+               232.2     99.98%
+               232.3     99.98%
+               232.4     99.98%
+               232.5     99.98%
+               232.6     99.98%
+               232.7     99.98%
+               232.8     99.98%
+               232.9     99.98%
+               233.0     99.98%
+               233.1     99.98%
+               233.2     99.98%
+               233.3     99.98%
+               233.4     99.98%
+               233.5     99.98%
+               233.6     99.98%
+               233.7     99.98%
+               233.8     99.98%
+               233.9     99.98%
+               234.0     99.98%
+               234.1     99.98%
+               234.2     99.98%
+               234.3     99.98%
+               234.4     99.98%
+               234.5     99.98%
+               234.6     99.98%
+               234.7     99.98%
+               234.8     99.98%
+               234.9     99.98%
+               235.0     99.98%
+               235.1     99.98%
+               235.2     99.98%
+               235.3     99.98%
+               235.4     99.98%
+               235.5     99.98%
+               235.6     99.98%
+               235.7     99.98%
+               235.8     99.98%
+               235.9     99.98%
+               236.0     99.98%
+               236.1     99.98%
+               236.2     99.98%
+               236.3     99.98%
+               236.4     99.98%
+               236.5     99.98%
+               236.6     99.98%
+               236.7     99.98%
+               236.8     99.98%
+               236.9     99.98%
+               237.0     99.98%
+               237.1     99.98%
+               237.2     99.98%
+               237.3     99.98%
+               237.4     99.98%
+               237.5     99.98%
+               237.6     99.98%
+               237.7     99.98%
+               237.8     99.98%
+               237.9     99.98%
+               238.0     99.98%
+               238.1     99.98%
+               238.2     99.98%
+               238.3     99.98%
+               238.4     99.98%
+               238.5     99.98%
+               238.6     99.98%
+               238.7     99.98%
+               238.8     99.98%
+               238.9     99.98%
+               239.0     99.98%
+               239.1     99.98%
+               239.2     99.98%
+               239.3     99.98%
+               239.4     99.98%
+               239.5     99.98%
+               239.6     99.98%
+               239.7     99.98%
+               239.8     99.98%
+               239.9     99.98%
+               240.0     99.98%
+               240.1     99.98%
+               240.2     99.98%
+               240.3     99.98%
+               240.4     99.98%
+               240.5     99.98%
+               240.6     99.98%
+               240.7     99.98%
+               240.8     99.98%
+               240.9     99.98%
+               241.0     99.98%
+               241.1     99.98%
+               241.2     99.98%
+               241.3     99.98%
+               241.4     99.98%
+               241.5     99.98%
+               241.6     99.98%
+               241.7     99.98%
+               241.8     99.98%
+               241.9     99.98%
+               242.0     99.98%
+               242.1     99.98%
+               242.2     99.98%
+               242.3     99.98%
+               242.4     99.98%
+               242.5     99.98%
+               242.6     99.98%
+               242.7     99.98%
+               242.8     99.98%
+               242.9     99.98%
+               243.0     99.98%
+               243.1     99.98%
+               243.2     99.98%
+               243.3     99.98%
+               243.4     99.98%
+               243.5     99.98%
+               243.6     99.98%
+               243.7     99.98%
+               243.8     99.98%
+               243.9     99.98%
+               244.0     99.98%
+               244.1     99.98%
+               244.2     99.98%
+               244.3     99.98%
+               244.4     99.98%
+               244.5     99.98%
+               244.6     99.98%
+               244.7     99.98%
+               244.8     99.98%
+               244.9     99.98%
+               245.0     99.98%
+               245.1     99.98%
+               245.2     99.98%
+               245.3     99.98%
+               245.4     99.98%
+               245.5     99.98%
+               245.6     99.98%
+               245.7     99.98%
+               245.8     99.98%
+               245.9     99.98%
+               246.0     99.98%
+               246.1     99.98%
+               246.2     99.98%
+               246.3     99.98%
+               246.4     99.98%
+               246.5     99.98%
+               246.6     99.98%
+               246.7     99.98%
+               246.8     99.98%
+               246.9     99.98%
+               247.0     99.98%
+               247.1     99.98%
+               247.2     99.98%
+               247.3     99.98%
+               247.4     99.98%
+               247.5     99.98%
+               247.6     99.98%
+               247.7     99.98%
+               247.8     99.98%
+               247.9     99.98%
+               248.0     99.98%
+               248.1     99.98%
+               248.2     99.98%
+               248.3     99.98%
+               248.4     99.98%
+               248.5     99.98%
+               248.6     99.98%
+               248.7     99.98%
+               248.8     99.98%
+               248.9     99.98%
+               249.0     99.98%
+               249.1     99.98%
+               249.2     99.98%
+               249.3     99.98%
+               249.4     99.98%
+               249.5     99.98%
+               249.6     99.98%
+               249.7     99.98%
+               249.8     99.98%
+               249.9     99.98%
+               250.0     99.98%
+               250.1     99.98%
+               250.2     99.98%
+               250.3     99.98%
+               250.4     99.98%
+               250.5     99.98%
+               250.6     99.98%
+               250.7     99.98%
+               250.8     99.98%
+               250.9     99.98%
+               251.0     99.98%
+               251.1     99.98%
+               251.2     99.98%
+               251.3     99.98%
+               251.4     99.98%
+               251.5     99.98%
+               251.6     99.98%
+               251.7     99.98%
+               251.8     99.98%
+               251.9     99.98%
+               252.0     99.98%
+               252.1     99.98%
+               252.2     99.98%
+               252.3     99.98%
+               252.4     99.98%
+               252.5     99.98%
+               252.6     99.98%
+               252.7     99.98%
+               252.8     99.98%
+               252.9     99.98%
+               253.0     99.98%
+               253.1     99.98%
+               253.2     99.98%
+               253.3     99.98%
+               253.4     99.98%
+               253.5     99.98%
+               253.6     99.98%
+               253.7     99.98%
+               253.8     99.98%
+               253.9     99.98%
+               254.0     99.98%
+               254.1     99.98%
+               254.2     99.98%
+               254.3     99.98%
+               254.4     99.98%
+               254.5     99.98%
+               254.6     99.98%
+               254.7     99.98%
+               254.8     99.98%
+               254.9     99.98%
+               255.0     99.98%
+               255.1     99.98%
+               255.2     99.98%
+               255.3     99.98%
+               255.4     99.98%
+               255.5     99.98%
+               255.6     99.98%
+               255.7     99.98%
+               255.8     99.98%
+               255.9     99.98%
+               256.0     99.98%
+               256.1     99.98%
+               256.2     99.98%
+               256.3     99.98%
+               256.4     99.98%
+               256.5     99.98%
+               256.6     99.98%
+               256.7     99.98%
+               256.8     99.98%
+               256.9     99.98%
+               257.0     99.99%
+               257.1     99.99%
+               257.2     99.99%
+               257.3     99.99%
+               257.4     99.99%
+               257.5     99.99%
+               257.6     99.99%
+               257.7     99.99%
+               257.8     99.99%
+               257.9     99.99%
+               258.0     99.99%
+               258.1     99.99%
+               258.2     99.99%
+               258.3     99.99%
+               258.4     99.99%
+               258.5     99.99%
+               258.6     99.99%
+               258.7     99.99%
+               258.8     99.99%
+               258.9     99.99%
+               259.0     99.99%
+               259.1     99.99%
+               259.2     99.99%
+               259.3     99.99%
+               259.4     99.99%
+               259.5     99.99%
+               259.6     99.99%
+               259.7     99.99%
+               259.8     99.99%
+               259.9     99.99%
+               260.0     99.99%
+               260.1     99.99%
+               260.2     99.99%
+               260.3     99.99%
+               260.4     99.99%
+               260.5     99.99%
+               260.6     99.99%
+               260.7     99.99%
+               260.8     99.99%
+               260.9     99.99%
+               261.0     99.99%
+               261.1     99.99%
+               261.2     99.99%
+               261.3     99.99%
+               261.4     99.99%
+               261.5     99.99%
+               261.6     99.99%
+               261.7     99.99%
+               261.8     99.99%
+               261.9     99.99%
+               262.0     99.99%
+               262.1     99.99%
+               262.2     99.99%
+               262.3     99.99%
+               262.4     99.99%
+               262.5     99.99%
+               262.6     99.99%
+               262.7     99.99%
+               262.8     99.99%
+               262.9     99.99%
+               263.0     99.99%
+               263.1     99.99%
+               263.2     99.99%
+               263.3     99.99%
+               263.4     99.99%
+               263.5     99.99%
+               263.6     99.99%
+               263.7     99.99%
+               263.8     99.99%
+               263.9     99.99%
+               264.0     99.99%
+               264.1     99.99%
+               264.2     99.99%
+               264.3     99.99%
+               264.4     99.99%
+               264.5     99.99%
+               264.6     99.99%
+               264.7     99.99%
+               264.8     99.99%
+               264.9     99.99%
+               265.0     99.99%
+               265.1     99.99%
+               265.2     99.99%
+               265.3     99.99%
+               265.4     99.99%
+               265.5     99.99%
+               265.6     99.99%
+               265.7     99.99%
+               265.8     99.99%
+               265.9     99.99%
+               266.0     99.99%
+               266.1     99.99%
+               266.2     99.99%
+               266.3     99.99%
+               266.4     99.99%
+               266.5     99.99%
+               266.6     99.99%
+               266.7     99.99%
+               266.8     99.99%
+               266.9     99.99%
+               267.0     99.99%
+               267.1     99.99%
+               267.2     99.99%
+               267.3     99.99%
+               267.4     99.99%
+               267.5     99.99%
+               267.6     99.99%
+               267.7     99.99%
+               267.8     99.99%
+               267.9     99.99%
+               268.0     99.99%
+               268.1     99.99%
+               268.2     99.99%
+               268.3     99.99%
+               268.4     99.99%
+               268.5     99.99%
+               268.6     99.99%
+               268.7     99.99%
+               268.8     99.99%
+               268.9     99.99%
+               269.0     99.99%
+               269.1     99.99%
+               269.2     99.99%
+               269.3    100.00%
+               269.4    100.00%
+               269.5    100.00%
+               269.6    100.00%
+               269.7    100.00%
+               269.8    100.00%
+               269.9    100.00%
+               270.0    100.00%
+               270.1    100.00%
+               270.2    100.00%
+               270.3    100.00%
+               270.4    100.00%
+               270.5    100.00%
+               270.6    100.00%
+               270.7    100.00%
+               270.8    100.00%
+               270.9    100.00%
+               271.0    100.00%
+               271.1    100.00%
+               271.2    100.00%
+               271.3    100.00%
+               271.4    100.00%
+               271.5    100.00%
+               271.6    100.00%
+               271.7    100.00%
+               271.8    100.00%
+               271.9    100.00%
+               272.0    100.00%
+               272.1    100.00%
+               272.2    100.00%
+               272.3    100.00%
+               272.4    100.00%
+               272.5    100.00%
+               272.6    100.00%
+               272.7    100.00%
+               272.8    100.00%
+               272.9    100.00%
+

@@ -1,0 +1,2635 @@
+Threads: 64, Sharded reads: false, Number of Memcached servers: 3.
+
+All measures in microseconds.
+  SETS   GETS  MGETS   INVLD    TOT   HITS     RSP T      Q T     SVR T  Q LEN
+     0      0  15546       0  15546  93276   2225.17    86.52   2033.98      0
+     0      0   2117       0   2117  12702   1986.71    54.69   1838.78      0
+     0      0   1971       0   1971  11826   2128.53    57.99   1977.70      0
+     0      0   1983       0   1983  11898   2097.98    45.80   1957.13      0
+     0      0   2035       0   2035  12210   2023.73    52.17   1885.84      0
+     0      0   2021       0   2021  12132   2078.92    63.71   1917.81      0
+     0      0   1914       0   1914  11478   2170.91    78.78   1986.21      0
+     0      0   1973       0   1973  11844   2137.71    72.25   1966.66      0
+     0      0   1950       0   1950  11694   2151.10    56.87   2000.39      0
+     0      0   1911       0   1911  11466   2207.89    73.75   2035.77      0
+     0      0   1996       0   1996  11976   2106.30    46.24   1955.02      0
+     0      0   1949       0   1949  11694   2132.66    67.90   1963.39      0
+     0      0   1945       0   1945  11670   2160.31    61.08   1999.97      0
+     0      0   2011       0   2011  12066   2079.51    62.52   1930.85      0
+     0      0   2014       0   2014  12084   2097.75    53.17   1956.41      0
+     0      0   2002       0   2002  12012   2115.26    65.07   1956.41      0
+     0      0   2008       0   2008  12048   2068.20    55.40   1907.98      0
+     0      0   2060       0   2060  12366   2043.09    51.92   1893.14      0
+     0      0   2081       0   2081  12480   2045.03    52.66   1914.55      0
+     0      0   1846       0   1846  11076   2257.90    88.60   2064.87      0
+     0      0   2167       0   2167  13002   1888.37    62.37   1741.22      0
+     0      0   2031       0   2031  12186   2018.30    73.90   1861.33      0
+     0      0   2102       0   2102  12612   2036.12    91.09   1854.60      0
+     0      0   1974       0   1974  11844   2117.98    62.84   1964.72      1
+     0      0   2007       0   2007  12042   2103.43    64.40   1944.35      0
+     0      0   2038       0   2038  12228   2083.46    49.85   1925.77      0
+     0      0   1954       0   1954  11724   2118.42    60.56   1975.63      0
+     0      0   2068       0   2068  12408   2057.19    56.05   1906.60      0
+     0      0   2023       0   2023  12144   2095.22    55.52   1954.06      1
+     0      0   2007       0   2007  12036   2082.13    49.55   1942.75      0
+     0      0   2015       0   2015  12090   2098.08    64.69   1926.24      0
+     0      0   2110       0   2110  12660   1985.40    47.22   1861.35      0
+     0      0   2074       0   2074  12444   2061.43    50.04   1920.30      0
+     0      0   2041       0   2041  12246   2018.22    57.26   1876.14      0
+     0      0   1962       0   1962  11772   2106.30    55.77   1959.21      0
+     0      0   2038       0   2038  12228   2067.43    73.81   1915.05      0
+     0      0   2186       0   2186  13116   1944.10    41.87   1807.51      0
+     0      0   2051       0   2051  12306   2048.46    51.99   1889.82      1
+     0      0   2071       0   2071  12426   2020.35    68.42   1856.35      0
+     0      0   1917       0   1917  11502   2154.53    63.69   2006.02      0
+     0      0   2096       0   2096  12576   1999.88    70.63   1841.62      0
+     0      0   2013       0   2013  12078   2060.10    49.51   1917.12      0
+     0      0   2015       0   2015  12090   2084.83    73.23   1918.14      0
+     0      0   2089       0   2089  12534   2046.39    61.43   1896.17      0
+     0      0   2024       0   2024  12144   2078.37    55.10   1932.53      0
+     0      0   2126       0   2126  12756   1985.87    60.09   1841.17      0
+     0      0   2027       0   2027  12162   2081.60    61.29   1926.63      0
+     0      0   2098       0   2098  12588   2023.00    52.03   1873.23      0
+     0      0   2019       0   2019  12114   2096.89    56.36   1948.98      0
+     0      0   2114       0   2114  12684   1955.88    46.06   1821.81      0
+     0      0   2113       0   2113  12678   2017.61    54.96   1870.04      0
+     0      0   2148       0   2148  12888   1963.56    52.65   1824.07      1
+     0      0   1871       0   1871  11226   2255.25    78.61   2082.84      0
+     0      0   1983       0   1983  11898   2095.25    44.37   1963.71      0
+     0      0   2101       0   2101  12606   2037.70    50.43   1897.52      0
+     0      0   1962       0   1962  11772   2131.37    59.47   1973.92      0
+     0      0   2083       0   2083  12498   2033.37    52.98   1904.62      0
+     0      0   2083       0   2083  12498   2040.08    56.69   1903.15      0
+     0      0   2068       0   2068  12408   2014.25    47.61   1881.00      0
+     0      0   2001       0   2001  12006   2090.86    58.27   1929.65      0
+     0      0   2122       0   2122  12732   1991.21    43.40   1846.03      0
+     0      0   2161       0   2161  12966   1917.77    43.03   1795.46      1
+     0      0   1962       0   1962  11772   2113.34    50.02   1964.35      0
+     0      0   2041       0   2041  12246   2077.40    43.52   1943.95      0
+     0      0   2112       0   2112  12672   1985.42    53.99   1844.53      1
+     0      0   2134       0   2134  12804   1952.79    48.32   1815.91      0
+     0      0   1995       0   1995  11970   2111.20    54.78   1958.28      0
+     0      0   1918       0   1918  11508   2207.33    73.64   2027.56      0
+     0      0   1950       0   1950  11700   2076.37    60.20   1925.79      0
+     0      0   1980       0   1980  11880   2158.73    51.57   2009.87      0
+     0      0   1978       0   1978  11868   2129.14    49.27   1994.12      0
+     0      0   1884       0   1884  11304   2207.61    64.52   2038.16      0
+     0      0   2084       0   2084  12510   2065.67    47.17   1925.72      1
+     0      0   1969       0   1969  11808   2120.34    65.61   1960.23      1
+     0      0   2116       0   2116  12696   1973.60    44.49   1846.91      0
+     0      0   2116       0   2116  12696   1998.86    56.30   1848.93      1
+     0      0   2186       0   2186  13116   1916.36    61.00   1773.99      0
+     0      0   1962       0   1962  11772   2124.22    58.86   1971.82      0
+     0      0   2020       0   2020  12120   2066.05    56.68   1894.18      1
+     0      0   2058       0   2058  12348   1956.02    64.89   1786.00      0
+     0      0   2220       0   2220  13320   1871.20    50.54   1726.59      0
+     0      0   2156       0   2156  12936   1973.07    65.68   1825.02      0
+     0      0    293       0    293   1758   1750.52    38.52   1645.34      0
+     0      0      0       0      0      0       NaN      NaN       NaN      0
+     0      0      0       0      0      0       NaN      NaN       NaN      0
+     0      0      0       0      0      0       NaN      NaN       NaN      0
+     0      0      0       0      0      0       NaN      NaN       NaN      0
+     0      0      0       0      0      0       NaN      NaN       NaN      0
+================================================================================
+ALL STATS (timing measures are in microseconds)
+WORKER 0:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2814|    30.92|   185.54|     0.00|  2087.82|  2026.96|  1935.32
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 1:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2802|    30.79|   184.75|     0.00|  2104.61|  2047.07|  1949.87
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 2:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2781|    30.56|   183.36|     0.00|  2083.50|  2022.62|  1935.87
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 3:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2786|    30.62|   183.69|     0.00|  2106.87|  2053.08|  1956.15
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 4:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2828|    31.08|   186.46|     0.00|  2075.53|  2018.62|  1918.95
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 5:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2805|    30.82|   184.95|     0.00|  2101.40|  2046.08|  1944.57
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 6:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2832|    31.12|   186.73|     0.00|  2036.94|  1978.94|  1892.99
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 7:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2777|    30.52|   183.10|     0.00|  2171.12|  2105.66|  2009.77
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 8:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2843|    31.24|   187.45|     0.00|  2094.16|  2031.77|  1932.94
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 9:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2827|    31.07|   186.40|     0.00|  2073.78|  2014.14|  1916.27
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 10:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2832|    31.12|   186.73|     0.00|  2127.96|  2051.82|  1963.53
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 11:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2796|    30.73|   184.35|     0.00|  2075.65|  2018.77|  1922.96
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 12:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2851|    31.33|   187.98|     0.00|  2136.34|  2071.88|  1983.81
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 13:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2827|    31.07|   186.40|     0.00|  2058.69|  2004.31|  1898.81
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 14:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2811|    30.89|   185.34|     0.00|  2112.91|  2045.76|  1957.43
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 15:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2857|    31.40|   188.37|     0.00|  2087.37|  2019.92|  1929.28
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 16:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2836|    31.16|   186.99|     0.00|  2099.77|  2037.96|  1943.94
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 17:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2803|    30.80|   184.81|     0.00|  2065.57|  2008.53|  1924.91
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 18:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2827|    31.07|   186.40|     0.00|  2087.25|  2032.00|  1944.06
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 19:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2815|    30.93|   185.60|     0.00|  2042.14|  1977.99|  1893.93
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 20:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2831|    31.11|   186.66|     0.00|  2048.57|  1987.52|  1896.65
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 21:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2834|    31.14|   186.86|     0.00|  1992.64|  1940.26|  1851.66
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 22:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2843|    31.24|   187.45|     0.00|  2033.90|  1966.34|  1870.59
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 23:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2836|    31.16|   186.99|     0.00|  2089.17|  2024.46|  1938.25
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 24:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2818|    30.97|   185.80|     0.00|  2066.05|  2007.20|  1912.87
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 25:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2814|    30.92|   185.54|     0.00|  2069.25|  2006.66|  1918.57
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 26:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2807|    30.85|   185.08|     0.00|  2079.51|  2020.89|  1920.12
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 27:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2829|    31.09|   186.53|     0.00|  2098.42|  2046.27|  1948.18
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 28:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2845|    31.26|   187.58|     0.00|  2042.35|  1990.68|  1893.57
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 29:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2840|    31.21|   187.25|     0.00|  2031.58|  1962.85|  1862.62
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 30:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2832|    31.12|   186.73|     0.00|  2109.87|  2044.28|  1947.55
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 31:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2842|    31.23|   187.38|     0.00|  2107.70|  2045.29|  1940.21
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 32:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2845|    31.26|   187.58|     0.00|  2121.09|  2058.26|  1972.78
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 33:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2824|    31.03|   186.20|     0.00|  2056.37|  2002.96|  1909.51
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 34:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2818|    30.97|   185.80|     0.00|  2062.60|  2006.21|  1911.41
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 35:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2813|    30.91|   185.47|     0.00|  2088.51|  2023.65|  1918.56
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 36:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2768|    30.42|   182.51|     0.00|  2073.48|  2016.02|  1911.65
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 37:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2811|    30.89|   185.34|     0.00|  2055.89|  1996.33|  1903.35
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 38:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2805|    30.82|   184.95|     0.00|  2051.49|  1990.59|  1901.64
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 39:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2812|    30.90|   185.41|     0.00|  2030.29|  1979.33|  1895.62
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 40:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2813|    30.91|   185.47|     0.00|  2093.49|  2040.98|  1937.11
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 41:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2822|    31.01|   186.07|     0.00|  2013.41|  1957.08|  1868.82
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 42:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2821|    31.00|   186.00|     0.00|  2093.68|  2026.25|  1936.80
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 43:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2788|    30.64|   183.82|     0.00|  2096.31|  2030.31|  1934.25
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 44:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2804|    30.81|   184.88|     0.00|  2075.24|  2024.52|  1945.82
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 45:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2781|    30.56|   183.36|     0.00|  2036.78|  1974.17|  1877.76
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 46:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2819|    30.98|   185.87|     0.00|  2061.17|  1998.29|  1907.16
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 47:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2807|    30.85|   185.08|     0.00|  2126.20|  2070.52|  1978.67
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 48:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2800|    30.77|   184.62|     0.00|  2078.02|  2007.46|  1913.09
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 49:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2827|    31.07|   186.40|     0.00|  2072.29|  2013.55|  1903.70
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 50:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2842|    31.23|   187.38|     0.00|  2072.67|  2010.63|  1918.34
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 51:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2830|    31.10|   186.59|     0.00|  2038.91|  1980.83|  1897.36
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 52:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2828|    31.08|   186.46|     0.00|  2113.00|  2054.70|  1949.77
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 53:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2863|    31.46|   188.77|     0.00|  2061.70|  1996.00|  1901.95
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 54:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2823|    31.02|   186.13|     0.00|  2077.84|  2028.77|  1920.70
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 55:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2830|    31.10|   186.59|     0.00|  2038.85|  1980.89|  1885.20
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 56:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2821|    31.00|   186.00|     0.00|  2088.14|  2022.49|  1932.48
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 57:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2839|    31.20|   187.19|     0.00|  2081.11|  2023.14|  1940.17
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 58:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2806|    30.84|   185.01|     0.00|  2079.99|  2010.50|  1920.53
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 59:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2834|    31.14|   186.86|     0.00|  2045.80|  1985.74|  1895.40
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 60:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2829|    31.09|   186.53|     0.00|  2087.84|  2021.18|  1926.83
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 61:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2863|    31.46|   188.77|     0.00|  2052.39|  1995.04|  1891.60
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 62:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2829|    31.09|   186.53|     0.00|  2089.36|  2029.43|  1946.57
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+WORKER 63:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |     2884|    31.69|   190.15|     0.00|  2048.35|  1981.87|  1900.66
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+================================================================================
+================================================================================
+
+AGGREGATE FOR ALL WORKERS:
+Type     |Total    |Ops/sec  |Hits/sec |Miss/Sec |Resp Time|Proc Time|Srvr Time
+SET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+GET      |        0|     0.00|     0.00|     0.00|      NaN|      NaN|      NaN
+MULTIGET |   180620|  1984.84| 11909.01|     0.00|  2075.90|  2015.48|  1922.01
+INVALID  |        0|     0.00|      ---|      ---|      NaN|      NaN|      ---
+Average mutliget length: 6.00
+
+
+ HISTOGRAM
+  Response time (ms)   Percent
+                 0.1      0.00%
+                 0.2      0.00%
+                 0.3      0.00%
+                 0.4      0.00%
+                 0.5      0.12%
+                 0.6      3.27%
+                 0.7     12.68%
+                 0.8     21.72%
+                 0.9     26.35%
+                 1.0     28.30%
+                 1.1     29.24%
+                 1.2     29.84%
+                 1.3     30.27%
+                 1.4     30.61%
+                 1.5     30.83%
+                 1.6     31.02%
+                 1.7     31.21%
+                 1.8     33.72%
+                 1.9     41.96%
+                 2.0     53.83%
+                 2.1     64.05%
+                 2.2     71.25%
+                 2.3     76.09%
+                 2.4     79.58%
+                 2.5     82.23%
+                 2.6     84.21%
+                 2.7     85.72%
+                 2.8     86.84%
+                 2.9     87.70%
+                 3.0     88.34%
+                 3.1     88.91%
+                 3.2     89.38%
+                 3.3     89.76%
+                 3.4     90.11%
+                 3.5     90.42%
+                 3.6     90.70%
+                 3.7     90.98%
+                 3.8     91.22%
+                 3.9     91.48%
+                 4.0     91.72%
+                 4.1     91.97%
+                 4.2     92.22%
+                 4.3     92.46%
+                 4.4     92.72%
+                 4.5     92.99%
+                 4.6     93.23%
+                 4.7     93.50%
+                 4.8     93.74%
+                 4.9     93.97%
+                 5.0     94.19%
+                 5.1     94.40%
+                 5.2     94.64%
+                 5.3     94.82%
+                 5.4     95.02%
+                 5.5     95.22%
+                 5.6     95.39%
+                 5.7     95.57%
+                 5.8     95.75%
+                 5.9     96.00%
+                 6.0     96.27%
+                 6.1     96.51%
+                 6.2     96.78%
+                 6.3     97.03%
+                 6.4     97.31%
+                 6.5     97.56%
+                 6.6     97.79%
+                 6.7     97.99%
+                 6.8     98.17%
+                 6.9     98.34%
+                 7.0     98.50%
+                 7.1     98.66%
+                 7.2     98.80%
+                 7.3     98.95%
+                 7.4     99.09%
+                 7.5     99.21%
+                 7.6     99.34%
+                 7.7     99.46%
+                 7.8     99.55%
+                 7.9     99.62%
+                 8.0     99.68%
+                 8.1     99.72%
+                 8.2     99.75%
+                 8.3     99.77%
+                 8.4     99.79%
+                 8.5     99.81%
+                 8.6     99.82%
+                 8.7     99.83%
+                 8.8     99.84%
+                 8.9     99.85%
+                 9.0     99.85%
+                 9.1     99.86%
+                 9.2     99.87%
+                 9.3     99.87%
+                 9.4     99.87%
+                 9.5     99.87%
+                 9.6     99.88%
+                 9.7     99.88%
+                 9.8     99.89%
+                 9.9     99.89%
+                10.0     99.89%
+                10.1     99.89%
+                10.2     99.90%
+                10.3     99.90%
+                10.4     99.90%
+                10.5     99.90%
+                10.6     99.90%
+                10.7     99.90%
+                10.8     99.90%
+                10.9     99.91%
+                11.0     99.91%
+                11.1     99.91%
+                11.2     99.91%
+                11.3     99.91%
+                11.4     99.92%
+                11.5     99.92%
+                11.6     99.92%
+                11.7     99.92%
+                11.8     99.92%
+                11.9     99.93%
+                12.0     99.93%
+                12.1     99.93%
+                12.2     99.93%
+                12.3     99.93%
+                12.4     99.93%
+                12.5     99.93%
+                12.6     99.93%
+                12.7     99.93%
+                12.8     99.94%
+                12.9     99.94%
+                13.0     99.94%
+                13.1     99.94%
+                13.2     99.94%
+                13.3     99.94%
+                13.4     99.94%
+                13.5     99.94%
+                13.6     99.94%
+                13.7     99.94%
+                13.8     99.94%
+                13.9     99.94%
+                14.0     99.94%
+                14.1     99.94%
+                14.2     99.94%
+                14.3     99.94%
+                14.4     99.94%
+                14.5     99.94%
+                14.6     99.94%
+                14.7     99.94%
+                14.8     99.94%
+                14.9     99.94%
+                15.0     99.94%
+                15.1     99.95%
+                15.2     99.95%
+                15.3     99.95%
+                15.4     99.95%
+                15.5     99.95%
+                15.6     99.95%
+                15.7     99.95%
+                15.8     99.95%
+                15.9     99.96%
+                16.0     99.96%
+                16.1     99.96%
+                16.2     99.96%
+                16.3     99.96%
+                16.4     99.96%
+                16.5     99.96%
+                16.6     99.96%
+                16.7     99.97%
+                16.8     99.97%
+                16.9     99.97%
+                17.0     99.97%
+                17.1     99.97%
+                17.2     99.97%
+                17.3     99.97%
+                17.4     99.97%
+                17.5     99.98%
+                17.6     99.98%
+                17.7     99.98%
+                17.8     99.98%
+                17.9     99.98%
+                18.0     99.98%
+                18.1     99.98%
+                18.2     99.98%
+                18.3     99.98%
+                18.4     99.98%
+                18.5     99.98%
+                18.6     99.98%
+                18.7     99.98%
+                18.8     99.98%
+                18.9     99.98%
+                19.0     99.98%
+                19.1     99.98%
+                19.2     99.98%
+                19.3     99.98%
+                19.4     99.98%
+                19.5     99.98%
+                19.6     99.98%
+                19.7     99.98%
+                19.8     99.98%
+                19.9     99.98%
+                20.0     99.98%
+                20.1     99.98%
+                20.2     99.98%
+                20.3     99.98%
+                20.4     99.98%
+                20.5     99.98%
+                20.6     99.98%
+                20.7     99.98%
+                20.8     99.98%
+                20.9     99.98%
+                21.0     99.98%
+                21.1     99.98%
+                21.2     99.98%
+                21.3     99.98%
+                21.4     99.98%
+                21.5     99.98%
+                21.6     99.98%
+                21.7     99.99%
+                21.8     99.99%
+                21.9     99.99%
+                22.0     99.99%
+                22.1     99.99%
+                22.2     99.99%
+                22.3     99.99%
+                22.4     99.99%
+                22.5     99.99%
+                22.6     99.99%
+                22.7     99.99%
+                22.8     99.99%
+                22.9     99.99%
+                23.0     99.99%
+                23.1     99.99%
+                23.2     99.99%
+                23.3     99.99%
+                23.4     99.99%
+                23.5     99.99%
+                23.6     99.99%
+                23.7     99.99%
+                23.8     99.99%
+                23.9     99.99%
+                24.0     99.99%
+                24.1     99.99%
+                24.2     99.99%
+                24.3     99.99%
+                24.4     99.99%
+                24.5     99.99%
+                24.6     99.99%
+                24.7     99.99%
+                24.8     99.99%
+                24.9     99.99%
+                25.0     99.99%
+                25.1     99.99%
+                25.2     99.99%
+                25.3     99.99%
+                25.4     99.99%
+                25.5     99.99%
+                25.6     99.99%
+                25.7     99.99%
+                25.8     99.99%
+                25.9     99.99%
+                26.0     99.99%
+                26.1     99.99%
+                26.2     99.99%
+                26.3     99.99%
+                26.4     99.99%
+                26.5     99.99%
+                26.6     99.99%
+                26.7     99.99%
+                26.8     99.99%
+                26.9     99.99%
+                27.0     99.99%
+                27.1     99.99%
+                27.2     99.99%
+                27.3     99.99%
+                27.4     99.99%
+                27.5    100.00%
+                27.6    100.00%
+                27.7    100.00%
+                27.8    100.00%
+                27.9    100.00%
+                28.0    100.00%
+                28.1    100.00%
+                28.2    100.00%
+                28.3    100.00%
+                28.4    100.00%
+                28.5    100.00%
+                28.6    100.00%
+                28.7    100.00%
+                28.8    100.00%
+                28.9    100.00%
+                29.0    100.00%
+                29.1    100.00%
+                29.2    100.00%
+                29.3    100.00%
+                29.4    100.00%
+                29.5    100.00%
+                29.6    100.00%
+                29.7    100.00%
+                29.8    100.00%
+                29.9    100.00%
+                30.0    100.00%
+                30.1    100.00%
+                30.2    100.00%
+                30.3    100.00%
+                30.4    100.00%
+                30.5    100.00%
+                30.6    100.00%
+                30.7    100.00%
+                30.8    100.00%
+                30.9    100.00%
+                31.0    100.00%
+                31.1    100.00%
+                31.2    100.00%
+                31.3    100.00%
+                31.4    100.00%
+                31.5    100.00%
+                31.6    100.00%
+                31.7    100.00%
+                31.8    100.00%
+                31.9    100.00%
+                32.0    100.00%
+                32.1    100.00%
+                32.2    100.00%
+                32.3    100.00%
+                32.4    100.00%
+                32.5    100.00%
+                32.6    100.00%
+                32.7    100.00%
+                32.8    100.00%
+                32.9    100.00%
+                33.0    100.00%
+                33.1    100.00%
+                33.2    100.00%
+                33.3    100.00%
+                33.4    100.00%
+                33.5    100.00%
+                33.6    100.00%
+                33.7    100.00%
+                33.8    100.00%
+                33.9    100.00%
+                34.0    100.00%
+                34.1    100.00%
+                34.2    100.00%
+                34.3    100.00%
+                34.4    100.00%
+                34.5    100.00%
+                34.6    100.00%
+                34.7    100.00%
+                34.8    100.00%
+                34.9    100.00%
+                35.0    100.00%
+                35.1    100.00%
+                35.2    100.00%
+                35.3    100.00%
+                35.4    100.00%
+                35.5    100.00%
+                35.6    100.00%
+                35.7    100.00%
+                35.8    100.00%
+                35.9    100.00%
+                36.0    100.00%
+                36.1    100.00%
+                36.2    100.00%
+                36.3    100.00%
+                36.4    100.00%
+                36.5    100.00%
+                36.6    100.00%
+                36.7    100.00%
+                36.8    100.00%
+                36.9    100.00%
+                37.0    100.00%
+                37.1    100.00%
+                37.2    100.00%
+                37.3    100.00%
+                37.4    100.00%
+                37.5    100.00%
+                37.6    100.00%
+                37.7    100.00%
+                37.8    100.00%
+                37.9    100.00%
+                38.0    100.00%
+                38.1    100.00%
+                38.2    100.00%
+                38.3    100.00%
+                38.4    100.00%
+                38.5    100.00%
+                38.6    100.00%
+                38.7    100.00%
+                38.8    100.00%
+                38.9    100.00%
+                39.0    100.00%
+                39.1    100.00%
+                39.2    100.00%
+                39.3    100.00%
+                39.4    100.00%
+                39.5    100.00%
+                39.6    100.00%
+                39.7    100.00%
+                39.8    100.00%
+                39.9    100.00%
+                40.0    100.00%
+                40.1    100.00%
+                40.2    100.00%
+                40.3    100.00%
+                40.4    100.00%
+                40.5    100.00%
+                40.6    100.00%
+                40.7    100.00%
+                40.8    100.00%
+                40.9    100.00%
+                41.0    100.00%
+                41.1    100.00%
+                41.2    100.00%
+                41.3    100.00%
+                41.4    100.00%
+                41.5    100.00%
+                41.6    100.00%
+                41.7    100.00%
+                41.8    100.00%
+                41.9    100.00%
+                42.0    100.00%
+                42.1    100.00%
+                42.2    100.00%
+                42.3    100.00%
+                42.4    100.00%
+                42.5    100.00%
+                42.6    100.00%
+                42.7    100.00%
+                42.8    100.00%
+                42.9    100.00%
+                43.0    100.00%
+                43.1    100.00%
+                43.2    100.00%
+                43.3    100.00%
+                43.4    100.00%
+                43.5    100.00%
+                43.6    100.00%
+                43.7    100.00%
+                43.8    100.00%
+                43.9    100.00%
+                44.0    100.00%
+                44.1    100.00%
+                44.2    100.00%
+                44.3    100.00%
+                44.4    100.00%
+                44.5    100.00%
+                44.6    100.00%
+                44.7    100.00%
+                44.8    100.00%
+                44.9    100.00%
+                45.0    100.00%
+                45.1    100.00%
+                45.2    100.00%
+                45.3    100.00%
+                45.4    100.00%
+                45.5    100.00%
+                45.6    100.00%
+                45.7    100.00%
+                45.8    100.00%
+                45.9    100.00%
+                46.0    100.00%
+                46.1    100.00%
+                46.2    100.00%
+                46.3    100.00%
+                46.4    100.00%
+                46.5    100.00%
+                46.6    100.00%
+                46.7    100.00%
+                46.8    100.00%
+                46.9    100.00%
+                47.0    100.00%
+                47.1    100.00%
+                47.2    100.00%
+                47.3    100.00%
+                47.4    100.00%
+                47.5    100.00%
+                47.6    100.00%
+                47.7    100.00%
+                47.8    100.00%
+                47.9    100.00%
+                48.0    100.00%
+                48.1    100.00%
+                48.2    100.00%
+                48.3    100.00%
+                48.4    100.00%
+                48.5    100.00%
+                48.6    100.00%
+                48.7    100.00%
+                48.8    100.00%
+                48.9    100.00%
+                49.0    100.00%
+                49.1    100.00%
+                49.2    100.00%
+                49.3    100.00%
+                49.4    100.00%
+                49.5    100.00%
+                49.6    100.00%
+                49.7    100.00%
+                49.8    100.00%
+                49.9    100.00%
+                50.0    100.00%
+                50.1    100.00%
+                50.2    100.00%
+                50.3    100.00%
+                50.4    100.00%
+                50.5    100.00%
+                50.6    100.00%
+                50.7    100.00%
+                50.8    100.00%
+                50.9    100.00%
+                51.0    100.00%
+                51.1    100.00%
+                51.2    100.00%
+                51.3    100.00%
+                51.4    100.00%
+                51.5    100.00%
+                51.6    100.00%
+                51.7    100.00%
+                51.8    100.00%
+                51.9    100.00%
+                52.0    100.00%
+                52.1    100.00%
+                52.2    100.00%
+                52.3    100.00%
+                52.4    100.00%
+                52.5    100.00%
+                52.6    100.00%
+                52.7    100.00%
+                52.8    100.00%
+                52.9    100.00%
+                53.0    100.00%
+                53.1    100.00%
+                53.2    100.00%
+                53.3    100.00%
+                53.4    100.00%
+                53.5    100.00%
+                53.6    100.00%
+                53.7    100.00%
+                53.8    100.00%
+                53.9    100.00%
+                54.0    100.00%
+                54.1    100.00%
+                54.2    100.00%
+                54.3    100.00%
+                54.4    100.00%
+                54.5    100.00%
+                54.6    100.00%
+                54.7    100.00%
+                54.8    100.00%
+                54.9    100.00%
+                55.0    100.00%
+                55.1    100.00%
+                55.2    100.00%
+                55.3    100.00%
+                55.4    100.00%
+                55.5    100.00%
+                55.6    100.00%
+                55.7    100.00%
+                55.8    100.00%
+                55.9    100.00%
+                56.0    100.00%
+                56.1    100.00%
+                56.2    100.00%
+                56.3    100.00%
+                56.4    100.00%
+                56.5    100.00%
+                56.6    100.00%
+                56.7    100.00%
+                56.8    100.00%
+                56.9    100.00%
+                57.0    100.00%
+                57.1    100.00%
+                57.2    100.00%
+                57.3    100.00%
+                57.4    100.00%
+                57.5    100.00%
+                57.6    100.00%
+                57.7    100.00%
+                57.8    100.00%
+                57.9    100.00%
+                58.0    100.00%
+                58.1    100.00%
+                58.2    100.00%
+                58.3    100.00%
+                58.4    100.00%
+                58.5    100.00%
+                58.6    100.00%
+                58.7    100.00%
+                58.8    100.00%
+                58.9    100.00%
+                59.0    100.00%
+                59.1    100.00%
+                59.2    100.00%
+                59.3    100.00%
+                59.4    100.00%
+                59.5    100.00%
+                59.6    100.00%
+                59.7    100.00%
+                59.8    100.00%
+                59.9    100.00%
+                60.0    100.00%
+                60.1    100.00%
+                60.2    100.00%
+                60.3    100.00%
+                60.4    100.00%
+                60.5    100.00%
+                60.6    100.00%
+                60.7    100.00%
+                60.8    100.00%
+                60.9    100.00%
+                61.0    100.00%
+                61.1    100.00%
+                61.2    100.00%
+                61.3    100.00%
+                61.4    100.00%
+                61.5    100.00%
+                61.6    100.00%
+                61.7    100.00%
+                61.8    100.00%
+                61.9    100.00%
+                62.0    100.00%
+                62.1    100.00%
+                62.2    100.00%
+                62.3    100.00%
+                62.4    100.00%
+                62.5    100.00%
+                62.6    100.00%
+                62.7    100.00%
+                62.8    100.00%
+                62.9    100.00%
+                63.0    100.00%
+                63.1    100.00%
+                63.2    100.00%
+                63.3    100.00%
+                63.4    100.00%
+                63.5    100.00%
+                63.6    100.00%
+                63.7    100.00%
+                63.8    100.00%
+                63.9    100.00%
+                64.0    100.00%
+                64.1    100.00%
+                64.2    100.00%
+                64.3    100.00%
+                64.4    100.00%
+                64.5    100.00%
+                64.6    100.00%
+                64.7    100.00%
+                64.8    100.00%
+                64.9    100.00%
+                65.0    100.00%
+                65.1    100.00%
+                65.2    100.00%
+                65.3    100.00%
+                65.4    100.00%
+                65.5    100.00%
+                65.6    100.00%
+                65.7    100.00%
+                65.8    100.00%
+                65.9    100.00%
+                66.0    100.00%
+                66.1    100.00%
+                66.2    100.00%
+                66.3    100.00%
+                66.4    100.00%
+                66.5    100.00%
+                66.6    100.00%
+                66.7    100.00%
+                66.8    100.00%
+                66.9    100.00%
+                67.0    100.00%
+                67.1    100.00%
+                67.2    100.00%
+                67.3    100.00%
+                67.4    100.00%
+                67.5    100.00%
+                67.6    100.00%
+                67.7    100.00%
+                67.8    100.00%
+                67.9    100.00%
+                68.0    100.00%
+                68.1    100.00%
+                68.2    100.00%
+                68.3    100.00%
+                68.4    100.00%
+                68.5    100.00%
+                68.6    100.00%
+                68.7    100.00%
+                68.8    100.00%
+                68.9    100.00%
+                69.0    100.00%
+                69.1    100.00%
+                69.2    100.00%
+                69.3    100.00%
+                69.4    100.00%
+                69.5    100.00%
+                69.6    100.00%
+                69.7    100.00%
+                69.8    100.00%
+                69.9    100.00%
+                70.0    100.00%
+                70.1    100.00%
+                70.2    100.00%
+                70.3    100.00%
+                70.4    100.00%
+                70.5    100.00%
+                70.6    100.00%
+                70.7    100.00%
+                70.8    100.00%
+                70.9    100.00%
+                71.0    100.00%
+                71.1    100.00%
+                71.2    100.00%
+                71.3    100.00%
+                71.4    100.00%
+                71.5    100.00%
+                71.6    100.00%
+                71.7    100.00%
+                71.8    100.00%
+                71.9    100.00%
+                72.0    100.00%
+                72.1    100.00%
+                72.2    100.00%
+                72.3    100.00%
+                72.4    100.00%
+                72.5    100.00%
+                72.6    100.00%
+                72.7    100.00%
+                72.8    100.00%
+                72.9    100.00%
+                73.0    100.00%
+                73.1    100.00%
+                73.2    100.00%
+                73.3    100.00%
+                73.4    100.00%
+                73.5    100.00%
+                73.6    100.00%
+                73.7    100.00%
+                73.8    100.00%
+                73.9    100.00%
+                74.0    100.00%
+                74.1    100.00%
+                74.2    100.00%
+                74.3    100.00%
+                74.4    100.00%
+                74.5    100.00%
+                74.6    100.00%
+                74.7    100.00%
+                74.8    100.00%
+                74.9    100.00%
+                75.0    100.00%
+                75.1    100.00%
+                75.2    100.00%
+                75.3    100.00%
+                75.4    100.00%
+                75.5    100.00%
+                75.6    100.00%
+                75.7    100.00%
+                75.8    100.00%
+                75.9    100.00%
+                76.0    100.00%
+                76.1    100.00%
+                76.2    100.00%
+                76.3    100.00%
+                76.4    100.00%
+                76.5    100.00%
+                76.6    100.00%
+                76.7    100.00%
+                76.8    100.00%
+                76.9    100.00%
+                77.0    100.00%
+                77.1    100.00%
+                77.2    100.00%
+                77.3    100.00%
+                77.4    100.00%
+                77.5    100.00%
+                77.6    100.00%
+                77.7    100.00%
+                77.8    100.00%
+                77.9    100.00%
+                78.0    100.00%
+                78.1    100.00%
+                78.2    100.00%
+                78.3    100.00%
+                78.4    100.00%
+                78.5    100.00%
+                78.6    100.00%
+                78.7    100.00%
+                78.8    100.00%
+                78.9    100.00%
+                79.0    100.00%
+                79.1    100.00%
+                79.2    100.00%
+                79.3    100.00%
+                79.4    100.00%
+                79.5    100.00%
+                79.6    100.00%
+                79.7    100.00%
+                79.8    100.00%
+                79.9    100.00%
+                80.0    100.00%
+                80.1    100.00%
+                80.2    100.00%
+                80.3    100.00%
+                80.4    100.00%
+                80.5    100.00%
+                80.6    100.00%
+                80.7    100.00%
+                80.8    100.00%
+                80.9    100.00%
+                81.0    100.00%
+                81.1    100.00%
+                81.2    100.00%
+                81.3    100.00%
+                81.4    100.00%
+                81.5    100.00%
+                81.6    100.00%
+                81.7    100.00%
+                81.8    100.00%
+                81.9    100.00%
+                82.0    100.00%
+                82.1    100.00%
+                82.2    100.00%
+                82.3    100.00%
+                82.4    100.00%
+                82.5    100.00%
+                82.6    100.00%
+                82.7    100.00%
+                82.8    100.00%
+                82.9    100.00%
+                83.0    100.00%
+                83.1    100.00%
+                83.2    100.00%
+                83.3    100.00%
+                83.4    100.00%
+                83.5    100.00%
+                83.6    100.00%
+                83.7    100.00%
+                83.8    100.00%
+                83.9    100.00%
+                84.0    100.00%
+                84.1    100.00%
+                84.2    100.00%
+                84.3    100.00%
+                84.4    100.00%
+                84.5    100.00%
+                84.6    100.00%
+                84.7    100.00%
+                84.8    100.00%
+                84.9    100.00%
+                85.0    100.00%
+                85.1    100.00%
+                85.2    100.00%
+                85.3    100.00%
+                85.4    100.00%
+                85.5    100.00%
+                85.6    100.00%
+                85.7    100.00%
+                85.8    100.00%
+                85.9    100.00%
+                86.0    100.00%
+                86.1    100.00%
+                86.2    100.00%
+                86.3    100.00%
+                86.4    100.00%
+                86.5    100.00%
+                86.6    100.00%
+                86.7    100.00%
+                86.8    100.00%
+                86.9    100.00%
+                87.0    100.00%
+                87.1    100.00%
+                87.2    100.00%
+                87.3    100.00%
+                87.4    100.00%
+                87.5    100.00%
+                87.6    100.00%
+                87.7    100.00%
+                87.8    100.00%
+                87.9    100.00%
+                88.0    100.00%
+                88.1    100.00%
+                88.2    100.00%
+                88.3    100.00%
+                88.4    100.00%
+                88.5    100.00%
+                88.6    100.00%
+                88.7    100.00%
+                88.8    100.00%
+                88.9    100.00%
+                89.0    100.00%
+                89.1    100.00%
+                89.2    100.00%
+                89.3    100.00%
+                89.4    100.00%
+                89.5    100.00%
+                89.6    100.00%
+                89.7    100.00%
+                89.8    100.00%
+                89.9    100.00%
+                90.0    100.00%
+                90.1    100.00%
+                90.2    100.00%
+                90.3    100.00%
+                90.4    100.00%
+                90.5    100.00%
+                90.6    100.00%
+                90.7    100.00%
+                90.8    100.00%
+                90.9    100.00%
+                91.0    100.00%
+                91.1    100.00%
+                91.2    100.00%
+                91.3    100.00%
+                91.4    100.00%
+                91.5    100.00%
+                91.6    100.00%
+                91.7    100.00%
+                91.8    100.00%
+                91.9    100.00%
+                92.0    100.00%
+                92.1    100.00%
+                92.2    100.00%
+                92.3    100.00%
+                92.4    100.00%
+                92.5    100.00%
+                92.6    100.00%
+                92.7    100.00%
+                92.8    100.00%
+                92.9    100.00%
+                93.0    100.00%
+                93.1    100.00%
+                93.2    100.00%
+                93.3    100.00%
+                93.4    100.00%
+                93.5    100.00%
+                93.6    100.00%
+                93.7    100.00%
+                93.8    100.00%
+                93.9    100.00%
+                94.0    100.00%
+                94.1    100.00%
+                94.2    100.00%
+                94.3    100.00%
+                94.4    100.00%
+                94.5    100.00%
+                94.6    100.00%
+                94.7    100.00%
+                94.8    100.00%
+                94.9    100.00%
+                95.0    100.00%
+                95.1    100.00%
+                95.2    100.00%
+                95.3    100.00%
+                95.4    100.00%
+                95.5    100.00%
+                95.6    100.00%
+                95.7    100.00%
+                95.8    100.00%
+                95.9    100.00%
+                96.0    100.00%
+                96.1    100.00%
+                96.2    100.00%
+                96.3    100.00%
+                96.4    100.00%
+                96.5    100.00%
+                96.6    100.00%
+                96.7    100.00%
+                96.8    100.00%
+                96.9    100.00%
+                97.0    100.00%
+                97.1    100.00%
+                97.2    100.00%
+                97.3    100.00%
+                97.4    100.00%
+                97.5    100.00%
+                97.6    100.00%
+                97.7    100.00%
+                97.8    100.00%
+                97.9    100.00%
+                98.0    100.00%
+                98.1    100.00%
+                98.2    100.00%
+                98.3    100.00%
+                98.4    100.00%
+                98.5    100.00%
+                98.6    100.00%
+                98.7    100.00%
+                98.8    100.00%
+                98.9    100.00%
+                99.0    100.00%
+                99.1    100.00%
+                99.2    100.00%
+                99.3    100.00%
+                99.4    100.00%
+                99.5    100.00%
+                99.6    100.00%
+                99.7    100.00%
+                99.8    100.00%
+                99.9    100.00%
+               100.0    100.00%
+               100.1    100.00%
+               100.2    100.00%
+               100.3    100.00%
+               100.4    100.00%
+               100.5    100.00%
+               100.6    100.00%
+               100.7    100.00%
+               100.8    100.00%
+               100.9    100.00%
+               101.0    100.00%
+               101.1    100.00%
+               101.2    100.00%
+               101.3    100.00%
+               101.4    100.00%
+               101.5    100.00%
+               101.6    100.00%
+               101.7    100.00%
+               101.8    100.00%
+               101.9    100.00%
+               102.0    100.00%
+               102.1    100.00%
+               102.2    100.00%
+               102.3    100.00%
+               102.4    100.00%
+               102.5    100.00%
+               102.6    100.00%
+               102.7    100.00%
+               102.8    100.00%
+               102.9    100.00%
+               103.0    100.00%
+               103.1    100.00%
+               103.2    100.00%
+               103.3    100.00%
+               103.4    100.00%
+               103.5    100.00%
+               103.6    100.00%
+               103.7    100.00%
+               103.8    100.00%
+               103.9    100.00%
+               104.0    100.00%
+               104.1    100.00%
+               104.2    100.00%
+               104.3    100.00%
+               104.4    100.00%
+               104.5    100.00%
+               104.6    100.00%
+               104.7    100.00%
+               104.8    100.00%
+               104.9    100.00%
+               105.0    100.00%
+               105.1    100.00%
+               105.2    100.00%
+               105.3    100.00%
+               105.4    100.00%
+               105.5    100.00%
+               105.6    100.00%
+               105.7    100.00%
+               105.8    100.00%
+               105.9    100.00%
+               106.0    100.00%
+               106.1    100.00%
+               106.2    100.00%
+               106.3    100.00%
+               106.4    100.00%
+               106.5    100.00%
+               106.6    100.00%
+               106.7    100.00%
+               106.8    100.00%
+               106.9    100.00%
+               107.0    100.00%
+               107.1    100.00%
+               107.2    100.00%
+               107.3    100.00%
+               107.4    100.00%
+               107.5    100.00%
+               107.6    100.00%
+               107.7    100.00%
+               107.8    100.00%
+               107.9    100.00%
+               108.0    100.00%
+               108.1    100.00%
+               108.2    100.00%
+               108.3    100.00%
+               108.4    100.00%
+               108.5    100.00%
+               108.6    100.00%
+               108.7    100.00%
+               108.8    100.00%
+               108.9    100.00%
+               109.0    100.00%
+               109.1    100.00%
+               109.2    100.00%
+               109.3    100.00%
+               109.4    100.00%
+               109.5    100.00%
+               109.6    100.00%
+               109.7    100.00%
+               109.8    100.00%
+               109.9    100.00%
+               110.0    100.00%
+               110.1    100.00%
+               110.2    100.00%
+               110.3    100.00%
+               110.4    100.00%
+               110.5    100.00%
+               110.6    100.00%
+               110.7    100.00%
+               110.8    100.00%
+               110.9    100.00%
+               111.0    100.00%
+               111.1    100.00%
+               111.2    100.00%
+               111.3    100.00%
+               111.4    100.00%
+               111.5    100.00%
+               111.6    100.00%
+               111.7    100.00%
+               111.8    100.00%
+               111.9    100.00%
+               112.0    100.00%
+               112.1    100.00%
+               112.2    100.00%
+               112.3    100.00%
+               112.4    100.00%
+               112.5    100.00%
+               112.6    100.00%
+               112.7    100.00%
+               112.8    100.00%
+               112.9    100.00%
+               113.0    100.00%
+               113.1    100.00%
+               113.2    100.00%
+               113.3    100.00%
+               113.4    100.00%
+               113.5    100.00%
+               113.6    100.00%
+               113.7    100.00%
+               113.8    100.00%
+               113.9    100.00%
+               114.0    100.00%
+               114.1    100.00%
+               114.2    100.00%
+               114.3    100.00%
+               114.4    100.00%
+               114.5    100.00%
+               114.6    100.00%
+               114.7    100.00%
+               114.8    100.00%
+               114.9    100.00%
+               115.0    100.00%
+               115.1    100.00%
+               115.2    100.00%
+               115.3    100.00%
+               115.4    100.00%
+               115.5    100.00%
+               115.6    100.00%
+               115.7    100.00%
+               115.8    100.00%
+               115.9    100.00%
+               116.0    100.00%
+               116.1    100.00%
+               116.2    100.00%
+               116.3    100.00%
+               116.4    100.00%
+               116.5    100.00%
+               116.6    100.00%
+               116.7    100.00%
+               116.8    100.00%
+               116.9    100.00%
+               117.0    100.00%
+               117.1    100.00%
+               117.2    100.00%
+               117.3    100.00%
+               117.4    100.00%
+               117.5    100.00%
+               117.6    100.00%
+               117.7    100.00%
+               117.8    100.00%
+               117.9    100.00%
+               118.0    100.00%
+               118.1    100.00%
+               118.2    100.00%
+               118.3    100.00%
+               118.4    100.00%
+               118.5    100.00%
+               118.6    100.00%
+               118.7    100.00%
+               118.8    100.00%
+               118.9    100.00%
+               119.0    100.00%
+               119.1    100.00%
+               119.2    100.00%
+               119.3    100.00%
+               119.4    100.00%
+               119.5    100.00%
+               119.6    100.00%
+               119.7    100.00%
+               119.8    100.00%
+               119.9    100.00%
+               120.0    100.00%
+               120.1    100.00%
+               120.2    100.00%
+               120.3    100.00%
+               120.4    100.00%
+               120.5    100.00%
+               120.6    100.00%
+               120.7    100.00%
+               120.8    100.00%
+               120.9    100.00%
+               121.0    100.00%
+               121.1    100.00%
+               121.2    100.00%
+               121.3    100.00%
+               121.4    100.00%
+               121.5    100.00%
+               121.6    100.00%
+               121.7    100.00%
+               121.8    100.00%
+               121.9    100.00%
+               122.0    100.00%
+               122.1    100.00%
+               122.2    100.00%
+               122.3    100.00%
+               122.4    100.00%
+               122.5    100.00%
+               122.6    100.00%
+               122.7    100.00%
+               122.8    100.00%
+               122.9    100.00%
+               123.0    100.00%
+               123.1    100.00%
+               123.2    100.00%
+               123.3    100.00%
+               123.4    100.00%
+               123.5    100.00%
+               123.6    100.00%
+               123.7    100.00%
+               123.8    100.00%
+               123.9    100.00%
+               124.0    100.00%
+               124.1    100.00%
+               124.2    100.00%
+               124.3    100.00%
+               124.4    100.00%
+               124.5    100.00%
+               124.6    100.00%
+               124.7    100.00%
+               124.8    100.00%
+               124.9    100.00%
+               125.0    100.00%
+               125.1    100.00%
+               125.2    100.00%
+               125.3    100.00%
+               125.4    100.00%
+               125.5    100.00%
+               125.6    100.00%
+               125.7    100.00%
+               125.8    100.00%
+               125.9    100.00%
+               126.0    100.00%
+               126.1    100.00%
+               126.2    100.00%
+               126.3    100.00%
+               126.4    100.00%
+               126.5    100.00%
+               126.6    100.00%
+               126.7    100.00%
+               126.8    100.00%
+               126.9    100.00%
+               127.0    100.00%
+               127.1    100.00%
+               127.2    100.00%
+               127.3    100.00%
+               127.4    100.00%
+               127.5    100.00%
+               127.6    100.00%
+               127.7    100.00%
+               127.8    100.00%
+               127.9    100.00%
+               128.0    100.00%
+               128.1    100.00%
+               128.2    100.00%
+               128.3    100.00%
+               128.4    100.00%
+               128.5    100.00%
+               128.6    100.00%
+               128.7    100.00%
+               128.8    100.00%
+               128.9    100.00%
+               129.0    100.00%
+               129.1    100.00%
+               129.2    100.00%
+               129.3    100.00%
+               129.4    100.00%
+               129.5    100.00%
+               129.6    100.00%
+               129.7    100.00%
+               129.8    100.00%
+               129.9    100.00%
+               130.0    100.00%
+               130.1    100.00%
+               130.2    100.00%
+               130.3    100.00%
+               130.4    100.00%
+               130.5    100.00%
+               130.6    100.00%
+               130.7    100.00%
+               130.8    100.00%
+               130.9    100.00%
+               131.0    100.00%
+               131.1    100.00%
+               131.2    100.00%
+               131.3    100.00%
+               131.4    100.00%
+               131.5    100.00%
+               131.6    100.00%
+               131.7    100.00%
+               131.8    100.00%
+               131.9    100.00%
+               132.0    100.00%
+               132.1    100.00%
+               132.2    100.00%
+               132.3    100.00%
+               132.4    100.00%
+               132.5    100.00%
+               132.6    100.00%
+               132.7    100.00%
+               132.8    100.00%
+               132.9    100.00%
+               133.0    100.00%
+               133.1    100.00%
+               133.2    100.00%
+               133.3    100.00%
+               133.4    100.00%
+               133.5    100.00%
+               133.6    100.00%
+               133.7    100.00%
+               133.8    100.00%
+               133.9    100.00%
+               134.0    100.00%
+               134.1    100.00%
+               134.2    100.00%
+               134.3    100.00%
+               134.4    100.00%
+               134.5    100.00%
+               134.6    100.00%
+               134.7    100.00%
+               134.8    100.00%
+               134.9    100.00%
+               135.0    100.00%
+               135.1    100.00%
+               135.2    100.00%
+               135.3    100.00%
+               135.4    100.00%
+               135.5    100.00%
+               135.6    100.00%
+               135.7    100.00%
+               135.8    100.00%
+               135.9    100.00%
+               136.0    100.00%
+               136.1    100.00%
+               136.2    100.00%
+               136.3    100.00%
+               136.4    100.00%
+               136.5    100.00%
+               136.6    100.00%
+               136.7    100.00%
+               136.8    100.00%
+               136.9    100.00%
+               137.0    100.00%
+               137.1    100.00%
+               137.2    100.00%
+               137.3    100.00%
+               137.4    100.00%
+               137.5    100.00%
+               137.6    100.00%
+               137.7    100.00%
+               137.8    100.00%
+               137.9    100.00%
+               138.0    100.00%
+               138.1    100.00%
+               138.2    100.00%
+               138.3    100.00%
+               138.4    100.00%
+               138.5    100.00%
+               138.6    100.00%
+               138.7    100.00%
+               138.8    100.00%
+               138.9    100.00%
+               139.0    100.00%
+               139.1    100.00%
+               139.2    100.00%
+               139.3    100.00%
+               139.4    100.00%
+               139.5    100.00%
+               139.6    100.00%
+               139.7    100.00%
+               139.8    100.00%
+               139.9    100.00%
+               140.0    100.00%
+               140.1    100.00%
+               140.2    100.00%
+               140.3    100.00%
+               140.4    100.00%
+               140.5    100.00%
+               140.6    100.00%
+               140.7    100.00%
+               140.8    100.00%
+               140.9    100.00%
+               141.0    100.00%
+               141.1    100.00%
+               141.2    100.00%
+               141.3    100.00%
+               141.4    100.00%
+               141.5    100.00%
+               141.6    100.00%
+               141.7    100.00%
+               141.8    100.00%
+               141.9    100.00%
+               142.0    100.00%
+               142.1    100.00%
+               142.2    100.00%
+               142.3    100.00%
+               142.4    100.00%
+               142.5    100.00%
+               142.6    100.00%
+               142.7    100.00%
+               142.8    100.00%
+               142.9    100.00%
+               143.0    100.00%
+               143.1    100.00%
+               143.2    100.00%
+               143.3    100.00%
+               143.4    100.00%
+               143.5    100.00%
+               143.6    100.00%
+               143.7    100.00%
+               143.8    100.00%
+               143.9    100.00%
+               144.0    100.00%
+               144.1    100.00%
+               144.2    100.00%
+               144.3    100.00%
+               144.4    100.00%
+               144.5    100.00%
+               144.6    100.00%
+               144.7    100.00%
+               144.8    100.00%
+               144.9    100.00%
+               145.0    100.00%
+               145.1    100.00%
+               145.2    100.00%
+               145.3    100.00%
+               145.4    100.00%
+               145.5    100.00%
+               145.6    100.00%
+               145.7    100.00%
+               145.8    100.00%
+               145.9    100.00%
+               146.0    100.00%
+               146.1    100.00%
+               146.2    100.00%
+               146.3    100.00%
+               146.4    100.00%
+               146.5    100.00%
+               146.6    100.00%
+               146.7    100.00%
+               146.8    100.00%
+               146.9    100.00%
+               147.0    100.00%
+               147.1    100.00%
+               147.2    100.00%
+               147.3    100.00%
+               147.4    100.00%
+               147.5    100.00%
+               147.6    100.00%
+               147.7    100.00%
+               147.8    100.00%
+               147.9    100.00%
+               148.0    100.00%
+               148.1    100.00%
+               148.2    100.00%
+               148.3    100.00%
+               148.4    100.00%
+               148.5    100.00%
+               148.6    100.00%
+               148.7    100.00%
+               148.8    100.00%
+               148.9    100.00%
+               149.0    100.00%
+               149.1    100.00%
+               149.2    100.00%
+               149.3    100.00%
+               149.4    100.00%
+               149.5    100.00%
+               149.6    100.00%
+               149.7    100.00%
+               149.8    100.00%
+               149.9    100.00%
+               150.0    100.00%
+               150.1    100.00%
+               150.2    100.00%
+               150.3    100.00%
+               150.4    100.00%
+               150.5    100.00%
+               150.6    100.00%
+               150.7    100.00%
+               150.8    100.00%
+               150.9    100.00%
+               151.0    100.00%
+               151.1    100.00%
+               151.2    100.00%
+               151.3    100.00%
+               151.4    100.00%
+               151.5    100.00%
+               151.6    100.00%
+               151.7    100.00%
+               151.8    100.00%
+               151.9    100.00%
+               152.0    100.00%
+               152.1    100.00%
+               152.2    100.00%
+               152.3    100.00%
+               152.4    100.00%
+               152.5    100.00%
+               152.6    100.00%
+               152.7    100.00%
+               152.8    100.00%
+               152.9    100.00%
+               153.0    100.00%
+               153.1    100.00%
+               153.2    100.00%
+               153.3    100.00%
+               153.4    100.00%
+               153.5    100.00%
+               153.6    100.00%
+               153.7    100.00%
+               153.8    100.00%
+               153.9    100.00%
+               154.0    100.00%
+               154.1    100.00%
+               154.2    100.00%
+               154.3    100.00%
+               154.4    100.00%
+               154.5    100.00%
+               154.6    100.00%
+               154.7    100.00%
+               154.8    100.00%
+               154.9    100.00%
+               155.0    100.00%
+               155.1    100.00%
+               155.2    100.00%
+               155.3    100.00%
+               155.4    100.00%
+               155.5    100.00%
+               155.6    100.00%
+               155.7    100.00%
+               155.8    100.00%
+               155.9    100.00%
+               156.0    100.00%
+               156.1    100.00%
+               156.2    100.00%
+               156.3    100.00%
+               156.4    100.00%
+               156.5    100.00%
+               156.6    100.00%
+               156.7    100.00%
+               156.8    100.00%
+               156.9    100.00%
+               157.0    100.00%
+               157.1    100.00%
+               157.2    100.00%
+               157.3    100.00%
+               157.4    100.00%
+               157.5    100.00%
+               157.6    100.00%
+               157.7    100.00%
+               157.8    100.00%
+               157.9    100.00%
+               158.0    100.00%
+               158.1    100.00%
+               158.2    100.00%
+               158.3    100.00%
+               158.4    100.00%
+               158.5    100.00%
+               158.6    100.00%
+               158.7    100.00%
+               158.8    100.00%
+               158.9    100.00%
+               159.0    100.00%
+               159.1    100.00%
+               159.2    100.00%
+               159.3    100.00%
+               159.4    100.00%
+               159.5    100.00%
+               159.6    100.00%
+               159.7    100.00%
+               159.8    100.00%
+               159.9    100.00%
+               160.0    100.00%
+               160.1    100.00%
+               160.2    100.00%
+               160.3    100.00%
+               160.4    100.00%
+               160.5    100.00%
+               160.6    100.00%
+               160.7    100.00%
+               160.8    100.00%
+               160.9    100.00%
+               161.0    100.00%
+               161.1    100.00%
+               161.2    100.00%
+               161.3    100.00%
+               161.4    100.00%
+               161.5    100.00%
+               161.6    100.00%
+               161.7    100.00%
+               161.8    100.00%
+               161.9    100.00%
+               162.0    100.00%
+               162.1    100.00%
+               162.2    100.00%
+               162.3    100.00%
+               162.4    100.00%
+               162.5    100.00%
+               162.6    100.00%
+               162.7    100.00%
+               162.8    100.00%
+               162.9    100.00%
+               163.0    100.00%
+               163.1    100.00%
+               163.2    100.00%
+               163.3    100.00%
+               163.4    100.00%
+               163.5    100.00%
+               163.6    100.00%
+               163.7    100.00%
+               163.8    100.00%
+               163.9    100.00%
+               164.0    100.00%
+               164.1    100.00%
+               164.2    100.00%
+               164.3    100.00%
+               164.4    100.00%
+               164.5    100.00%
+               164.6    100.00%
+               164.7    100.00%
+               164.8    100.00%
+               164.9    100.00%
+               165.0    100.00%
+               165.1    100.00%
+               165.2    100.00%
+               165.3    100.00%
+               165.4    100.00%
+               165.5    100.00%
+               165.6    100.00%
+               165.7    100.00%
+               165.8    100.00%
+               165.9    100.00%
+               166.0    100.00%
+               166.1    100.00%
+               166.2    100.00%
+               166.3    100.00%
+               166.4    100.00%
+               166.5    100.00%
+               166.6    100.00%
+               166.7    100.00%
+               166.8    100.00%
+               166.9    100.00%
+               167.0    100.00%
+               167.1    100.00%
+               167.2    100.00%
+               167.3    100.00%
+               167.4    100.00%
+               167.5    100.00%
+               167.6    100.00%
+               167.7    100.00%
+               167.8    100.00%
+               167.9    100.00%
+               168.0    100.00%
+               168.1    100.00%
+               168.2    100.00%
+               168.3    100.00%
+               168.4    100.00%
+               168.5    100.00%
+               168.6    100.00%
+               168.7    100.00%
+               168.8    100.00%
+               168.9    100.00%
+               169.0    100.00%
+               169.1    100.00%
+               169.2    100.00%
+               169.3    100.00%
+               169.4    100.00%
+               169.5    100.00%
+               169.6    100.00%
+               169.7    100.00%
+               169.8    100.00%
+               169.9    100.00%
+               170.0    100.00%
+               170.1    100.00%
+               170.2    100.00%
+               170.3    100.00%
+               170.4    100.00%
+               170.5    100.00%
+               170.6    100.00%
+               170.7    100.00%
+               170.8    100.00%
+               170.9    100.00%
+               171.0    100.00%
+               171.1    100.00%
+               171.2    100.00%
+               171.3    100.00%
+               171.4    100.00%
+               171.5    100.00%
+               171.6    100.00%
+               171.7    100.00%
+               171.8    100.00%
+               171.9    100.00%
+               172.0    100.00%
+               172.1    100.00%
+               172.2    100.00%
+               172.3    100.00%
+               172.4    100.00%
+               172.5    100.00%
+               172.6    100.00%
+               172.7    100.00%
+               172.8    100.00%
+               172.9    100.00%
+               173.0    100.00%
+               173.1    100.00%
+               173.2    100.00%
+               173.3    100.00%
+               173.4    100.00%
+               173.5    100.00%
+               173.6    100.00%
+               173.7    100.00%
+               173.8    100.00%
+               173.9    100.00%
+               174.0    100.00%
+               174.1    100.00%
+               174.2    100.00%
+               174.3    100.00%
+               174.4    100.00%
+               174.5    100.00%
+               174.6    100.00%
+               174.7    100.00%
+               174.8    100.00%
+               174.9    100.00%
+               175.0    100.00%
+               175.1    100.00%
+               175.2    100.00%
+               175.3    100.00%
+               175.4    100.00%
+               175.5    100.00%
+               175.6    100.00%
+               175.7    100.00%
+               175.8    100.00%
+               175.9    100.00%
+               176.0    100.00%
+               176.1    100.00%
+               176.2    100.00%
+               176.3    100.00%
+               176.4    100.00%
+               176.5    100.00%
+               176.6    100.00%
+               176.7    100.00%
+               176.8    100.00%
+               176.9    100.00%
+               177.0    100.00%
+               177.1    100.00%
+               177.2    100.00%
+               177.3    100.00%
+               177.4    100.00%
+               177.5    100.00%
+               177.6    100.00%
+               177.7    100.00%
+               177.8    100.00%
+               177.9    100.00%
+               178.0    100.00%
+               178.1    100.00%
+               178.2    100.00%
+               178.3    100.00%
+               178.4    100.00%
+               178.5    100.00%
+               178.6    100.00%
+               178.7    100.00%
+               178.8    100.00%
+               178.9    100.00%
+               179.0    100.00%
+               179.1    100.00%
+               179.2    100.00%
+               179.3    100.00%
+               179.4    100.00%
+               179.5    100.00%
+               179.6    100.00%
+               179.7    100.00%
+               179.8    100.00%
+               179.9    100.00%
+               180.0    100.00%
+               180.1    100.00%
+               180.2    100.00%
+               180.3    100.00%
+               180.4    100.00%
+               180.5    100.00%
+               180.6    100.00%
+               180.7    100.00%
+               180.8    100.00%
+               180.9    100.00%
+               181.0    100.00%
+               181.1    100.00%
+               181.2    100.00%
+               181.3    100.00%
+               181.4    100.00%
+               181.5    100.00%
+               181.6    100.00%
+               181.7    100.00%
+               181.8    100.00%
+               181.9    100.00%
+               182.0    100.00%
+               182.1    100.00%
+               182.2    100.00%
+               182.3    100.00%
+               182.4    100.00%
+               182.5    100.00%
+               182.6    100.00%
+               182.7    100.00%
+               182.8    100.00%
+               182.9    100.00%
+               183.0    100.00%
+               183.1    100.00%
+               183.2    100.00%
+               183.3    100.00%
+               183.4    100.00%
+               183.5    100.00%
+               183.6    100.00%
+               183.7    100.00%
+               183.8    100.00%
+               183.9    100.00%
+               184.0    100.00%
+               184.1    100.00%
+               184.2    100.00%
+               184.3    100.00%
+               184.4    100.00%
+               184.5    100.00%
+               184.6    100.00%
+               184.7    100.00%
+               184.8    100.00%
+               184.9    100.00%
+               185.0    100.00%
+               185.1    100.00%
+               185.2    100.00%
+               185.3    100.00%
+               185.4    100.00%
+               185.5    100.00%
+               185.6    100.00%
+               185.7    100.00%
+               185.8    100.00%
+               185.9    100.00%
+               186.0    100.00%
+               186.1    100.00%
+               186.2    100.00%
+               186.3    100.00%
+               186.4    100.00%
+               186.5    100.00%
+               186.6    100.00%
+               186.7    100.00%
+               186.8    100.00%
+               186.9    100.00%
+               187.0    100.00%
+               187.1    100.00%
+               187.2    100.00%
+               187.3    100.00%
+               187.4    100.00%
+               187.5    100.00%
+               187.6    100.00%
+               187.7    100.00%
+               187.8    100.00%
+               187.9    100.00%
+               188.0    100.00%
+               188.1    100.00%
+               188.2    100.00%
+               188.3    100.00%
+               188.4    100.00%
+               188.5    100.00%
+               188.6    100.00%
+               188.7    100.00%
+               188.8    100.00%
+               188.9    100.00%
+               189.0    100.00%
+               189.1    100.00%
+               189.2    100.00%
+               189.3    100.00%
+               189.4    100.00%
+               189.5    100.00%
+               189.6    100.00%
+               189.7    100.00%
+               189.8    100.00%
+               189.9    100.00%
+               190.0    100.00%
+               190.1    100.00%
+               190.2    100.00%
+               190.3    100.00%
+               190.4    100.00%
+               190.5    100.00%
+               190.6    100.00%
+               190.7    100.00%
+               190.8    100.00%
+               190.9    100.00%
+               191.0    100.00%
+               191.1    100.00%
+               191.2    100.00%
+               191.3    100.00%
+               191.4    100.00%
+               191.5    100.00%
+               191.6    100.00%
+               191.7    100.00%
+               191.8    100.00%
+               191.9    100.00%
+               192.0    100.00%
+               192.1    100.00%
+               192.2    100.00%
+               192.3    100.00%
+               192.4    100.00%
+               192.5    100.00%
+               192.6    100.00%
+               192.7    100.00%
+               192.8    100.00%
+               192.9    100.00%
+               193.0    100.00%
+               193.1    100.00%
+               193.2    100.00%
+               193.3    100.00%
+               193.4    100.00%
+               193.5    100.00%
+               193.6    100.00%
+               193.7    100.00%
+               193.8    100.00%
+               193.9    100.00%
+               194.0    100.00%
+               194.1    100.00%
+               194.2    100.00%
+               194.3    100.00%
+               194.4    100.00%
+               194.5    100.00%
+               194.6    100.00%
+               194.7    100.00%
+               194.8    100.00%
+               194.9    100.00%
+               195.0    100.00%
+               195.1    100.00%
+               195.2    100.00%
+               195.3    100.00%
+               195.4    100.00%
+               195.5    100.00%
+               195.6    100.00%
+               195.7    100.00%
+               195.8    100.00%
+               195.9    100.00%
+               196.0    100.00%
+               196.1    100.00%
+               196.2    100.00%
+               196.3    100.00%
+               196.4    100.00%
+               196.5    100.00%
+               196.6    100.00%
+               196.7    100.00%
+               196.8    100.00%
+               196.9    100.00%
+               197.0    100.00%
+               197.1    100.00%
+               197.2    100.00%
+               197.3    100.00%
+               197.4    100.00%
+               197.5    100.00%
+               197.6    100.00%
+               197.7    100.00%
+               197.8    100.00%
+               197.9    100.00%
+               198.0    100.00%
+               198.1    100.00%
+               198.2    100.00%
+               198.3    100.00%
+               198.4    100.00%
+               198.5    100.00%
+               198.6    100.00%
+               198.7    100.00%
+               198.8    100.00%
+               198.9    100.00%
+               199.0    100.00%
+               199.1    100.00%
+               199.2    100.00%
+               199.3    100.00%
+               199.4    100.00%
+               199.5    100.00%
+               199.6    100.00%
+               199.7    100.00%
+               199.8    100.00%
+               199.9    100.00%
+               200.0    100.00%
+               200.1    100.00%
+               200.2    100.00%
+               200.3    100.00%
+               200.4    100.00%
+               200.5    100.00%
+               200.6    100.00%
+               200.7    100.00%
+               200.8    100.00%
+               200.9    100.00%
+               201.0    100.00%
+               201.1    100.00%
+               201.2    100.00%
+               201.3    100.00%
+               201.4    100.00%
+               201.5    100.00%
+
