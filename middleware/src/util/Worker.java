@@ -172,12 +172,15 @@ public class Worker implements Runnable {
                     String response_str = "";
                     request.hit = true;
                     for(int server = 0; server < this.serverCount; server++) {
-                        ByteBuffer responseSvr = ByteBuffer.allocate(128);
-                        byte[] responseByte = new byte[128];
-                        connections.get(server).read(responseSvr);
-                        responseSvr.flip();
-                        responseSvr.get(responseByte, 0, responseSvr.limit());
-                        response_str = new String(Arrays.copyOfRange(responseByte, 0, responseSvr.limit()));
+                        // ByteBuffer responseSvr = ByteBuffer.allocate(128);
+                        // byte[] responseByte = new byte[128];
+                        // connections.get(server).read(responseSvr);
+                        // responseSvr.flip();
+                        // responseSvr.get(responseByte, 0, responseSvr.limit());
+                        temp.clear();
+                        connections.get(server).read(temp);
+                        temp.flip();
+                        response_str = new String(Arrays.copyOfRange(temp.array(), 0, temp.limit()));
                         // Check if the server reponded something else than stored
                         if(!response_str.equals("STORED\r\n")) {
                             request.time_mmcd_rcvd = System.nanoTime() >> 10;       // In microseconds

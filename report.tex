@@ -3,6 +3,18 @@
 \usepackage{fullpage}
 \usepackage{hyperref}
 \usepackage{graphicx}
+\usepackage{xcolor}
+\definecolor{bg}{RGB}{39, 40, 34}
+
+\usepackage{minted}
+\usemintedstyle{monokai}
+\setminted{
+    bgcolor=bg,
+    linenos,
+    mathescape,
+    autogobble,
+    showspaces=false
+}
 
 \usepackage{fancyhdr}
 \pagestyle{fancy}
@@ -18,13 +30,13 @@
 
 }
 
-\lfoot{Name: YOUR\_NAME Legi: YOUR\_LEGI}
+\lfoot{Name: Jakob Beckmann Legi: 17-945-866}
 \rfoot{\thepage}
 
 \begin{document}
 
 \title{Advanced Systems Lab Report\\ \normalsize{Autumn Semester 2017}}
-\author{Name: YOUR\_NAME\\Legi: YOUR\_LEGI}
+\author{Name: Jakob Beckmann\\Legi: 17-945-866}
 \date{
 	\vspace{4cm}
 	\textbf{Grading} \\
@@ -47,44 +59,36 @@
 
 \newpage
 
-\section*{Notes on writing the report \small{(remove this page for submission)}}
+\section{System Overview}
+\subsection{Overall Design}
+The overall design of the middleware created in this project is quite straight-forward. A single net-thread listens to a server socket and adds any requests sent to this socket to a blocking queue. A fixed number of worker threads then pull requests from the queue and process them one by one. Each of these worker threads is connected to all backend Memcached servers at all times. When a request is being processed by a worker thread, this thread calls to at least one Memcached server to handle the request. The only exception to this is an invalid request, such as an unknown command, in which case the middleware does not contact any backend servers.
 
-The report for the lab needs not be extensive but it must be concise, complete, and correct.
-Conciseness is important in terms of content and explanations, focusing on what has been done and explanations of the results. A long report is not necessarily a better report, especially if there are aspects of the design or the experiments that remain unexplained. Completeness implies that the report should give a comprehensive idea of what has been done by mentioning all key aspects of the design, experiments, and analysis. Aspects of the system, be it of its design or of its behavior, that remain unexplained detract from the credibility and grade of the report. Correctness is expected in terms of the explanations being logical and correlated with the numbers in the experiments and the design.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{processing/graphics/system_overview.png}
+    \caption{System Overview}
+    \label{png::system_overview}
+\end{figure}
 
-Remember that this is a report about the system you have designed and built, about the experiments you have performed, and about how you interpret the results of the experiments and map them to your design and implementation. Please do not contact us seeking confirmation and assurances about, e.g., whether the report is sufficient, your interpretation of the data, validation of concrete aspects of your design, or whether you have done enough experiments. Making those decisions is your job and part of what the course will evaluate.
+As can be seen in figure \ref{png::system_overview}, a selector is attacked to the server socket in order to accept connections from clients. The key attached to the client connection is then passed with the request such that the workers can communicate the response back to the clients. The reason for the selector is to allow client connections to remain open until explicitly closed by the client. Hence the role of the selector is also to allow new connections and to add them to its internal register of client connections. Once in the internal register (the connection is accepted), the client can send a request which will be read by the net-thread and added to the queue with a reference to the client key. The worker threads then get requests off the queue and process them one by one. The workers first parse the request to get the command type. If the command is invalid, an error message is immediately sent back to the client associated with this request. Otherwise, the worker then communicates with the Memcached server(s) in order to store or retrieve data. The servers' response(s) are then parsed again to check for errors and statistics, and a response, potentially merged, is sent to the client.
 
-The report will be graded together with the code and data submitted. \textbf{You will need at least 400 points to pass.} You might be called for a meeting in person to clarify aspects of the report or the system. By submitting the report, the code, and the data, you confirm that you have done the work on your own, the code has been developed by yourself, the data submitted comes from experiments your have done, you have written the report on your own, and you have not copied neither code nor text nor data from other sources.
+\subsection{Selector}
+The selector serves as a register for connected clients. It is used as passing a socket channel in the queue as part of the request forces the connection to be closed at completion of the request. Hence the selector accepts connections from clients and registers all connected clients. The selector then listens to the registered clients for messages sent to the server socket it is connected to and generates ``read events'' for each client sending messages to the socket. Simultaneously, the net-thread permanently checks for read events generated by the selector and reads data from the client associated with the event to a buffer. This buffer is then added as a request to the queue. Note that the selector key and a timestamp are added to the buffer to form a complete request on the queue.
 
-Each section will have to contain a description of the experimental setup, graphs (where applicable) and tables with most important numbers. More importantly, each experiment and modeling result should be accompanied by an explanation that puts the result in the context of your system. Without proper explanations you risk losing most of the points in the experimental sections. Furthermore, it is expected that the interactive law holds for all experiments. In case throughput and response time do not match, it is imperative that you explain why, otherwise you risk losing most of the points for the experiment in question.
+\subsection{Worker Threads}
+A thread pool executor of fixed size is used to organise the worker threads. This has the advantage that it reduces thread environment switching if there is not need for an extra thread to be used. This could be the case when the connection to the Memcached servers are extremely fast. In such a case, the executor will not use more threads than than are available from the hardware as reusing the same thread to process the next request does not involve any overhead compared to switching to another thread to perform the same work. However, as soon as server service times increase, the thread pool allows to perform work on some thread while another is idle awaiting a response from Memcached. Moreover, the thread pool executor has the advantage that if some thread crashed during the execution of the middleware, it will automatically be relaunched. Hence it should in theory provide more stability to the system.
 
-In each section you can find a table summarizing the system configuration that should to be used for that particular section. These configurations should be considered as a guideline to help you find interesting configurations where we expect your system to change its behaviour (e.g., going from an under-saturated to a saturated system). If you do not observe such a change inside that range of parameters, you might have to run additional experiments outside the given range. In that case, ask your assistant for advise.
+The worker threads perform close to the entirety of the work within the middleware. The reason these workers perform the most work is that the work can be performed concurrently and, ideally, it is performed in parallel. In the initial design, even the reading of the socket was performed by the workers to avoid creating a buffer (containing the message sent from the client) for each request. However, this lead to request duplication as the read event was active as long as nothing was read from the socket, hence repeatedly adding requests to the queue if the initial request had not already been read. This was easily caused by even non-significant queue times. Therefore the design was changed, at the cost of creating a byte buffer for each request.
 
-This document provides you with the end-results that have to be included in the report. Please keep in mind that you are encouraged to provide additional graphs and experiments that help you in understanding your system. These additional experiments should be chosen such that they support the claims you make in your explanations and help you illustrate your point.
+When launching a thread, two buffers are created. One is used for temporary data while the other contains the response from Memcached to be sent back to clients. Note that all buffers
 
-\section*{Formatting guidelines}
-We expect you to use this template for the report, but you are free to use another text processor. Keep in mind the following:
-\begin{itemize}
-	\item  We expect you to submit \textbf{a single PDF that has the same section structure as this template, and answers all points we outline here}. If you use this file, you should remove this page with notes, and the short description provided by us at the beginning of sections.
-	\item Keep the same cover page as on this document and \textbf{fill out your name and legi number}. Leave the grading table empty.
-	\item Write your name and Legi number on every page.
-	\item The main text should be in \textbf{single-column format with 11pt font on A4 paper}. In case you don't start with one of the files provided by us, \textbf{for margins use 2.54 cm (1~inch) on all sides}.
-	\item The length of report should be at minimum 25, but should not exceed 50 pages (including figures, tables, etc.).
-\end{itemize}
 
-\subsection*{How to Generate Load and Populate the Data}
 
-To generate load on the system, you will use memtier. When using memtier, you can specify two parameters: the number of threads (CT) and the number of virtual clients per thread (VC). The total number of virtual clients per memtier is CPM=CT*VC. When referring to ``number of clients'' in the system, it is the number of memtier instances times the number of virtual clients per instance, i.e., NumClients=NumMemtier*CPM.
 
-Increasing NumClients for experiments is always done by first fixing the number of virtual machines (VMs) and memtier instances and then changing the VC setting for all memtiers. In most cases it is enough to increase VC in large increments, unless you want to explore the behavior of your system around the inflexion point or other points which are of interest. In this case, you can use more fine-grained steps.
 
-For all experiments, use 2 CT per VM and between 1 and 32 VC per thread. We recommend to choose at least 6 points in this range. You will have to use up to 3 VMs for clients. In case you use a single middleware, set up each memtier instance with 2 CTs. If you use two middlewares, start two memtier instances per VM (each connected to one middleware) with 1 CT each.
 
-For all experiments conducted in this report, the value size has to be 1024\,Bs, and the number of keys 10000 (\texttt{--key-maximum=10000}). Before running experiments, populate the key-value store using a write-only workload long enough to write all keys at least once. All sets should have a long expiry time, to ensure that keys are not evicted during the experiments (e.g., \texttt{--expiry-range=9999-10000}). The loading of the memcached servers is not part of the measured performance, and the middleware has to be restarted after the initial population, before running experiments.
 
-\newpage
 
-\section{System Overview (75 pts)}
 
 Describe the implementation of your system and highlight design decisions relevant for the experiments. Explain how messages are parsed and how statistics are gathered in a multi-threaded setting. Provide figures containing all the threads and queues in your system (including the network and the memcached servers). Include illustrations that show how requests of different types are handled (e.g., components involved in processing the request and method calls). Please include all details necessary to understand artifacts and effects in your experiments that arise from your implementation choices.
 
