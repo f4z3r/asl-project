@@ -41,9 +41,11 @@ The standard deviations in the `/processing/processed/**` subfiles is computed t
 - For an aggregate of subclients/clients/middlewares, the standard deviation is taken as the deviation of the averages of subclients/clients/middlewares computed every second during the experiment.
 
 The averages are taken as averages of the total available data. Note that internally (within the scripts), this is computed as an average of averages. However, as the number of measurements is exactly 80 across all processed logs, this is equivalent to an overall average.
+
 Consider the following:
-    - Take the overall average (n1 + n2 + n3 + ...) / (80 * num_clients * ...)
-    - Take average of averages (n1/80 + n2/80 + n3/80 + ...) / (num_clients * ...)
+- Take the overall average (n1 + n2 + n3 + ...) / (80 * num_clients * ...)
+- Take average of averages (n1/80 + n2/80 + n3/80 + ...) / (num_clients * ...)
+
 In the second case, the division can be factored out and we obtain the same as in the first case.
 
 Note however, that in the final data, standard deviations of the averages across repetitions are also included (i.e. how individual repetitions deviate from each other).
