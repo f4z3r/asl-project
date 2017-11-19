@@ -2,195 +2,178 @@
 
 import sys
 import os
-import pandas as pd
 import csv
+import pandas as pd
+import numpy as np
 
-def aggregate_memtier(basedir, client_num):
-    for operation in ["read", "write"]:
-        for nclients in [1, 2, 4, 8, 16, 24, 32]:
-            cwd = "{}/{}/{}_clients".format(basedir, operation, nclients)
-            os.makedirs("processed/{}".format(cwd))
-            with open("processed/{}/clients.csv".format(cwd), 'w', newline="") as outputfile:
-                writer = csv.writer(outputfile)
-                writer.writerow(["Client host",
-                                 "Average Throughput",
-                                 "Std Throughput",
-                                 "Average Response Time",
-                                 "Std Response Time"])
-                cross_client_throughputs = pd.DataFrame([])
-                cross_client_resp_time = pd.DataFrame([])
-                for client in range(1, client_num + 1):
-                    all_throughput = pd.DataFrame([])
-                    all_resp_time = pd.DataFrame([])
-                    # Gather data from all reps
-                    for rep in [1, 2, 3]:
-                        data = pd.read_csv("preprocessed/{}/client{}/rep{}.csv".format(cwd,
-                                                                                       client,
-                                                                                       rep),
-                                           header=0)
-                        all_throughput = pd.concat(([all_throughput, data["Throughput"]]))
-                        all_resp_time = pd.concat(([all_resp_time, data["Latency"]]))
+def aggregate(name,
+              operation_list,
+              sharded_list,
+              worker_list,
+              client_list,
+              mw=True):
+    """Aggregates all files within the processed directory for that experiment and produce a single
+    file used for graphing etc.
+    Arguments:
+        name: String of the experiment name
+        memtier_count: integer count of memtier machines in experiment
+        mw_count: integer count of middlewares used in experiment
+        operation_list: list of operations used in experiment
+        sharded_list: list of sharding parameters used in experiment
+        worker_list: list of worker parameters used in experiment
+        client_list: list of clients used in experiment
+        mw=True: whether this experiment used middlewares"""
 
-                    cross_client_resp_time = pd.concat([cross_client_resp_time, all_resp_time])
+    cwd = os.path.join("final", name)
+    os.makedirs(cwd)
 
-                    # Get total throughput
-                    if cross_client_throughputs.empty:
-                        cross_client_throughputs = all_throughput
-                    else:
-                        cross_client_throughputs += all_throughput
+    with open(os.path.join(cwd, "data.csv"), 'w', newline="") as outputfile:
+        writer = csv.writer(outputfile)
+        writer.writerow([name.upper()])
+        writer.writerow([])
+        writer.writerow([])
 
-                    writer.writerow([client,
-                                     float(all_throughput.mean()),
-                                     float(all_throughput.std()),
-                                     float(all_resp_time.mean()),
-                                     float(all_resp_time.std())])
+        writer.writerow(["Operation",
+                         "Sharded",
+                         "Workers",
+                         "Clients",
+                         "Average Throughput (client)",
+                         "Std Throughtput (client)",
+                         "Average Latency (client)",
+                         "Std Latency (client)",
+                         "Average Throughput (mw)",
+                         "Std Throughput (mw)",
+                         "Average Latency (mw)",
+                         "Std Latency (mw)",
+                         "Average Queue Length (mw)",
+                         "Std Queue Length (mw)",
+                         "Average Queue Time (mw)",
+                         "Std Queue Time (mw)",
+                         "Average Server Time (mw)",
+                         "Std Server Time (mw)",
+                         "Hits/Throughput (mw)",
+                         "",
+                         "Std Throughput across reps (clients)",
+                         "Std Latency across reps (clients)",
+                         "Std Throughtput across reps (mw)",
+                         "Std Latency across reps (mw)"])
 
-                writer.writerow(["Total",
-                                 float(cross_client_throughputs.mean()),
-                                 float(cross_client_throughputs.std()),
-                                 float(cross_client_resp_time.mean()),
-                                 float(cross_client_resp_time.std())])
-            outputfile.close()
+        for op in operation_list:
+            for sharded in sharded_list:
+                for workers in worker_list:
+                    for clients in client_list:
+                        input_dir = os.path.join("processed",
+                                                 name,
+                                                 "ratio_{}".format(op),
+                                                 "sharded_{}".format(sharded),
+                                                 "workers_{}".format(workers),
+                                                 "clients_{}".format(clients))
+                        _handle_innerloop(operation=op,
+                                          sharded=sharded,
+                                          workers=workers,
+                                          clients=clients,
+                                          input_dir=input_dir,
+                                          writer=writer,
+                                          mw=mw)
 
-def aggregate_mw(basedir, client_num, mw_num):
-    for operation in ["read", "write"]:
-        for nworkers in [8, 16, 32, 64]:
-            for nclients in [2, 4, 8, 14, 20, 26, 32]:
-                cwd = "{}/{}/{}_workers/{}_clients".format(basedir, operation, nworkers, nclients)
-                os.makedirs("processed/{}".format(cwd))
-                with open("processed/{}/clients.csv".format(cwd), 'w', newline="") as outputfile:
-                    writer = csv.writer(outputfile)
-                    writer.writerow(["Client host",
-                                     "Average Throughput",
-                                     "Std Throughput",
-                                     "Average Response Time",
-                                     "Std Response Time"])
-                    cross_client_throughputs = pd.DataFrame([])
-                    cross_client_resp_time = pd.DataFrame([])
-                    for client in range(1, client_num + 1):
-                        all_throughput = pd.DataFrame([])
-                        all_resp_time = pd.DataFrame([])
-                        # Gather data from all reps
-                        for rep in [1, 2, 3]:
-                            data = pd.read_csv("preprocessed/{}/client{}/rep{}.csv".format(cwd,
-                                                                                           client,
-                                                                                           rep),
-                                               header=0)
-                            all_throughput = pd.concat(([all_throughput, data["Throughput"]]))
-                            all_resp_time = pd.concat(([all_resp_time, data["Latency"]]))
 
-                        cross_client_resp_time = pd.concat([cross_client_resp_time, all_resp_time])
 
-                        # Get total throughput
-                        if cross_client_throughputs.empty:
-                            cross_client_throughputs = all_throughput
-                        else:
-                            cross_client_throughputs += all_throughput
+def _handle_innerloop(operation,
+                      sharded,
+                      workers,
+                      clients,
+                      input_dir,
+                      writer,
+                      mw=True):
+    """Handles printing a single row of aggregate data from one configuration within an
+    experiment.
+    Arguments:
+        operation: the operation of the current configuration
+        sharded: the sharded parameters of the current configuration
+        workers: the worker count used in the current configuration
+        clients: the client count used in the current configuration
+        input_dir: the directory containing the input files of the current configuration
+        writer: the CSV writer object linked to the ouput file for this experiment
+        mw=True: whether this experiment used middlewares."""
 
-                        writer.writerow([client,
-                                         float(all_throughput.mean()),
-                                         float(all_throughput.std()),
-                                         float(all_resp_time.mean()),
-                                         float(all_resp_time.std())])
+    rep_data = pd.DataFrame({"Latency (clients)": [0]*3,
+                             "Latency (mw)": [0]*3,
+                             "Throughput (clients)": [0]*3,
+                             "Throughput (mw)": [0]*3})
+    data = [operation, sharded, workers, clients]
 
-                    writer.writerow(["Total",
-                                     float(cross_client_throughputs.mean()),
-                                     float(cross_client_throughputs.std()),
-                                     float(cross_client_resp_time.mean()),
-                                     float(cross_client_resp_time.std())])
-                outputfile.close()
+    with open(os.path.join(input_dir, "clients.csv"), 'r', newline="") as clientfile:
+        clientreader = csv.reader(clientfile)
 
-                with open("processed/{}/mws.csv".format(cwd), 'w', newline="") as outputfile:
-                    writer = csv.writer(outputfile)
-                    writer.writerow(["MW host",
-                                     "Average Throughput",
-                                     "Std Throughput",
-                                     "Average Response Time",
-                                     "Std Response Time",
-                                     "Average Queue Time",
-                                     "Std Queue Time",
-                                     "Average Queue Length",
-                                     "Std Queue Length",
-                                     "Average Server Time",
-                                     "Std Server Time"])
-                    cross_mw_throughputs = pd.DataFrame([])
-                    cross_mw_resp_time = pd.DataFrame([])
-                    cross_mw_q_time = pd.DataFrame([])
-                    cross_mw_q_len = pd.DataFrame([])
-                    cross_mw_server_time = pd.DataFrame([])
-                    for mw in range(1, mw_num + 1):
-                        all_throughput = pd.DataFrame([])
-                        all_resp_time = pd.DataFrame([])
-                        all_q_time = pd.DataFrame([])
-                        all_q_len = pd.DataFrame([])
-                        all_server_time = pd.DataFrame([])
-                        # Gather data from all reps
-                        for rep in [1, 2, 3]:
-                            data = pd.read_csv("preprocessed/{}/mw{}/rep{}.csv".format(cwd,
-                                                                                       mw,
-                                                                                       rep),
-                                               header=0)
-                            all_throughput = pd.concat(([all_throughput, data["TOT"]]))
-                            all_resp_time = pd.concat(([all_resp_time, data["RSP T"]]))
-                            all_q_time = pd.concat(([all_q_time, data["Q T"]]))
-                            all_q_len = pd.concat(([all_q_len, data["Q LEN"]]))
-                            all_server_time = pd.concat(([all_server_time, data["SVR T"]]))
+        for content in clientreader:
+            if content[1:3] == ["Total", "Total"] and content[0] != "Total":
+                rep_data.loc[int(content[0]) - 1] += np.array([float(content[5]),
+                                                               0,
+                                                               float(content[3]),
+                                                               0])
+            if content[:3] == ["Total", "Total", "Total"]:
+                data += content[3:]
 
-                        cross_mw_resp_time = pd.concat([cross_mw_resp_time, all_resp_time])
-                        cross_mw_q_time = pd.concat([cross_mw_q_time, all_q_time])
-                        cross_mw_server_time = pd.concat([cross_mw_server_time, all_server_time])
+    clientfile.close()
 
-                        # Get total throughput
-                        if cross_mw_throughputs.empty:
-                            cross_mw_throughputs = all_throughput
-                        else:
-                            cross_mw_throughputs += all_throughput
+    if mw is True:
+        with open(os.path.join(input_dir, "mws.csv"), 'r', newline="") as mwfile:
+            mwreader = csv.reader(mwfile)
 
-                        # Get total queue length
-                        if cross_mw_q_len.empty:
-                            cross_mw_q_len = all_q_len
-                        else:
-                            cross_mw_q_len += all_q_len
+            for content in mwreader:
+                if content[1] == "Total" and content[0] != "Total":
+                    rep_data.loc[int(content[0]) - 1] += np.array([0,
+                                                                   float(content[4]),
+                                                                   0,
+                                                                   float(content[2])])
+                if content[:2] == ["Total", "Total"]:
+                    data += content[2:6] + content[11:] + [float(content[10]) / float(content[2])]
 
-                        # Convert all timing into milli-seconds
-                        all_resp_time /= 1000
-                        all_q_time /= 1000
-                        all_server_time /= 1000
+        mwfile.close()
+    else:
+        data += [0] * 11
 
-                        writer.writerow([mw,
-                                         float(all_throughput.mean()),
-                                         float(all_throughput.std()),
-                                         float(all_resp_time.mean()),
-                                         float(all_resp_time.std()),
-                                         float(all_q_time.mean()),
-                                         float(all_q_time.std()),
-                                         float(all_q_len.mean()),
-                                         float(all_q_len.std()),
-                                         float(all_server_time.mean()),
-                                         float(all_server_time.std())])
+    data += ["",
+             rep_data["Throughput (clients)"].std(),
+             rep_data["Latency (clients)"].std(),
+             rep_data["Throughput (mw)"].std(),
+             rep_data["Latency (mw)"].std()]
 
-                    # Convert all timing into milli-seconds
-                    cross_mw_resp_time /= 1000
-                    cross_mw_q_time /= 1000
-                    cross_mw_server_time /= 1000
 
-                    writer.writerow(["Total",
-                                     float(cross_mw_throughputs.mean()),
-                                     float(cross_mw_throughputs.std()),
-                                     float(cross_mw_resp_time.mean()),
-                                     float(cross_mw_resp_time.std()),
-                                     float(cross_mw_q_time.mean()),
-                                     float(cross_mw_q_time.std()),
-                                     float(cross_mw_q_len.mean()),
-                                     float(cross_mw_q_len.std()),
-                                     float(cross_mw_server_time.mean()),
-                                     float(cross_mw_server_time.std())])
-                outputfile.close()
+    writer.writerow(data)
 
 
 if __name__ == "__main__":
     if sys.argv[1] == "all":
-        aggregate_memtier("bench_clients", 2)
-        aggregate_memtier("bench_memcached", 3)
-        aggregate_mw("bench_1mw", 1, 1)
-        aggregate_mw("bench_2mw", 2, 2)
+        aggregate(name="benchmark_memcached",
+                  operation_list=["0:1", "1:0"],
+                  sharded_list=["false"],
+                  worker_list=["no"],
+                  client_list=[2, 4, 8, 16, 24, 32, 40, 48, 56],
+                  mw=False)
+        aggregate(name="benchmark_clients",
+                  operation_list=["0:1", "1:0"],
+                  sharded_list=["false"],
+                  worker_list=["no"],
+                  client_list=[2, 4, 8, 16, 24, 32, 40, 48, 56],
+                  mw=False)
+        aggregate(name="benchmark_1mw",
+                  operation_list=["0:1", "1:0"],
+                  sharded_list=["false"],
+                  worker_list=[8, 16, 32, 64],
+                  client_list=[2, 4, 8, 16, 24, 32, 40, 48, 56])
+        aggregate(name="benchmark_2mw",
+                  operation_list=["0:1", "1:0"],
+                  sharded_list=["false"],
+                  worker_list=[8, 16, 32, 64],
+                  client_list=[2, 4, 8, 16, 24, 32, 40, 48, 56])
+        aggregate(name="throughput_writes",
+                  operation_list=["1:0"],
+                  sharded_list=["false"],
+                  worker_list=[8, 16, 32, 64],
+                  client_list=[2, 4, 8, 16, 24, 32, 40, 48, 56])
+        aggregate(name="get_and_multigets",
+                  operation_list=["0:9", "0:6", "0:3", "0:1"],
+                  sharded_list=["true", "false"],
+                  worker_list=[64],
+                  client_list=[2])

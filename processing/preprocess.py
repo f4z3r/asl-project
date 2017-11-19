@@ -112,6 +112,8 @@ def _handle_repetitions(cwd,
                             "Std Throughput",
                             "Average Latency",
                             "Std Latency"])
+
+    tot_data = pd.DataFrame({"Latency": [0]*80, "Throughput": [0]*80})
     for rep in [1, 2, 3]:
         rep_data = pd.DataFrame({"Latency": [0]*80, "Throughput": [0]*80})
         for memtier in range(1, memtier_count + 1):
@@ -143,7 +145,7 @@ def _handle_repetitions(cwd,
                                 if line_num < 89:
                                     line_content = re.split(r"\s", line)
                                     line_content = list(filter(None, line_content))
-                                    subclient_data.loc[line_num - 10] = np.array([
+                                    subclient_data.loc[line_num - 9] = np.array([
                                         float(line_content[16]),
                                         int(line_content[9]),
                                     ])
@@ -178,6 +180,17 @@ def _handle_repetitions(cwd,
                                 rep_data["Throughput"].std(),
                                 rep_data["Latency"].mean(),
                                 rep_data["Latency"].std()])
+        tot_data += rep_data
+
+    # Get average across all reps
+    tot_data /= 3
+    client_writer.writerow(["Total",
+                            "Total",
+                            "Total",
+                            tot_data["Throughput"].mean(),
+                            tot_data["Throughput"].std(),
+                            tot_data["Latency"].mean(),
+                            tot_data["Latency"].std()])
 
     # Check if we need to handle middleware info
     if mw_count == 0:
@@ -205,6 +218,16 @@ def _handle_repetitions(cwd,
                         "Std Queue Time",
                         "Average Server Time",
                         "Std Server Time"])
+    tot_data = pd.DataFrame({"Gets": [0]*80,
+                             "Hits": [0]*80,
+                             "Invalids": [0]*80,
+                             "Latency": [0]*80,
+                             "Multigets": [0]*80,
+                             "Queue length": [0]*80,
+                             "Queue time": [0]*80,
+                             "Server time": [0]*80,
+                             "Sets": [0]*80,
+                             "Total": [0]*80,})
     for rep in [1, 2, 3]:
         rep_data = pd.DataFrame({"Gets": [0]*80,
                                  "Hits": [0]*80,
@@ -251,7 +274,7 @@ def _handle_repetitions(cwd,
 
                     # Take 80 seconds of measurements
                     if line_num < 83:
-                        mw_data.loc[line_num - 4] = np.array([
+                        mw_data.loc[line_num - 3] = np.array([
                             int(contents[1]),
                             int(contents[5]),
                             int(contents[3]),
@@ -316,6 +339,28 @@ def _handle_repetitions(cwd,
                             rep_data["Queue time"].std(),
                             rep_data["Server time"].mean(),
                             rep_data["Server time"].std()])
+        tot_data += rep_data
+
+    # Get average across all repetitions
+    tot_data /= 3
+    mw_writer.writerow(["Total",
+                        "Total",
+                        tot_data["Total"].mean(),
+                        tot_data["Total"].std(),
+                        tot_data["Latency"].mean(),
+                        tot_data["Latency"].std(),
+                        tot_data["Gets"].mean(),
+                        tot_data["Multigets"].mean(),
+                        tot_data["Sets"].mean(),
+                        tot_data["Invalids"].mean(),
+                        tot_data["Hits"].mean(),
+                        tot_data["Queue length"].mean(),
+                        tot_data["Queue length"].std(),
+                        tot_data["Queue time"].mean(),
+                        tot_data["Queue time"].std(),
+                        tot_data["Server time"].mean(),
+                        tot_data["Server time"].std()])
+
 
 
 if __name__ == "__main__":

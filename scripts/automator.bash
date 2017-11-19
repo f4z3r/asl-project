@@ -1069,7 +1069,7 @@ function 2kanalysis {
 }
 
 function test51 {
-    
+
 }
 
 if [ "${1}" == "run" ]; then
@@ -1077,12 +1077,12 @@ if [ "${1}" == "run" ]; then
     populate;
 
     # List the experiments to run
-    # benchmark_memcached;
-    # benchmark_clients;
-    # benchmark_1mw;
-    # benchmark_2mw;
-    # throughput_writes;
-    # get_and_multigets;
+    benchmark_memcached;
+    benchmark_clients;
+    benchmark_1mw;
+    benchmark_2mw;
+    throughput_writes;
+    get_and_multigets;
     2kanalysis;
 
     cleanup;
