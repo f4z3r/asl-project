@@ -172,11 +172,6 @@ public class Worker implements Runnable {
                     String response_str = "";
                     request.hit = true;
                     for(int server = 0; server < this.serverCount; server++) {
-                        // ByteBuffer responseSvr = ByteBuffer.allocate(128);
-                        // byte[] responseByte = new byte[128];
-                        // connections.get(server).read(responseSvr);
-                        // responseSvr.flip();
-                        // responseSvr.get(responseByte, 0, responseSvr.limit());
                         temp.clear();
                         connections.get(server).read(temp);
                         temp.flip();
@@ -223,10 +218,12 @@ public class Worker implements Runnable {
                     request.time_mmcd_rcvd = System.nanoTime() >> 10;       // In microseconds
 
                     if(request.type == Request.Type.MULTIGET) {
-                        int num_hits = response_str.split("VALUE").length - 1;
-                        this.hits_multiget += num_hits;
-                        this.hits_interval += num_hits;
-                        this.misses_multiget += request.multigetLength - num_hits;
+                        synchronized(this) {
+                            int num_hits = response_str.split("VALUE").length - 1;
+                            this.hits_multiget += num_hits;
+                            this.hits_interval += num_hits;
+                            this.misses_multiget += request.multigetLength - num_hits;
+                        }
                     }
 
                     request.hit = true;
@@ -359,10 +356,12 @@ public class Worker implements Runnable {
 
         request.channel.write(response);
         // Count number of hits / misses
-        int num_hits = response_str.split("VALUE").length - 1;
-        this.hits_multiget += num_hits;
-        this.hits_interval += num_hits;
-        this.misses_multiget += request.multigetLength - num_hits;
+        synchronized(this) {
+            int num_hits = response_str.split("VALUE").length - 1;
+            this.hits_multiget += num_hits;
+            this.hits_interval += num_hits;
+            this.misses_multiget += request.multigetLength - num_hits;
+        }
     }
 
     // ======================================================================================
