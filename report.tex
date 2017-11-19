@@ -3,13 +3,10 @@
 \usepackage{fullpage}
 \usepackage{hyperref}
 \usepackage{graphicx}
-\usepackage{xcolor}
-\definecolor{bg}{RGB}{39, 40, 34}
 
 \usepackage{minted}
-\usemintedstyle{monokai}
+% \usemintedstyle{monokai}
 \setminted{
-    bgcolor=bg,
     linenos,
     mathescape,
     autogobble,
@@ -32,6 +29,8 @@
 
 \lfoot{Name: Jakob Beckmann Legi: 17-945-866}
 \rfoot{\thepage}
+
+\setlength{\parskip}{1em}
 
 \begin{document}
 
@@ -80,11 +79,35 @@ A thread pool executor of fixed size is used to organise the worker threads. Thi
 
 The worker threads perform close to the entirety of the work within the middleware. The reason these workers perform the most work is that the work can be performed concurrently and, ideally, it is performed in parallel. In the initial design, even the reading of the socket was performed by the workers to avoid creating a buffer (containing the message sent from the client) for each request. However, this lead to request duplication as the read event was active as long as nothing was read from the socket, hence repeatedly adding requests to the queue if the initial request had not already been read. This was easily caused by even non-significant queue times. Therefore the design was changed, at the cost of creating a byte buffer for each request.
 
-When launching a thread, two buffers are created. One is used for temporary data while the other contains the response from Memcached to be sent back to clients. Note that all buffers used in the middleware are of size 16384 bytes as this allows for 10 keys of size 250 bytes and 10 values of 1024 (and some margin) to be stored in the buffer. The temporary data buffer is mostly used to interpret individual responses from the Memcached servers and its data is then added to the buffer containing the aggregate data for the client. Creating only two buffers for each worker has the goal to reduce dead times created by the garbage collector. Exactly how individual request types are handled by the middleware and how the buffers are utilised is explained in a later section.
+When launching a thread, two buffers are created. One is used for temporary data while the other contains the response from Memcached to be sent back to clients. Note that all buffers used in the middleware are of size 16384 bytes as this allows for 10 keys of size 250 bytes and 10 values of 1024 bytes (and some margin) to be stored in the buffer. The temporary data buffer is mostly used to interpret individual responses from the Memcached servers and its data is then added to the buffer containing the aggregate data for the client. Creating only two buffers for each worker has the goal to reduce dead times created by the garbage collector. Exactly how individual request types are handled by the middleware and how the buffers are utilised is explained in a later section.
 
 Each worker is connected to all backend Memcached servers at all times. These channels are blocking to ensure that the worker awaits a response from the servers when reading from a channel. Should a worker crash, the thread pool executor will rebuild a thread to replace it and the connections to the servers should be reestablished. However, note that such a situation never occurred during testing.
 
 \subsection{Requests}
+All requests are built from the following:
+\begin{itemize}
+    \item A buffer containing the data sent from the client. This is known when the request object is created.
+    \item A selection key that refers to the client who sent the request. This is used to recover the channel to said client in order to sent him the response. Note this has nothing to do with the Memcached key used to refer to the data stored on the backend servers.
+    \item A type which can be either:
+    \begin{enumerate}
+        \item GET: a simple get request with a single key.
+        \item SET: a simple set request with one key and the data to be set as the value for that key.
+        \item MULTIGET: a get request with more than one key.
+        \item INVALID: a request that does not conform to the protocol defining the format of the three commands above.
+    \end{enumerate}
+    This is not known when the request is created and will only be known once a worker parses the request.
+    \item A boolean identifying the request as a hit. Note that the notion of hit is different for each type of request. In the case of a get, it simply identifies whether a value was returned by the Memcached servers. In the case of a set, this represents whether a server responded with something different to \mintinline{shell}{STORED}. In the cases of multiget and invalid request, this boolean does not have any meaning. Multiget hits are handled directly as the responses from Memcached are parsed.
+    \item Several timestamps:
+    \begin{enumerate}
+        \item The time the request is created. This is (obviously) known when the request is created.
+        \item The time the request is dequeued. The worker updates this timestamp as soon as the request is taken from the queue.
+        \item The time the request was transmitted to the servers. This timestamp is taken just before any messages are sent to Memcached.
+        \item The time Memcached answered. This is taken once \textit{all} Memcached servers that were contacted for this request have answered.
+        \item The time the request was completed. This is the timestamp taken when the complete response was sent back to the client.
+    \end{enumerate}
+\end{itemize}
+
+All requests are parsed only at the worker level, hence the majority of the fields defined above are only known once the request is being processed by some worker.
 
 \subsubsection{Sets}
 

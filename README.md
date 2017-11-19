@@ -23,6 +23,10 @@
     aggregate.py    -- aggregates processed data from experiments
                        (/processing/processed/) into a single data.csv file in
                        /processing/final/
+    aggregate_stat.py   -- aggregates processed dstat data from experiments
+                           (/processing/processed/) into a single dstat.csv file in
+                           /processing/final/
+    handle_dstat.py -- preprocesses dstat data from dstat raw logs
     README.md
 
 README.md           -- this file

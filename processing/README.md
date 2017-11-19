@@ -7,7 +7,9 @@ This directory contains all non-raw log data and the scripts used to generate sa
 /processed              -- processed data from raw logs
 /graphics               -- graphs used for the generation of the report
 
+aggregate_dstat.py      -- script used to generate final dstat data
 aggregate.py            -- script used to generate final data
+handle_dstat.py         -- script used to generate prcessed dstat data
 preprocess.py           -- script used to generate processed data
 ```
 
