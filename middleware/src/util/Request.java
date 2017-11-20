@@ -103,6 +103,7 @@ public class Request {
             this.type = Type.SET;
         } else {
             this.type = Type.INVALID;
+            return false;
         }
 
         // If the command is of type SET, check if all required data is in the message

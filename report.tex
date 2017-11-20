@@ -10,8 +10,12 @@
     linenos,
     mathescape,
     autogobble,
-    showspaces=false
+    showspaces=false,
+    fontsize=\small,
+    baselinestretch=1
 }
+\BeforeBeginEnvironment{minted}{\vspace{-0.5em}}
+\AfterEndEnvironment{minted}{\vspace{-0.5em}}
 
 \usepackage{fancyhdr}
 \pagestyle{fancy}
@@ -30,7 +34,7 @@
 \lfoot{Name: Jakob Beckmann Legi: 17-945-866}
 \rfoot{\thepage}
 
-\setlength{\parskip}{1em}
+\setlength{\parskip}{0.5em}
 
 \begin{document}
 
@@ -96,7 +100,7 @@ All requests are built from the following:
         \item INVALID: a request that does not conform to the protocol defining the format of the three commands above.
     \end{enumerate}
     This is not known when the request is created and will only be known once a worker parses the request.
-    \item A boolean identifying the request as a hit. Note that the notion of hit is different for each type of request. In the case of a get, it simply identifies whether a value was returned by the Memcached servers. In the case of a set, this represents whether a server responded with something different to \mintinline{shell}{STORED}. In the cases of multiget and invalid request, this boolean does not have any meaning. Multiget hits are handled directly as the responses from Memcached are parsed.
+    \item A boolean identifying the request as a hit. Note that the notion of hit is different for each type of request. In the case of a get, it simply identifies whether a value was returned by the Memcached servers. In the case of a set, this represents whether a server responded with something different to \mintinline{java}{STORED}. In the cases of multiget and invalid request, this boolean does not have any meaning. Multiget hits are handled directly as the responses from Memcached are parsed.
     \item Several timestamps:
     \begin{enumerate}
         \item The time the request is created. This is (obviously) known when the request is created.
@@ -109,22 +113,80 @@ All requests are built from the following:
 
 All requests are parsed only at the worker level, hence the majority of the fields defined above are only known once the request is being processed by some worker.
 
+When parsing a request, the first aspect that is checked is whether the request terminates with \mintinline{java}{"\r\n"}. Then the command is parsed up to the first occurrence of \mintinline{java}{"\r\n"}. The set of bytes preceding these two characters is converted to a string and the first word in said string is compared to known command words (i.e. \mintinline{java}{get} or \mintinline{java}{set}). Once it is established which type the command is, the rest of the command is checked for correctness. In the case of \mintinline{java}{get}, the number of arguments is checked in order to determine whether the command should be treated as a \mintinline{java}{multiget}. In the case of a \mintinline{java}{set}, it is checked if the data block attacked to the request is of the length specified in the command. If any of these tests fail, the command is flagged as invalid and an error string is sent back to the client. In this case there is no communication with the backend Memcached servers as the request does not conform to the protocol.
+
 \subsubsection{Sets}
+Once a command has been dequeued, parsed, and established as type \mintinline{java}{set}, all worker buffers are cleared and the original request buffer is transmitted to all backend servers. The worker thread then awaits responses from the servers in the same order as he sent out the request. As we use blocking input/output on the server side, the same order is chosen as the first contacted server is likely the first to respond. Note however that if the connection to the first Memcached server is significantly slower than other connections, this will result in inefficient time utilisation as the middleware will wait for this response first, even though the responses from other servers might already be available. Every response is then checked and if anything other than \mintinline{java}{"STORED\r\n"} is returned from any server, that response is returned to the client and the \mintinline{java}{set} is flagged as a miss. The rest of the servers' responses are read in order to make sure all communication channels are cleared for the next request.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{processing/graphics/sets_handling.png}
+    \caption{Handling of \mintinline{java}{SET} requests}
+    \label{png::sets_handling}
+\end{figure}
+In the case of a hit (i.e. all servers responded \mintinline{java}{"STORED\r\n"}), this is relayed to the client and the request is completed. Request completion will be described under logging and thread synchronisation below.
+
+Note that that during the time the request is handled, the appropriate timestamps are updated for the request.
+
+\subsubsection{Gets and Non-Sharded Multigets}
+As these requests are not sent to all Memcached servers, load balancing is in order. To perform load balancing, a server is chosen by simply taking the least recently used server across all workers. Of course, this can be suboptimal if the least recently used server is still working on a large request and other servers have already freed after handling smaller requests. However, due to relatively strong variations in the network latencies, it is very difficult to predict the time needed for a server to process a request.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{processing/graphics/gets_handling.png}
+    \caption{Handling of \mintinline{java}{GET} and non-sharded \mintinline{java}{MULTIGET} requests}
+    \label{png::gets_handling}
+\end{figure}
+
+The request, as it was received by the client, is then sent to the selected server. The worker awaits a answer and continuously reads from the channel until the response either ends with \mintinline{java}{"ERROR\r\n"} or matches an error (anything ending with \mintinline{java}{"ERROR\r\n"}, i.e. also \mintinline{java}{"SERVER_ERROR\r\n"} or \mintinline{java}{"CLIENT_ERROR\r\n"}). Note that this does not create a hot loop as the channel reading is blocking.
+
+If the request is of type multiget, the worker checks how many values were included in the response compared to the number of values requested in the command. This then determined the number of hits and misses of the request.
+
+For a get, the response is compared to \mintinline{java}{"END\r\n"} and checked if it ends with \mintinline{java}{"ERROR\r\n"}. If neither is the case, the request is flagged as a hit.
+
+Both for \mintinline{java}{multigets} and single \mintinline{java}{get}, the response is then relayed to the client and the request completed.
+
+
+\subsubsection{Sharded Multigets}
+In the case of a sharded multigets, the \mintinline{java}{readSharded(request, response_buffer, temp_buffer)} function is called. This function completely takes care of the handling of such requests with the exception of request completion. Sharded requests are handled in two ways (graphically shown in figure \ref{png::multigets_handling}):
+\begin{enumerate}
+    \item If the number of requested values is less than the number of available Memcached servers, load balancing is performed and a single \mintinline{java}{get} is sent to a server. Again, the servers responses are interpreted in the same order as the servers were contacted. If an error is received from any server, \mintinline{java}{"ERROR\r\n"} is relayed to the client and the server channels are cleared for the next request. Otherwise individual responses are read into the temporary buffer, \mintinline{java}{"END\r\n"} is removed from the end of the buffer and the entire buffer is appended to the response buffer.
+    \item If the number of request values is larger than the number of available Memcached servers, no load balancing is required as all servers will need to be contacted anyways. The processing is then performed as above.
+\end{enumerate}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{processing/graphics/multigets_handling.png}
+    \caption{Handling of sharded \mintinline{java}{MULTIGET} requests}
+    \label{png::multigets_handling}
+\end{figure}
+When all Memcached servers have answered, \mintinline{java}{"END\r\n"} is added to the response buffer and the response is relayed to the client unless an error occurred in one of the servers. The response buffer is then converted into a string to check the number of hits. Note that this is performed irrespective of a server responding \mintinline{java}{"ERROR\r\n"}.
+
+
+\subsection{Logging, Request Completion and Thread Synchronisation}
+All statistical data relating to a request is stored within the request itself. Hence the reserved fields for timestamps, type and hit flags. When a request is completed, the \mintinline{java}{complete(request)} private method of that worker object is called. This method is then computes the required statistics and stores them internally in the corresponding worker object. Hence note that up until the completion of the request, no internal data of the worker was touched with the exception of \mintinline{java}{multigets} hit counting.
+
+Every part of the workers that accessed internal statistics data is synchronised with respect to the worker object. Hence both the \mintinline{java}{complete(request)} and the \mintinline{java}{multiget} hit counting are synchronised. This ensures memory data consistency when accessing the internal statistical data for logging. Hence all data should be consistent and no request should only partially logged unless the logger kicks in between two boxes in figures \ref{png::gets_handling} and \ref{png::multigets_handling}. This can only happen during the handling of multigets and creates hits to be registered even though the request is incomplete. This is very unlikely to happen as close to no work is performed between any two blue boxes. Moreover, note that this does not affect any final statistics.
+
+The logging is performed by a static function:
+\begin{minted}{java}
+    public static String getRecord(ArrayList<Worker> workers, int queueLength);
+\end{minted}
+(of the worker class) that, when accessing the internal data of a worker in its argument list, locks that worker, hence preventing it from modifying its internal statistical data. This is done in order to get consistent interval information when logging. \\
+Every second, the \mintinline{java}{getRecord()} function is called on all workers and gathers their statistical data to output what has happened in the last second. Note that this does not prevent the worker from performing work until it reaches either request completion or a multiget hit count update. Due to the fact that data gathering is relatively fast compared to the overall time needed to process a request and the server time, this usually does not affect performance. Moreover, note that not all workers are blocked but only the one currently being accessed. This can create slightly offset data when the middleware is launched with a large number of workers as the last few workers might complete some requests while the data from the first worker is being read. However, this only affects the time interval, not the overall data, because the logger only gathers data from since \mintinline{java}{getRecord()} was called \textit{on that worker}. Hence, even if the last worker completes more requests while the data from the first worker is being collected, these completed requests will not be considered the next time \mintinline{java}{getRecord()} is called on that worker.
+
+Furthermore, \mintinline{java}{getRecord()} also takes care of clearing any histogram information stored in workers when running for the first time. This is to ensure that histogram data does not include requests completed during warm up time. The warm up time is set to ten seconds, therefore \mintinline{java}{getRecord()} is called ten seconds after the launch of the middleware and then again every second after that.
+
+The analysis data is logged both to console and to an \mintinline{shell}{analysis.log} file in the home directory. Note that the logs in the log file additionally contain timestamps. Moreover, the middleware logs system information such as interruptions, errors settings up sockets, connection request, etc. to \mintinline{shell}{system_report.log} also in the home directory.
+
+On top of that, when the \mintinline{java}{ShutdownHook} is triggered, statistics for individual workers is gathered and the histogram is printed. The statistic for individual workers include queue time, processing time, server time, total count, hits per second and misses per second for each request type. The final statistics layout is very similar to the one provided my memtier.
+
+
+\subsection{Overall Experimental Design}
+All repetitions taken are at least 90 seconds long. The ten first seconds are evicted (warm up time) and the 80 next measurements are taken as the data. For client and server data, only the first eight seconds are evicted as the automation scripts allow two seconds for the middleware to boot properly before launching the clients. Note that due to \mintinline{java}{ssh} network latencies, the 80 second windows of measurements might not perfectly coincide between clients, middleware, and servers, but this should be insignificant compared to the overall length of a repetition.
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-Describe the implementation of your system and highlight design decisions relevant for the experiments. Explain how messages are parsed and how statistics are gathered in a multi-threaded setting. Provide figures containing all the threads and queues in your system (including the network and the memcached servers). Include illustrations that show how requests of different types are handled (e.g., components involved in processing the request and method calls). Please include all details necessary to understand artifacts and effects in your experiments that arise from your implementation choices.
+\newpage
 
 \section{Baseline without Middleware (75 pts)}
 

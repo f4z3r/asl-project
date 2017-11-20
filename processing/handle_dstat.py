@@ -184,9 +184,9 @@ def _handle_inner_loop(operation,
                 line_num = 0
                 for line in inputfile.readlines():
                     line_num += 1
-                    if line_num < 11:
+                    if line_num < 9:
                         continue
-                    if line_num > 90:
+                    if line_num > 88:
                         break
                     content = re.split(r"[\s|]", line)
                     content = list(filter(None, content))
@@ -244,9 +244,9 @@ def _handle_inner_loop(operation,
                 line_num = 0
                 for line in inputfile.readlines():
                     line_num += 1
-                    if line_num < 11:
+                    if line_num < 9:
                         continue
-                    if line_num > 90:
+                    if line_num > 88:
                         break
                     content = re.split(r"[\s|]", line)
                     content = list(filter(None, content))

@@ -178,16 +178,17 @@ public class Worker implements Runnable {
                         response_str = new String(Arrays.copyOfRange(temp.array(), 0, temp.limit()));
                         // Check if the server reponded something else than stored
                         if(!response_str.equals("STORED\r\n")) {
-                            request.time_mmcd_rcvd = System.nanoTime() >> 10;       // In microseconds
-                            request.hit = false;
-                            // It did, relay the message to the client
-                            request.channel.write(ByteBuffer.wrap(response_str.getBytes()));
-                            completed(request);
-                            break;
+                            if(request.hit == true) {
+                                request.time_mmcd_rcvd = System.nanoTime() >> 10;       // In microseconds
+                                request.hit = false;
+                                // It did, relay the message to the client
+                                request.channel.write(ByteBuffer.wrap(response_str.getBytes()));
+                            }
                         }
                     }
                     request.time_mmcd_rcvd = System.nanoTime() >> 10;       // In microseconds
                     if(request.hit == false) {
+                        completed(request);
                         // Request is completed, skip to next request
                         continue;
                     }
@@ -209,7 +210,7 @@ public class Worker implements Runnable {
 
                     // Get response from server
                     String response_str = "response";
-                    while(!response_str.endsWith("END\r\n") && !response_str.endsWith("ERROR\r\n") && !response_str.endsWith("SERVER_ERROR\r\n") && !response_str.endsWith("CLIENT_ERROR\r\n")) {
+                    while(!response_str.endsWith("END\r\n") && !response_str.endsWith("ERROR\r\n")) {
                         connections.get(server).read(response);
 
                         // Convert response into string
@@ -227,7 +228,7 @@ public class Worker implements Runnable {
                     }
 
                     request.hit = true;
-                    if(response_str.equals("END\r\n") || response_str.endsWith("ERROR\r\n") || response_str.endsWith("SERVER_ERROR\r\n") || response_str.endsWith("CLIENT_ERROR\r\n")) {
+                    if(response_str.equals("END\r\n") || response_str.endsWith("ERROR\r\n")) {
                         request.hit = false;
                     }
 
@@ -266,6 +267,7 @@ public class Worker implements Runnable {
         String command = new String(Arrays.copyOfRange(request.buffer.array(), 0, request.buffer.limit() - 2)).trim();
         String[] arguments = command.split(" ");
 
+        boolean responded = false;
         String response_str = "response";
         if(arguments.length - 1 < this.serverCount) {
             // We have less arguments than available servers
@@ -280,11 +282,12 @@ public class Worker implements Runnable {
                 connections.get(server).write(ByteBuffer.wrap(("get " + arguments[idx] + "\r\n").getBytes()));
             }
 
+            responded = false;
             for(int server = 0; server < this.serverCount; server++) {
                 temp.clear();
                 response_str = "response";
                 if(servers[server] == 1) {
-                    while(!response_str.endsWith("END\r\n") && !response_str.endsWith("ERROR\r\n") && !response_str.endsWith("SERVER_ERROR\r\n") && !response_str.endsWith("CLIENT_ERROR\r\n")) {
+                    while(!response_str.endsWith("END\r\n") && !response_str.endsWith("ERROR\r\n")) {
                         this.connections.get(server).read(temp);
 
                         // Convert response into string
@@ -292,14 +295,10 @@ public class Worker implements Runnable {
                     }
                     // Check if an error occured
                     if(response_str.endsWith("ERROR\r\n")) {
-                        request.channel.write(ByteBuffer.wrap("ERROR\r\n".getBytes()));
-                        return;
-                    } else if(response_str.endsWith("SERVER_ERROR\r\n")) {
-                        request.channel.write(ByteBuffer.wrap("SERVER_ERROR\r\n".getBytes()));
-                        return;
-                    } else if(response_str.endsWith("CLIENT_ERROR\r\n")) {
-                        request.channel.write(ByteBuffer.wrap("CLIENT_ERROR\r\n".getBytes()));
-                        return;
+                        if(!responded) {
+                            responded = true;
+                            request.channel.write(ByteBuffer.wrap("ERROR\r\n".getBytes()));
+                        }
                     }
 
                     // Remove the "END\r\n" of the end of the message
@@ -308,7 +307,6 @@ public class Worker implements Runnable {
                     response.put(temp);
                 }
             }
-
         } else {
             // We have more arguments than available servers
             request.time_mmcd_sent = System.nanoTime() >> 10;       // In microseconds
@@ -321,10 +319,11 @@ public class Worker implements Runnable {
                 connections.get(server).write(ByteBuffer.wrap(commandSvr.getBytes()));
             }
 
+            responded = false;
             for(int server = 0; server < this.serverCount; server++) {
                 temp.clear();
                 response_str = "response";
-                while(!response_str.endsWith("END\r\n") && !response_str.endsWith("ERROR\r\n") && !response_str.endsWith("SERVER_ERROR\r\n") && !response_str.endsWith("CLIENT_ERROR\r\n")) {
+                while(!response_str.endsWith("END\r\n") && !response_str.endsWith("ERROR\r\n")) {
                     this.connections.get(server).read(temp);
 
                     // Convert response into string
@@ -332,14 +331,10 @@ public class Worker implements Runnable {
                 }
                 // Check if an error occured
                 if(response_str.endsWith("ERROR\r\n")) {
-                    request.channel.write(ByteBuffer.wrap("ERROR\r\n".getBytes()));
-                    return;
-                } else if(response_str.endsWith("SERVER_ERROR\r\n")) {
-                    request.channel.write(ByteBuffer.wrap("SERVER_ERROR\r\n".getBytes()));
-                    return;
-                } else if(response_str.endsWith("CLIENT_ERROR\r\n")) {
-                    request.channel.write(ByteBuffer.wrap("CLIENT_ERROR\r\n".getBytes()));
-                    return;
+                    if(!responded) {
+                        responded = true;
+                        request.channel.write(ByteBuffer.wrap("ERROR\r\n".getBytes()));
+                    }
                 }
 
                 // Remove the "END\r\n" of the end of the message
@@ -352,9 +347,11 @@ public class Worker implements Runnable {
         response.put("END\r\n".getBytes());
         response.flip();
 
-        response_str = new String(Arrays.copyOfRange(response.array(), 0, response.limit()));
+        if(!responded) {
+            response_str = new String(Arrays.copyOfRange(response.array(), 0, response.limit()));
+            request.channel.write(response);
+        }
 
-        request.channel.write(response);
         // Count number of hits / misses
         synchronized(this) {
             int num_hits = response_str.split("VALUE").length - 1;
