@@ -25,7 +25,10 @@ def aggregate(name,
         mw=True: whether this experiment used middlewares"""
 
     cwd = os.path.join("final", name)
-    os.makedirs(cwd)
+    try:
+        os.makedirs(cwd)
+    except:
+        pass
 
     with open(os.path.join(cwd, "data.csv"), 'w', newline="") as outputfile:
         writer = csv.writer(outputfile)

@@ -290,7 +290,6 @@ def _handle_repetitions(cwd,
 
             # Convert timing measurements in ms
             mw_data[["Latency",
-                     "Queue length",
                      "Queue time",
                      "Server time"
                     ]] /= 1000

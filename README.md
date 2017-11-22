@@ -37,7 +37,7 @@ azure_template.json -- JSON template used to generate VMs on the cloud
 ```
 
 ## Graphs
-Note that unless explicitly stated otherwise in the report, every graph is generated from the data contained in the data.csv file of the respective experiment. This file can be found the under `/processing/final/<experiment_name>/data.csv`. In order to check exactly which data point is graphed to what, the individual graphs are stored in the Excel workbooks that can be found in the same directory. One can check exactly what subsection of the data contained in data.csv is used for a specific graph.
+Note that unless explicitly stated otherwise in the report, every graph is generated from the data contained in the data.csv and dstat.csv files of the respective experiment. These files can be found the under `/processing/final/<experiment_name>/`. In order to check exactly which data point is graphed to what, the individual graphs are stored in the Excel workbooks that can be found in the same directory. One can check exactly what subsection of the data contained in data.csv is used for a specific graph.
 
 ## Notes on standard deviations and means (stated in report)
 The standard deviations in the `/processing/processed/**` subfiles is computed the following way:
