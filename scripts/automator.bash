@@ -656,7 +656,7 @@ function get_and_multigets {
 
     # Config:
     threads=1;
-    operations=(0:9 0:6 0:3 0:1);
+    operations=(1:9 1:6 1:3 1:1);
     is_sharded=(true false);
     worker_list=64;
     client_list=2;
@@ -664,10 +664,10 @@ function get_and_multigets {
 
     echo "Starting get_and_multigets ...";
     for op in "${operations[@]}"; do
-        if [ "${op}" == "0:9" ]; then multiget=9; fi
-        if [ "${op}" == "0:6" ]; then multiget=6; fi
-        if [ "${op}" == "0:3" ]; then multiget=3; fi
-        if [ "${op}" == "0:1" ]; then multiget=1; fi
+        if [ "${op}" == "1:9" ]; then multiget=9; fi
+        if [ "${op}" == "1:6" ]; then multiget=6; fi
+        if [ "${op}" == "1:3" ]; then multiget=3; fi
+        if [ "${op}" == "1:1" ]; then multiget=1; fi
         mkdir ${log_dir}/ratio_${op};
         for sharded in "${is_sharded[@]}"; do
             mkdir ${log_dir}/ratio_${op}/sharded_${sharded};
@@ -1066,10 +1066,6 @@ function 2kanalysis {
     mv /Users/jakob_beckmann/Desktop/logs/** ${final_dir};
 
     echo "2kanalysis finished";
-}
-
-function test51 {
-
 }
 
 if [ "${1}" == "run" ]; then

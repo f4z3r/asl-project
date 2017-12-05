@@ -18,15 +18,7 @@
 /processing
     /final          -- final processed data used for analysis and graphing
     /processed      -- processed data, client cumulated, etc.
-    preprocess.py   -- preprocessed raw logs from /logs/ into cumulated data
-                       in /processing/processed/
-    aggregate.py    -- aggregates processed data from experiments
-                       (/processing/processed/) into a single data.csv file in
-                       /processing/final/
-    aggregate_stat.py   -- aggregates processed dstat data from experiments
-                           (/processing/processed/) into a single dstat.csv file in
-                           /processing/final/
-    handle_dstat.py -- preprocesses dstat data from dstat raw logs
+    *.py            -- data processing scripts
     README.md
 
 README.md           -- this file

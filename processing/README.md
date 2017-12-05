@@ -8,12 +8,22 @@ This directory contains all non-raw log data and the scripts used to generate sa
 /graphics               -- graphs used for the generation of the report
 
 aggregate_dstat.py      -- script used to generate final dstat data
+aggregate_2k.py         -- script used to generate final 2k analysis data
 aggregate.py            -- script used to generate final data
+compute_mm1.py          -- script to compute M/M/1 data and output LaTeX table
+                           code
+compute_mmn.py          -- script to compute M/M/m data and output LaTeX table
+                           code
 handle_dstat.py         -- script used to generate prcessed dstat data
+histogram.py            -- script to compute histogram data for plotting
+percentiles.py          -- script to compute percentile information for
+                           response times
+preprocess_2k.py        -- script used to generate processed data for 2k
+                           analysis
 preprocess.py           -- script used to generate processed data
 ```
 
-## Running script
+## Running scripts
 In order to run the scripts in this directory use:
 ```
 python3 <script> all
