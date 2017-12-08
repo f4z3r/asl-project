@@ -16,7 +16,11 @@
 
 \definecolor{red}{RGB}{250, 0, 0}
 
-\usepackage{minted}
+\usepackage[newfloat]{minted}
+
+\newenvironment{code}{\captionsetup{type=listing}}{}
+\SetupFloatingEnvironment{listing}{name=Source Code}
+
 % \usemintedstyle{monokai}
 \setminted{
     linenos,
@@ -200,18 +204,37 @@ In the case of a sharded \mintinline{java}{multigets}, the \mintinline{java}{rea
 \end{figure}
 When all memcached servers have answered, \mintinline{java}{"END\r\n"} is added to the response buffer and the response is relayed to the client unless an error occurred in one of the servers. The response buffer is then converted into a string to check the number of hits. Note that this is performed irrespective of a server responding \mintinline{java}{"ERROR\r\n"}.
 
+\subsection{Load Balancing}
+As mentioned above, load balancing is performed in a simple round-robin way.
+\begin{code}
+    \captionof{listing}{Load Balancing}
+    \label{code::get_server}
+    \begin{minted}{java}
+        private static synchronized int getServer() {
+            return Worker.server++;
+        }
+    \end{minted}
+\end{code}
+A synchronised function (listing \ref{code::get_server}) increments a static counter in the \mintinline{java}{Worker} class and returns this value. As this is a single integer, note that no leaking is performed. The worker thread having requested a new server is then responsible for taking the return value modulo the number of available servers. The result of this computation gives the least recently used server across all worker threads. Note that in this case least recently used has the meaning of ``least recently requested from the load balancing mechanism''. In the case of mixed loads, as \mintinline{java}{sets} are propagated to all backend servers, the server returned by this strategy might actually just have been used due to a \mintinline{java}{set} request. However, this technique still guarantees that the load for requests that do not require access to all servers is balanced.
+
+In the case of sharded \mintinline{java}{multigets} where the number of keys is lower than the number of available backend servers, the function in listing \ref{code::get_server} is called for each partial \mintinline{java}{get} request.
 
 \subsection{Logging, Request Completion and Thread Synchronisation}
 All statistical data relating to a request is stored within the request itself, hence the reserved fields for timestamps, type and hit flags. When a request is completed, the \mintinline{java}{complete(request)} private method of that worker object is called. This method then computes the required statistics and stores them internally in the corresponding worker object. Therefore, up until the completion of the request, no internal data of the worker was touched with the exception of \mintinline{java}{multigets} hit counting.
 
 Every part of the workers that accessed internal statistics data is synchronised with respect to the worker object. Hence both the \mintinline{java}{complete(request)} and the \mintinline{java}{multiget} hit counting are synchronised. This ensures memory consistency when accessing the internal statistical data for logging. Thus all data should be consistent and no request should only be partially logged unless the logger kicks in between two blue boxes in figures \ref{png::gets_handling} and \ref{png::multigets_handling}. This can only happen during the handling of multigets and creates hits to be registered even though the request is incomplete. This is very unlikely to happen since close to no work is performed between any two blue boxes. Moreover, note that this does not affect any final statistics.
 
-The logging is performed by a static function:
-\begin{minted}{java}
-    public static String getRecord(ArrayList<Worker> workers, int queueLength);
-\end{minted}
-(of the worker class) that, when accessing the internal data of a worker in its argument list, locks that worker, hence preventing it from modifying its internal statistical data. This is done in order to get consistent interval information when logging. \\
-Every second, the \mintinline{java}{getRecord()} function is called on all workers and gathers their statistical data to output what has happened in the last second. Note that this does not prevent the worker from performing work until it reaches either request completion or a multiget hit count update. Due to the fact that data gathering is relatively fast compared to the overall time needed to process a request and the server time, this usually does not affect performance. Moreover, note that not all workers are blocked, but only the one currently being accessed. This can create slightly offset data when the middleware is launched with a large number of workers as the last few workers might complete some requests while the data from the first worker is being read. However, this only affects the time interval, not the overall data, because the logger only gathers data from when \mintinline{java}{getRecord()} was called \textit{on that worker}. Hence, even if the last worker completes more requests while the data from the first worker is being collected, these completed requests will not be considered the next time \mintinline{java}{getRecord()} is called on that worker.
+The logging is performed by a static function (of the worker class) that, when accessing the internal data of a worker in its argument list, locks that worker, hence preventing it from modifying its internal statistical data. This is done in order to get consistent interval information when logging. The signature of this function is shown in listing \ref{code::get_record}.
+
+\begin{code}
+    \captionof{listing}{Logging}
+    \label{code::get_record}
+    \begin{minted}{java}
+        public static String getRecord(ArrayList<Worker> workers, int queueLength);
+    \end{minted}
+\end{code}
+
+Every second, the \mintinline{java}{getRecord()} function from listing \ref{code::get_record} is called on all workers and gathers their statistical data to output what has happened in the last second. Note that this does not prevent the worker from performing work until it reaches either request completion or a multiget hit count update. Due to the fact that data gathering is relatively fast compared to the overall time needed to process a request and the server time, this usually does not affect performance. Moreover, note that not all workers are blocked, but only the one currently being accessed. This can create slightly offset data when the middleware is launched with a large number of workers as the last few workers might complete some requests while the data from the first worker is being read. However, this only affects the time interval, not the overall data, because the logger only gathers data from when \mintinline{java}{getRecord()} was called \textit{on that worker}. Hence, even if the last worker completes more requests while the data from the first worker is being collected, these completed requests will not be considered the next time \mintinline{java}{getRecord()} is called on that worker.
 
 Furthermore, \mintinline{java}{getRecord()} also takes care of clearing any histogram information stored in workers when running for the first time. This is to ensure that histogram data does not include requests completed during warm up time. The warm up time is set to ten seconds, therefore \mintinline{java}{getRecord()} is called ten seconds after the launch of the middleware and then again every second after that. This is performed by a scheduled executor service spawning a thread from the net-thread.
 
@@ -238,9 +261,17 @@ On top of that, on all memcached host machines, memcached is always launched on 
 
 In order to have a better understanding of system resource bounds and usage, two other pieces of software are used. Firstly, \mintinline{java}{dstat} is launched for each repetition in order to monitor CPU usage, network sends and receives, and disk reads and writes. This allows for a better overview of resource usage. Secondly, \mintinline{java}{iperf} is run at the very beginning of the experiments to measure network bandwidths between machines. This is only run once at the very beginning as all experiments were performed in a single run. Performing all experiments in one go ensures consistency in latencies between machines as no machines are reallocated between different experiments. In order to have an idea of these latencies, \mintinline{java}{ping} is also run between machines before each experiment for about five seconds. \mintinline{java}{ping} is not run during the actual experiments as it sends packets over a network which is the bottleneck for most test scenarios. Hence running it during experiments would restrict the middlewares performance even further.
 
+\subsection{System Stability}
+Figure \ref{png::system_stability} shows the stability of the system over time. The measurements shown are over the typical eighty second window used for all experiments in this report. The warm up time is excluded from this graph as explained in the previous subsection. The source of the data used to generate this plot is the data retrieved during the $2^k\cdot r$ analysis with one middleware, three servers, thirty-two worker threads, and a balanced mixed load (\mintinline{java}{1:1} ratio). Every data point is the average across all three repetitions. The error bars represent the standard deviation from between repetitions. Notice that, in this case, the throughput is the number of requests processed during the one second interval before the data point. Hence the data points at time 34 represent the number of requests handled between second 33 and 34 of the measurement window, and the average response times, server times and queue times of these requests.
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{processing/graphics/system_stability.png}
+    \caption{Stability of the middleware over time}
+    \source{processing/final/stability/servers\_3/workers\_32/ratio\_1:1/stability.xlsx}
+    \label{png::system_stability}
+\end{figure}
 
-
-
+As one can observe, the system is stable over time.
 
 
 \newpage
@@ -280,7 +311,7 @@ First, note that the experiment obeys the interactive law. This can be seen in f
     \begin{minipage}[b]{.45\textwidth}
         \centering
         \includegraphics[width=\textwidth]{processing/graphics/bench_memcached_inter_law.png}
-        \caption{Latency measured by clients versus interactive law latency}
+        \caption{Response time measured by clients versus interactive law response time}
         \label{png::bench_memcached_inter_law}
     \end{minipage}
     \qquad
@@ -352,7 +383,7 @@ In conclusion, the overall bottleneck in this experiment is the network. For bot
 \subsection{Summary}
 In both experiments, writes generally allow to reach higher maximal throughputs (and hence lower latencies). Generally, running around 70 to 80 clients per client machines also allows to reach the highest throughput without over-saturation and increased latencies due to network bandwidth limits or server compute power bounds. The only exception to this rule is read-only workloads on a single server. In that case, the network bandwidth limit is already reached with much lower client numbers.
 
-The numbers in table \ref{table::max_through_section_2} give the maximum measured throughputs, irrespective of when this is obtained. In the best scenario, the client number with a single server is around 150 total clients. This provides throughput very close to the numbers shown in table \ref{table::max_through_section_2} but with lower response times. Similarly, for one load generating virtual machine, around 70 to 80 clients generate enough load to achieve numbers close to the ones displayed in table \ref{table::max_through_section_2} but with lower response times than with the configuration given in the table.
+The numbers in table \ref{table::max_through_section_2} give the maximum measured throughputs, irrespective of when this is obtained. In the best scenario, the client number with a single server is around 150 total clients. This provides throughput very close to the numbers shown in table \ref{table::max_through_section_2} but with lower response times (saturation points). Similarly, for one load generating virtual machine, around 70 to 80 clients generate enough load to achieve numbers close to the ones displayed in table \ref{table::max_through_section_2} but with lower response times than with the configuration given in the table.
 
 \begin{table}[!h]
     \centering
@@ -371,7 +402,9 @@ The numbers in table \ref{table::max_through_section_2} give the maximum measure
 \newpage
 
 \section{Baseline with Middleware \label{section::net_queues}}
-In this set of experiments, one load generating virtual machine and one memcached server are used. In the first experiment, a single middleware is used as intermediary between clients and the memcached server. During the second experiment, the client virtual machine is connected to two middleware machines, each getting requests from a single thread memtier instance. Both middlewares then use the same memcached server as backend.
+In this set of experiments, one load generating virtual machine and one memcached server are used. In the first experiment, a single middleware is used as intermediary between clients and the memcached server. In that case, the client machine runs a single instance of memtier with two threads and a range of two to 56 clients \textit{per thread}.\\
+During the second experiment, the client virtual machine is connected to two middleware machines, each getting requests from a single thread memtier instance. Both middlewares then use the same memcached server as backend.\\
+In both cases, the middlewares are tested with eight, sixteen, thirty-two, and sixty-four worker threads \textit{per middleware}. The backend server runs with a single thread configuration.
 
 \subsection{One Middleware}
 \subsubsection{Reads}
@@ -511,7 +544,7 @@ With 8 workers, the same issue as for reads with 8 workers is encountered. One c
 
 
 
-\subsection{Two middlewares}
+\subsection{Two Middlewares}
 In this subsection, two middleware machines are used. Each is connected to the same memcached server and a single load generating virtual machine hosts clients. Two instances of memtier, each running on a single thread, are connected to the two middlewares and the client count per thread is increased to study its impact on the behaviour of the system.
 
 \subsubsection{Reads}
@@ -602,12 +635,16 @@ Moreover, the system with two middlewares performs nearly twice as well as the s
     \label{table::max_through_section_3_2mw}
 \end{table}
 
+
+
+
 \newpage
 
-\section{Throughput of writes \label{section::queue_model}}
-During this experiment, three load generating virtual machines, running two instances of memtier each, are connected to two middlewares. Each instance of memtier runs on a single thread. The two middlewares are hosted on different virtual machines and are connected to three backend memcached servers.
+\section{Throughput of Writes \label{section::queue_model}}
+During this experiment, three load generating virtual machines, running two instances of memtier each, are connected to two middlewares. Each instance of memtier runs on a single thread. The number of clients per thread varies between two and 56. The two middlewares are hosted on different virtual machines and are connected to three backend memcached servers. Configurations with eight, sixteen, thirty-two, and sixty-four worker threads \textit{per middleware} are used.\\
+Once more, all instances of memcached run on a single thread.
 
-As the title indicates, the experiment is run on write-only workloads with a range of different client numbers. Moreover, the number of worker threads is changed in the middlewares, same as in the last section.
+As the title indicates, the experiment is run on write-only workloads with a range of different client numbers.
 
 As shown in figure \ref{png::throughput_writes_through-clients}, each increase in workers increases the overall performance of the system. The middlewares already saturate at 24 clients when running with 8 workers. This follows from the time taken for servers to respond to the middlewares. Note that the base time spent waiting for servers is much higher when using three backend servers compared to a single memcached server. This is caused by the fact that if one of the three servers is very slow (due to network latencies or CPU bounds), the worker is idle waiting for a response. Moreover, much more data has to be sent over the network since \textit{all} data from \mintinline{java}{set} requests is sent to all servers (not just parts such as in sharded \mintinline{java}{mutliget} requests). Hence, it requires the middlewares to send exactly three times as much data as with a single server. This results in longer response times and, by operational laws, in lower throughput.
 
@@ -688,7 +725,7 @@ All standard deviations used for percentile information are computed as the devi
 
 Moreover, note that the actual sizes of the \mintinline{java}{multigets} is equivalent to their maximum size as the ratio was intentionally modified during the testing to ensure consistency. Therefore, from this point onwards, maximum key size will be equivalent to average \mintinline{java}{multiget} size.
 
-\subsection{Sharded case}
+\subsection{Sharded Case}
 Figures \ref{png::get_and_multigets_latency-keylen_sharded} shows the average response time as measured by clients and response times for 25\textsuperscript{th}, 50\textsuperscript{th}, 75\textsuperscript{th}, 90\textsuperscript{th} and 99\textsuperscript{th} percentiles.
 
 \begin{figure}[!h]
@@ -707,7 +744,7 @@ Server response time still represents nearly the entire processing time. As long
 
 The general increasing trend in average response times measured by the clients is due to increased server times as the maximum key number increases. This follows as a \mintinline{java}{multiget} with twice the number of keys requires twice as much data to be sent over the network and, unless memcached optimises \mintinline{java}{multigets}, twice the compute power for memcached.
 
-\subsection{Non-Sharded case}
+\subsection{Non-Sharded Case}
 In the non-sharded case, average response time is comparable to the 50\textsuperscript{th} percentile response time (as seen on figure \ref{png::get_and_multigets_latency-keylen_non-sharded}). This follows from the middlewares only contacting a single server for each request, hence the likelihood of a server behaving better is comparable to the likelihood to a server behaving worse. As the worker thread handling the request does not need to wait for additional servers, these two scenarios balance out resulting in a mean relatively close to the median. However, note that the overall spread of percentile response times is larger than the one measured in the sharded case. This implies that the spread of the response time distribution is relatively broad, even if the average is close to the median.
 
 \begin{figure}[!h]
@@ -725,7 +762,7 @@ The same increasing trend in average response times is visible for this configur
 \subsection{Histogram}
 All histograms displayed in this section are the result of unweighted averages across all client instances / middleware hosts. Hence the histogram of response times given by some memtier instance has the same weight than any other memtier instance, irrespective of the actual throughput measured by said instance. This results in small inaccuracies in the data as memtier instances with smaller throughput should have a smaller impact on the histogram than other memtier instances.
 
-\subsubsection{Sharded case}
+\subsubsection{Sharded Case}
 Figure \ref{png::get_and_multigets_hist_sharded_clients} illustrates the response time histogram of sharded \mintinline{java}{multigets} as measured by the clients. Each bucket represents the percentage of total requests having a response time higher or equal to the bucket in question, yet lower than the next bucket. The first and last buckets represent the percentage of requests having lower and higher response times than the one indicated respectively.
 
 As one can see, the vast majority of requests have a response time between 2.4 and 4.2 milliseconds. Moreover, the histogram shows a single peak in the distribution of response times. The reason for the very high percentage for the last bucket is only due to the grouping of all requests having response times higher than 6.9 milliseconds. The actual distribution decreases gradually until reaching zero.
@@ -746,7 +783,7 @@ Figure \ref{png::get_and_multigets_hist_sharded_mws} represents the same data bu
     \label{png::get_and_multigets_hist_sharded_mws}
 \end{figure}
 
-\subsubsection{Non-Sharded cases}
+\subsubsection{Non-Sharded Case}
 Figure \ref{png::get_and_multigets_hist_non-sharded_clients} shows the response times measured by clients for non-sharded \mintinline{java}{multigets}. As once can see, the overall spread of response times is much larger than for the sharded case. The vast majority of requests are amassed around two peaks. The second peak is comparable to the one seen in figure \ref{png::get_and_multigets_hist_sharded_clients} (if not as high) whereas the first peak has much lower response times. This is caused by network latencies being much lower for one server (namely ``\mintinline{java}{server1}''\footnote{\mintinline{shell}{logs/get_and_multigets(2017-11-18_13h10)/mw_._ping.log}}). In the sharded case, this did not impact service rates of the middleware as the middleware had to wait for all servers to respond. Hence the slowest servers (``\mintinline{java}{server2}'' and ``\mintinline{java}{server3}'') dictated the server time (here slow server means servers with high response times, even if due to network latencies). However, in the non-sharded case, about one third of all requests (due to load balancing) are sent to the server having lower network latencies, hence resulting in lower overall response times for this subset of requests. Because of this distribution of requests, one can also see that the first peak is smaller than the second one.
 
 \begin{figure}[!h]
@@ -766,10 +803,14 @@ As seen in figure \ref{png::get_and_multigets_hist_non-sharded_mws}, the data co
 \end{figure}
 
 \subsection{Summary}
-In general, non-sharded \mintinline{java}{multigets} are preferred over sharded ones. This is due to the fact that sharded requests cannot take advantage of the situation where a server or subset of servers behaves better than the rest. Therefore, non-sharded \mintinline{java}{multigets} have a lower average response time than sharded ones. However, due to the potentially large discrepancy between server behaviours, non-sharded requests are not very consistent in terms of response times. This is seen in figure \ref{png::get_and_multigets_latency-keylen_non-sharded}, where the difference in response times between 25\textsuperscript{th}, 50\textsuperscript{th}, and 75\textsuperscript{th} percentiles is much larger than in the sharded case. Nonetheless, as speed and throughput are usually the primary goals of such systems, non-sharded requests are superior.
+In general, non-sharded \mintinline{java}{multigets} are preferred over sharded ones. This is due to the fact that sharded requests cannot take advantage of the situation where a server or subset of servers behaves better than the rest. Therefore, non-sharded \mintinline{java}{multigets} have a lower average response time than sharded ones. However, due to the potentially large discrepancy between server behaviours, non-sharded requests are not very consistent in terms of response times. This is seen in figure \ref{png::get_and_multigets_latency-keylen_non-sharded}, where the difference in response times between 25\textsuperscript{th}, 50\textsuperscript{th}, and 75\textsuperscript{th} percentiles is much larger than in the sharded case. Nonetheless, as speed and throughput are usually the primary goals of such systems, non-sharded requests are superior, even if they offer less consistency than sharded requests.
+
+
+
+\newpage
 
 \section{2K Analysis}
-The experiments conducted in this section is are 6 different $2^k\cdot r$ experiments with three factors ($k = 3$) and three repetitions ($r = 3$). For three different types of workload (read-only, write-only, and read-write), the modified factors are:
+The experiments conducted in this section are 6 different $2^k\cdot r$ experiments with three factors ($k = 3$) and three repetitions ($r = 3$). For three different types of workload (read-only, write-only, and read-write (balanced \mintinline{shell}{1:1} ratio)), the modified factors are:
 \begin{enumerate}
     \item the number of servers used as backends (2 or 3), denoted $A$;
     \item the number of middlewares used (1 or 2), denoted $B$;
@@ -798,7 +839,7 @@ The following variables are defined:
 
 The model used is multiplicative as every middleware has a number of workers and each of these workers is connected to all servers. Therefore, the data in the following tables under the headings ``Repetitions'' is actually the \textbf{logarithm} of throughput or response time. All other computations within the tables is then based on that data.
 
-\subsection{Read-only workload}
+\subsection{Read-Only Workload}
 Table \ref{table::ro_2k_through} illustrates the impact on throughput of changing the factors. The last row in this table gives the portion of the variation affected by the change in the given factor.
 
 From the last row in said table, one can see that the only factors affecting throughput are the number of middlewares and the number of workers. The number of workers has a slightly bigger impact, as the actual change in number of workers quadruples when going from 8 to 32 workers, whereas only doubles by adding a second middleware. However, note that the effect of increasing workers is only slightly better than the effect of adding a middleware. Therefore, it is preferred to increase from one middleware to two rather than doubling the number of workers on a single middleware.
@@ -867,7 +908,7 @@ All cross-effects between variables are insignificant, not even reaching one per
 As expected, the results observed in table \ref{table::ro_2k_latency} show the same behaviour to the previous table mapped to response time. However, impacts have grown in importance. This entire shift in the significance of the factors is caused by the network latencies between middleware and clients not being taken into account. As a consequence, the response times used in table \ref{table::ro_2k_latency} are lower than the actual one. Therefore changes in response time caused by the modifications in the configuration feel more significant than when measured by the client.
 
 
-\subsection{Write-only workload}
+\subsection{Write-Only Workload}
 Table \ref{table::wo_2k_through} illustrates the effect of changes in the factors outlined in equation \ref{eq::x_a}, \ref{eq::x_b} and \ref{eq::x_c}. For write-only workloads, the effects observed are extremely similar to read-only workloads, both for throughput and response time.
 
 \afterpage{%
@@ -929,7 +970,7 @@ Table \ref{table::wo_2k_through} illustrates the effect of changes in the factor
 }
 
 
-\subsection{Read-Write workload}
+\subsection{Read-Write Workload}
 As expected, since the effects were similar to write-only and for read-only workloads, the impact of the factors chosen for this analysis is also the same when using a read-write workload. This can be seen in tables \ref{table::rw_2k_through} and \ref{table::rw_2k_latency}.
 
 
@@ -997,11 +1038,11 @@ As seen in tables \ref{table::ro_2k_through}, \ref{table::ro_2k_latency}, \ref{t
 
 \newpage
 
-\section{Queuing Model}
+\section{Queuing Models}
 This section provides an analysis of the system under different queuing models. First, the experimental results on section \ref{section::queue_model} will be compared to M/M/1 and M/M/m queuing model. Then, section \ref{section::net_queues} will be used to build a network of queues. In each case, the results of the queuing models will be compared to the results obtained from the tests.
 
-\subsection{M/M/1}
-Figure \ref{png::mm1_queue} shows the model used for this subsection. In this case, the system used during section \ref{section::queue_model} is modelled as a queue with a single entity providing the service (the equivalent of ``server'' in traditional queuing theory). This differs from the actual system model used during the experiment as two middlewares were used (therefore two separate queues), each having a variable amount of entities providing the service (worker threads).
+\subsection{M/M/1 Model}
+Figure \ref{png::mm1_queue} shows the model used for this subsection. In this case, the system used during section \ref{section::queue_model} is modelled as a queue with a single entity providing the service (the equivalent of ``server'' in traditional queuing theory). This differs from the actual system model used during the experiment as two middlewares were used (therefore two separate queues), each having a variable amount of entities providing the service (worker threads). The model is open as the clients are not contained in the model and hence the boundaries of the system are the net-thread for input from outside the system and the worker threads as they send responses back to clients outside the system. However, the memcached servers are considered as being part of the worker threads of the middleware and are thus contained in the model.
 
 \begin{figure}[!h]
     \centering
@@ -1129,7 +1170,7 @@ Table \ref{table::mm1_data_32} shows utilisation levels above 90\% for 16 client
 
 The data illustrated in table \ref{table::mm1_data_64} shows the M/M/1 model applied to the system with a configuration of 64 workers per middleware. As close to full utilisation is reached much later, queue lengths computed here are much more accurate. However, response times are not accurate at all. This is caused by the fact that service times are much higher than used in the model. In fact, the real average service rate is nearly three milliseconds longer than the response time given in the last row of table \ref{table::mm1_data_64}.
 
-\subsection{M/M/m}
+\subsection{M/M/m Model}
 
 \begin{figure}[!h]
     \centering
@@ -1145,7 +1186,8 @@ Figure \ref{png::mmn_queue} illustrates the model used in this subsection. A var
     \item The arrival rate is computed as for the M/M/1 model.
 \end{enumerate}
 
-The server count ($m$) used for the model is equal to twice the number of worker threads used in the configurations. This follows from the way the service rate was computed. As the service rate taken from the average service times of a worker, the total number of workers in the system (twice the number given in the configuration as two middlewares are used) serves as the count of service providing entities for the model.
+The server count ($m$) used for the model is equal to twice the number of worker threads used in the configurations. This follows from the way the service rate was computed. As the service rate taken from the average service times of a worker, the total number of workers in the system (twice the number given in the configuration as two middlewares are used) serves as the count of service providing entities for the model.\\
+Moreover, the boundaries of the model are exactly the same as for the M/M/1 model. The system is also open.
 
 \begin{table}
     \centering
@@ -1277,18 +1319,16 @@ Figure \ref{png::network_queues_2mw} shows the same model but with two separate 
     \end{minipage}
 \end{SidewaysFigure}
 
-
-
 The data flow represented in these schemas is not accurate as no flow leads back from the servers to the middleware. As the model does not consider any queue when data is passed back from the servers to the middleware, the flow is represented as going directly from the server to the clients.
 
-\subsubsection{Single middleware}
-First, note that the system is closed. No data is passed out of the system, and no data arrives from the outside.
+\subsubsection{Single Middleware}
+First, note that the system is closed. No data is passed out of the system, and no data arrives from the outside. Hence the system contains all devices used in the experiments. Therefore the boundaries of the system are between the testing environment and the outside world.
 
-Second, the number of requests per job is exactly one in each device. This would be different for sets and sharded multigets when using several backend servers. However, as only a single memcached server is used, each job spawns only a single request across all devices in the entire system.
+Second, the number of requests per job is exactly one in each device. This would be different for gets and non-sharded multigets when using several backend servers. However, as only a single memcached server is used, each job spawns only a single request across all devices (not components) in the entire system.
 
-Third, as all but the middleware use a M/M/1 model and the data flow as no fork between individual queuing models, the visit count for each device is exactly one. Moreover, the visit count for each service in each device is one, with the exception of the workers in the middleware, where the average visit count is one over the number of workers used in the middleware device.
+Third, as all but the middleware use a M/M/1 model and the data flow as no fork between individual queuing models, the visit count for each component is exactly one. The only exception are the workers in the middleware, where the average visit count is one over the number of workers used in the middleware device.
 
-Fourth, the total number of jobs in the system is taken as the average throughput as measured by the client. As no jobs are lost, no jobs are received from outside the system, and no jobs are sent outside the system, the average throughput as measured by the client can also be used as the average arrival rate for each device.
+Fourth, the total throughput of the system is taken as the average throughput as measured by the client. As no jobs are lost, no jobs are received from outside the system, and no jobs are sent outside the system, the average throughput as measured by the client can also be used as the average arrival rate for each device. Moreover, note that due to the behaviour of memtier, the total number of jobs in the system at any time is equal to the total number of clients.
 
 Finally, in order to compute properties of individual devices in the system, their respective response time will be used. As memtier does not involve any think time, one can assume that the cycle time across the system is the response time as measured by the clients. Then, by the forced flow law, the sum of individual response times from each device is equal to the response time measured by the client. Furthermore, the response time for the backend server is known as it is measured as the server time by the middleware. Moreover, the time a requests spends in the middleware is known as it can be computed by the time between reception of a request from a client and the time the request is completed. As the server is considered a separate device in this model, the server time can be deducted from this time interval to compute the time spend either in queue or processing in a worker within the middleware. The resulting time give the response time of the middleware. Thus, by the forced flow law, the response time of the client machine can be computed by subtracting the middleware's and the server's response times from the system response time.
 
@@ -1359,8 +1399,8 @@ Using the same equation as for the server, one can compute the utilisation of cl
 There is no significant difference in utilisation between the client and the server. The service times computed using equation \ref{eq::service_time} are nearly equal for the client and the server. Moreover, their visit count is exactly one hence resulting in very similar service demand. This indicates that they present a comparable bottleneck (using bottleneck analysis as service demand is proportional to utilisation). This implies that the overall bottleneck in this system is the network.
 
 
-\subsubsection{Two middlewares}
-Just as for the single middleware model, the system under consideration is closed. However, in contrast to the model above, the visit count in each device is no longer one. In the case of the clients and the middlewares, the client count is one half. Therefore, even though the computations for measurements are performed very similarly for this model compared to the one presented above, they are not the same. For example, the average throughput of a single middleware is only half the measured throughput from the clients. This follows as throughputs from individual clients were added in post-processing to get the overall throughput of the system.
+\subsubsection{Two Middlewares}
+Just as for the single middleware model, the system under consideration is closed. On top of that, the models boundaries remain unchanged. However, in contrast to the model above, the visit count in each device is no longer one. In the case of the clients and the middlewares, the client count is one half. Therefore, even though the computations for measurements are performed very similarly for this model compared to the one presented above, they are not the same. For example, the average throughput of a single middleware is only half the measured overall throughput from the clients. This follows as throughputs from individual clients were added in post-processing to get the overall throughput of the system.
 
 Server service times and client service times computations can remain unchanged. In the server case this is obvious as the queuing model does not change between single and two middleware models. In the case of clients, half the system's throughput must be taken as the arrival rate as the job visit count for each client instance is only one half.
 

@@ -21,6 +21,7 @@ percentiles.py          -- script to compute percentile information for
 preprocess_2k.py        -- script used to generate processed data for 2k
                            analysis
 preprocess.py           -- script used to generate processed data
+stability.py            -- script used to generate data for stability trace
 ```
 
 ## Running scripts
