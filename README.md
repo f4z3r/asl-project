@@ -22,10 +22,11 @@
     README.md
 
 README.md           -- this file
-report.tex          -- the tex file generating the report
-project.pdf         -- project description as given by the course
-report-outline.pdf  -- report outline as given by the course
 azure_template.json -- JSON template used to generate VMs on the cloud
+report.pdf          -- the report
+report.tex          -- the tex file generating the report
+
+
 ```
 
 ## Graphs
