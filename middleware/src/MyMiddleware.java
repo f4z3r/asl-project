@@ -142,8 +142,10 @@ public class MyMiddleware {
         // Perform the work for the net thread
         while(true) {
             // Get the keys in the selected-set of the selector
+            int selectedKeysnmn;
             try {
-                selector.select();
+                selectedKeysnmn = selector.select();
+                System.out.println("Number of selected keys: " + selectedKeysnmn);
             } catch(IOException ex) {
                 SYS_LOG.info("Selector selected-set could not be updated.");
             }
