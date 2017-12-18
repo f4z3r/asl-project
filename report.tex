@@ -1,6 +1,7 @@
 \documentclass[11pt,a4paper]{article}
 
 \usepackage{fullpage}
+\usepackage{lastpage}
 \usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{amsmath}
@@ -72,12 +73,12 @@
 \fancypagestyle{firstpagefooter} {
     \lfoot{\tiny{Version: 30.11.2017}}
     \cfoot{}
-    \rfoot{\thepage}
+    \rfoot{\thepage\ of \pageref{LastPage}}
 
 }
 
 \lfoot{Name: Jakob Beckmann Legi: 17-945-866}
-\rfoot{\thepage}
+\rfoot{\thepage\ of \pageref{LastPage}}
 
 \setlength{\parskip}{0.5em}
 
@@ -728,6 +729,8 @@ Note that in order to correctly measure response times for \mintinline{java}{mul
 All standard deviations used for percentile information are computed as the deviation of all percentile measurements. Hence an average is taken across all repetitions, memtier machines, and memtier instances on each machine, and the standard deviation of these (18) measurements is used in the graphs for this section. Therefore, the error bars represent both variations between repetitions and variations across memtier instances.
 
 Moreover, note that the actual sizes of the \mintinline{java}{multigets} is equivalent to their maximum size as the ratio was intentionally modified during the testing to ensure consistency. Therefore, from this point onwards, maximum key size will be equivalent to average \mintinline{java}{multiget} size.
+
+On top of that, the bottleneck is the same for both sharded and non-sharded \mintinline{java}{multigets}. For all request sizes, the bottleneck is the client count. The network bandwidths are not reached and we have way less clients than workers. This means that at all times, some workers are idle waiting for requests to be read by the net-thread. Moreover, the servers have very low CPU utilisation, indicating they could handle more requests. Clients CPU utilisation is also very low as they can generate many more requests per second, but by the design of memtier (each client awaits a response before sending a new request), only very few requests are generated at any one time. Note however, that for \mintinline{java}{multigets} of size nine, the network write bandwidth of the servers is nearly attained. The average network write (for both sharded and non-sharded cases) is above 10MB/s\footnote{\mintinline{shell}{processing/final/get_and_multigets/dstat.csv}}. Hence, slightly increasing the client count would create a new bottleneck in the network.
 
 \subsection{Sharded Case}
 Figures \ref{png::get_and_multigets_latency-keylen_sharded} shows the average response time as measured by clients and response times for 25\textsuperscript{th}, 50\textsuperscript{th}, 75\textsuperscript{th}, 90\textsuperscript{th} and 99\textsuperscript{th} percentiles.
